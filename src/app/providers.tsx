@@ -1,8 +1,7 @@
-import { MantineProvider } from '@mantine/core';
+'use client';
+import { SessionProvider } from 'next-auth/react';
 import React, { PropsWithChildren } from 'react';
 
 export default function Providers({ children }: PropsWithChildren) {
-  return (
-    <MantineProvider defaultColorScheme='auto'>{children}</MantineProvider>
-  );
+  return <SessionProvider>{children}</SessionProvider>;
 }

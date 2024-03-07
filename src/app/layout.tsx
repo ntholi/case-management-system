@@ -4,11 +4,11 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
-import { ColorSchemeScript } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import Providers from './providers';
 
 export const metadata: Metadata = {
-  title: 'Case',
+  title: 'Case Management',
   description: 'Case Management System for Lesotho Mounted Police Service',
 };
 
@@ -19,7 +19,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <ColorSchemeScript />
       </head>
       <body>
-        <Providers>{children}</Providers>
+        <MantineProvider defaultColorScheme='auto'>
+          <Providers>{children}</Providers>
+        </MantineProvider>
       </body>
     </html>
   );
