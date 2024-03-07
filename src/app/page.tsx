@@ -1,7 +1,28 @@
-export default function Home() {
+'use client';
+import { Stack, Title, Text } from '@mantine/core';
+import { useSession } from 'next-auth/react';
+import React, { Suspense } from 'react';
+
+export default function AdminPage() {
   return (
-    <main>
-      <h1>Hello World</h1>
-    </main>
+    <Stack h={'70vh'} w={'100%'} justify='center' align='center'>
+      <div>
+        <Title size={'1.8rem'} fw={'lighter'}>
+          Case Management System
+        </Title>
+        <Suspense fallback={<Text>...</Text>}>
+          <UserDisplay />
+        </Suspense>
+      </div>
+    </Stack>
+  );
+}
+
+function UserDisplay() {
+  const { data: session } = useSession();
+  return (
+    <Text size='sm' mt='xs'>
+      Welcome, {session?.user?.name}
+    </Text>
   );
 }
