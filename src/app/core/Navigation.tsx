@@ -1,4 +1,12 @@
-import { AppShell, Avatar, Divider, NavLink, ScrollArea } from '@mantine/core';
+import {
+  AppShell,
+  Avatar,
+  Box,
+  Divider,
+  NavLink,
+  ScrollArea,
+  Skeleton,
+} from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { IconChevronRight, IconHome, IconLogout2 } from '@tabler/icons-react';
 import { signOut, useSession } from 'next-auth/react';
@@ -7,6 +15,7 @@ import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
   const pathname = usePathname();
+  const { status } = useSession();
 
   return (
     <AppShell.Navbar p='xs'>
@@ -22,7 +31,7 @@ export default function Navigation() {
       </AppShell.Section>
       <AppShell.Section>
         <Divider mb='md' />
-        <UserButton />
+        {status === 'loading' ? <Skeleton my={18} h={40} /> : <UserButton />}
       </AppShell.Section>
     </AppShell.Navbar>
   );
