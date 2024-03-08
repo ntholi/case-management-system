@@ -13,11 +13,107 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Weapon {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Case      Case?    @relation(fields: [caseId], references: [id])
+  caseId    Int?
+}
+
+model CrimeClassification {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Case      Case?    @relation(fields: [caseId], references: [id])
+  caseId    Int?
+}
+
+model ReportingPerson {
+  id           Int      @id @default(autoincrement())
+  name         String
+  idNo         String
+  phoneNumber  String
+  relationship String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Case         Case[]
+}
+
 model Case {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  status      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                   Int                   @id @default(autoincrement())
+  rciNo                String
+  obNo                 String
+  weapons              Weapon[]
+  crimeClassifications CrimeClassification[]
+  reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
+  occurrencePlace      String
+  victim               PersonalInformation   @relation("CaseToVictim", fields: [victimId], references: [id])
+  suspect              PersonalInformation   @relation("CaseToSuspect", fields: [suspectId], references: [id])
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  reportingPersonId Int
+  victimId          Int
+  suspectId         Int
+}
+
+model PersonalInformation {
+  id               Int            @id @default(autoincrement())
+  nationalId       String
+  nationalIdType   NationalIdType
+  surname          String
+  middleName       String
+  firstName        String
+  gender           Gender
+  phoneNumber      String
+  email            String
+  dateOfBirth      DateTime
+  nationality      String
+  meritalStatus    MeritalStatus
+  occupation       String
+  education        Education
+  placeOfBirth     String
+  areaChief        String
+  placeOfResidence String
+  headMan          String
+  principalChief   String
+  district         String
+  nextOfKin        String
+  nextOfKinPhone   String
+  victimCases      Case[]         @relation("CaseToVictim")
+  suspectCases     Case[]         @relation("CaseToSuspect")
+}
+
+enum Education {
+  NONE
+  PRIMARY
+  SECONDARY
+  TERTIARY
+  OTHER
+}
+
+enum MeritalStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+  OTHER
+}
+
+enum NationalIdType {
+  ID_CARD
+  DRIVING_LICENSE
+  PASSPORT
+  VOTERS_CARD
+  NONE
+  OTHER
+}
+
+enum Gender {
+  MALE
+  FEAMLE
+  OTHER
 }
