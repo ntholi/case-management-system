@@ -28,6 +28,14 @@ export default function Navigation() {
           leftSection={<IconHome size='1.1rem' />}
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
+        <NavLink
+          label='Crime Classifications'
+          component={Link}
+          active={pathname.startsWith('/crime-classifications')}
+          href={'/crime-classifications'}
+          leftSection={<IconHome size='1.1rem' />}
+          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+        />
       </AppShell.Section>
       <AppShell.Section>
         <Divider mb='md' />

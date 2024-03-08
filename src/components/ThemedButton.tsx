@@ -3,7 +3,7 @@ import { Button, ButtonProps, useComputedColorScheme } from '@mantine/core';
 import React from 'react';
 
 type Props = {
-  type?: 'submit' | 'reset' | 'button';
+  onClick?: () => void;
 } & ButtonProps;
 
 export default function ThemedButton({ children, ...props }: Props) {
