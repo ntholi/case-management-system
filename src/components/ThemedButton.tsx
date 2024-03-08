@@ -1,3 +1,4 @@
+'use client';
 import { Button, ButtonProps, useComputedColorScheme } from '@mantine/core';
 import React from 'react';
 
