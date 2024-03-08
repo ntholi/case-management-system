@@ -1,6 +1,6 @@
 import FormModal from '@/components/FormModal';
 import ThemedButton from '@/components/ThemedButton';
-import prisma from '@/lib/prisma';
+
 import {
   Paper,
   Table,
@@ -10,6 +10,8 @@ import {
   TableTr,
   TextInput,
 } from '@mantine/core';
+import prisma from '@/lib/prisma';
+import { createCrimeClassification } from './actions';
 
 export default async function CasePage() {
   const data = await prisma.crimeClassification.findMany();
@@ -24,17 +26,8 @@ export default async function CasePage() {
   return (
     <>
       <Paper p='md' withBorder>
-        <FormModal
-          label='The Thing'
-          onSubmit={async (value) => {
-            'use server';
-            const res = await prisma.crimeClassification.create({
-              data: value,
-            });
-            console.log(res);
-          }}
-        >
-          <TextInput withAsterisk label='Name' name='name' />
+        <FormModal buttonLabel='The Thing' onSubmit={createCrimeClassification}>
+          <Form />
         </FormModal>
       </Paper>
       <Table>
@@ -46,6 +39,14 @@ export default async function CasePage() {
         </TableThead>
         <TableTbody>{rows}</TableTbody>
       </Table>
+    </>
+  );
+}
+
+function Form() {
+  return (
+    <>
+      <TextInput name='name' label='Name' required />
     </>
   );
 }

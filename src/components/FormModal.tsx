@@ -12,7 +12,7 @@ export type CreateViewProps<T extends Resource> = {
   schema?: ZodObject<{ [K in any]: ZodTypeAny }>;
   initialValues?: ResourceCreate<T>;
   onSubmit: (value: T) => Promise<void>;
-  label: string;
+  buttonLabel: string;
 };
 
 export default function FormModal<T extends Resource>(
@@ -20,7 +20,7 @@ export default function FormModal<T extends Resource>(
 ) {
   const [isPending, startTransition] = React.useTransition();
   const [opened, { open, close }] = useDisclosure(false);
-  const { children, schema, initialValues, label } = props;
+  const { children, schema, initialValues, buttonLabel } = props;
   const form = useForm<ResourceCreate<T>>({
     validate: schema && zodResolver(schema),
     initialValues,
@@ -50,7 +50,7 @@ export default function FormModal<T extends Resource>(
           </Button>
         </form>
       </Modal>
-      <Button onClick={open}>Open modal</Button>
+      <Button onClick={open}>{buttonLabel}</Button>
     </>
   );
 }
