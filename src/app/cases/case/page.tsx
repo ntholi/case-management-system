@@ -1,13 +1,13 @@
 import PageTitle from '@/components/PageTitle';
-import ResourceForm from '@/components/ResourceForm';
 import ThemedButton from '@/components/ThemedButton';
-import ThemedIconButton from '@/components/ThemedIconButton';
-import { Flex, Grid, GridCol, Group, Paper, TextInput } from '@mantine/core';
-import { IconArrowNarrowLeft, IconPick, IconSelect } from '@tabler/icons-react';
-import React from 'react';
+import prisma from '@/lib/prisma';
+import { Flex, Paper } from '@mantine/core';
+import { IconArrowNarrowLeft } from '@tabler/icons-react';
 import Form from './Form';
 
-export default function CasePage() {
+export default async function CasePage() {
+  const weapons = await prisma?.weapon.findMany();
+
   return (
     <>
       <Paper p='md' withBorder>
@@ -19,7 +19,7 @@ export default function CasePage() {
         </Flex>
       </Paper>
       <Paper p='md' withBorder mt={'xl'}>
-        <Form />
+        <Form weapons={weapons} />
       </Paper>
     </>
   );

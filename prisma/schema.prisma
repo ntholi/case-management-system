@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Weapon {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -22,7 +22,7 @@ model Weapon {
 }
 
 model CrimeClassification {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   name      String
   cases     Case[]
   createdAt DateTime @default(now())
@@ -47,9 +47,12 @@ model Case {
   weapons              Weapon[]
   crimeClassifications CrimeClassification[]
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
-  occurrencePlace      String
+  occurrencePlace      String?
   victim               PersonalInformation   @relation("CaseToVictim", fields: [victimId], references: [id])
   suspect              PersonalInformation   @relation("CaseToSuspect", fields: [suspectId], references: [id])
+  modusOperandi        String?
+  modusOperandiDetails String?
+  modusOperandeLinked  ModusOperandiLined?
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -116,4 +119,10 @@ enum Gender {
   MALE
   FEAMLE
   OTHER
+}
+
+enum ModusOperandiLined {
+  YES
+  NO
+  UNKNOWN
 }
