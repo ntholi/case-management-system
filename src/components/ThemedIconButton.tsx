@@ -4,12 +4,30 @@ import {
   ActionIconProps,
   useComputedColorScheme,
 } from '@mantine/core';
-import React, { HTMLAttributes } from 'react';
+import Link from 'next/link';
 
-type Props = ActionIconProps & HTMLAttributes<HTMLButtonElement>;
+type Props = {
+  href?: string;
+  onClick?: () => void;
+} & ActionIconProps;
 
-export default function ThemedIconButton({ children, ...props }: Props) {
+export default function ThemedIconButton({ children, href, ...props }: Props) {
   const colorScheme = useComputedColorScheme();
+
+  if (href) {
+    return (
+      <ActionIcon
+        color='dark'
+        component={Link}
+        href={href}
+        variant={colorScheme === 'dark' ? 'default' : 'filled'}
+        {...props}
+      >
+        {children}
+      </ActionIcon>
+    );
+  }
+
   return (
     <ActionIcon
       color='dark'

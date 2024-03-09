@@ -23,7 +23,6 @@ export default function CreateButton<T extends Resource>(props: Props<T>) {
     <>
       <Modal opened={opened} onClose={close} title={title}>
         <ResourceForm
-          title={title}
           schema={schema}
           onCreate={async (it: T) => {
             if (onCreate) {

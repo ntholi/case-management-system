@@ -26,7 +26,6 @@ export default function UpdateIconButton<T extends Resource>(props: Props<T>) {
     <>
       <Modal opened={opened} onClose={close} title={title}>
         <ResourceForm
-          title={title}
           initialValues={initialValues}
           schema={schema}
           onCreate={async (it: T) => {

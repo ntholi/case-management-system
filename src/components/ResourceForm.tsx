@@ -16,7 +16,6 @@ export type Props<T extends Resource> = {
   onCreate?: (value: T) => Promise<void>;
   onUpdate?: (value: T, id: any) => Promise<void>;
   objectId?: string | number;
-  title: string;
 };
 
 export default function ResourceForm<T extends Resource>(
@@ -24,7 +23,7 @@ export default function ResourceForm<T extends Resource>(
 ) {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
-  const { children, schema, initialValues, title } = props;
+  const { children, schema, initialValues } = props;
 
   const form = useForm<ResourceCreate<T>>({
     validate: schema && zodResolver(schema),
