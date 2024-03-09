@@ -8,7 +8,12 @@ import {
   Skeleton,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { IconChevronRight, IconHome, IconLogout2 } from '@tabler/icons-react';
+import {
+  IconChevronRight,
+  IconHome,
+  IconLogout2,
+  IconSwords,
+} from '@tabler/icons-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -34,6 +39,14 @@ export default function Navigation() {
           active={pathname.startsWith('/crime-classifications')}
           href={'/crime-classifications'}
           leftSection={<IconHome size='1.1rem' />}
+          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+        />
+        <NavLink
+          label='Weapons'
+          component={Link}
+          active={pathname.startsWith('/weapons')}
+          href={'/weapons'}
+          leftSection={<IconSwords size='1.1rem' />}
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
       </AppShell.Section>

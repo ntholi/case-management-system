@@ -19,7 +19,7 @@ import PageTitle from '@/components/PageTitle';
 import Link from 'next/link';
 
 export default async function CasePage() {
-  const data = await prisma.crimeClassification.findMany({
+  const data = await prisma.weapon.findMany({
     include: {
       cases: true,
     },
@@ -34,7 +34,7 @@ export default async function CasePage() {
       </TableTd>
       <TableTd align='right'>
         <UpdateIconButton
-          title={'Crime Classification'}
+          title={'Weapon'}
           form={<Form />}
           initialValues={row}
           objectId={row.id}
@@ -48,18 +48,14 @@ export default async function CasePage() {
     <>
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
-          <PageTitle text='Crime Classifications' />
-          <CreateButton
-            title='Crime Classification'
-            onCreate={create}
-            form={<Form />}
-          />
+          <PageTitle text='Weapons' />
+          <CreateButton title='Weapon' onCreate={create} form={<Form />} />
         </Flex>
       </Paper>
       <Table withTableBorder mt={'xl'}>
         <TableThead>
           <TableTr>
-            <TableTh>Classifications</TableTh>
+            <TableTh>Weapon</TableTh>
             <TableTh>Cases</TableTh>
             <TableTh></TableTh>
           </TableTr>
