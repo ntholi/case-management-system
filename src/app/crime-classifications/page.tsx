@@ -1,7 +1,9 @@
 import FormModal from '@/components/FormModal';
 
+import DeleteIconButton from '@/components/DeleteIconButton';
+import ThemedIconButton from '@/components/ThemedIconButton';
+import prisma from '@/lib/prisma';
 import {
-  Box,
   Paper,
   Table,
   TableTbody,
@@ -11,11 +13,8 @@ import {
   TableTr,
   TextInput,
 } from '@mantine/core';
-import prisma from '@/lib/prisma';
-import { create, remove } from './actions';
 import { IconEdit } from '@tabler/icons-react';
-import ThemedIconButton from '@/components/ThemedIconButton';
-import DeleteIconButton from '@/components/DeleteIconButton';
+import { create, remove } from './actions';
 
 export default async function CasePage() {
   const data = await prisma.crimeClassification.findMany();
