@@ -3,18 +3,19 @@ import {
   ActionIcon,
   AppShell,
   Burger,
+  Flex,
   Group,
   Loader,
+  Text,
   useComputedColorScheme,
   useMantineColorScheme,
-  Text,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconMoon, IconSun } from '@tabler/icons-react';
+import { useSession } from 'next-auth/react';
 import { PropsWithChildren } from 'react';
 import Logo from './Logo';
 import Navigation from './Navigation';
-import { useSession } from 'next-auth/react';
 
 export default function AdminShell({ children }: PropsWithChildren) {
   const [opened, { toggle }] = useDisclosure();
@@ -56,7 +57,9 @@ export default function AdminShell({ children }: PropsWithChildren) {
       <Navigation />
       <AppShell.Main bg={colorScheme === 'dark' ? 'dark.8' : 'gray.0'}>
         {status === 'loading' ? (
-          <Loader />
+          <Flex w={'100%'} justify={'center'} mt={250}>
+            <Loader />
+          </Flex>
         ) : status === 'authenticated' ? (
           children
         ) : (
