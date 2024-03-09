@@ -27,6 +27,7 @@ export default function FormModal<T extends Resource>(
   const [isPending, startTransition] = React.useTransition();
   const [opened, { open, close }] = useDisclosure(false);
   const { children, schema, initialValues, buttonLabel, title } = props;
+
   const form = useForm<ResourceCreate<T>>({
     validate: schema && zodResolver(schema),
     initialValues,
@@ -41,6 +42,7 @@ export default function FormModal<T extends Resource>(
         await props.onUpdate(values as T, props.objectId);
       }
       router.refresh();
+      form.reset();
       close();
     });
   };
