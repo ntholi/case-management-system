@@ -25,10 +25,9 @@ model Weapon {
 model CrimeClassification {
   id        Int      @id @default(autoincrement())
   name      String
+  crimes    Case[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Case      Case?    @relation(fields: [caseId], references: [id])
-  caseId    Int?
 }
 
 model ReportingPerson {

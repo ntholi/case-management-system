@@ -21,6 +21,7 @@ export default async function CasePage() {
   const rows = data.map((row) => (
     <TableTr key={row.id}>
       <TableTd>{row.name}</TableTd>
+      <TableTd>{row.name}</TableTd>
       <TableTd align='right'>
         <UpdateIconButton
           title={'Crime Classification'}
@@ -48,7 +49,8 @@ export default async function CasePage() {
       <Table withTableBorder mt={'xl'}>
         <TableThead>
           <TableTr>
-            <TableTh>Element</TableTh>
+            <TableTh>Classifications</TableTh>
+            <TableTh>Crimes</TableTh>
             <TableTh></TableTh>
           </TableTr>
         </TableThead>
