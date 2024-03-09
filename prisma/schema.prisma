@@ -25,7 +25,7 @@ model Weapon {
 model CrimeClassification {
   id        Int      @id @default(autoincrement())
   name      String
-  crimes    Case[]
+  cases     Case[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -12,16 +12,26 @@ import {
   TableThead,
   TableTr,
   TextInput,
+  Anchor,
 } from '@mantine/core';
 import { create, remove, update } from './actions';
 import PageTitle from '@/components/PageTitle';
+import Link from 'next/link';
 
 export default async function CasePage() {
-  const data = await prisma.crimeClassification.findMany();
+  const data = await prisma.crimeClassification.findMany({
+    include: {
+      cases: true,
+    },
+  });
   const rows = data.map((row) => (
     <TableTr key={row.id}>
       <TableTd>{row.name}</TableTd>
-      <TableTd>{row.name}</TableTd>
+      <TableTd>
+        <Anchor component={Link} href={`#`}>
+          {row.cases.length} Cases
+        </Anchor>
+      </TableTd>
       <TableTd align='right'>
         <UpdateIconButton
           title={'Crime Classification'}
@@ -50,7 +60,7 @@ export default async function CasePage() {
         <TableThead>
           <TableTr>
             <TableTh>Classifications</TableTh>
-            <TableTh>Crimes</TableTh>
+            <TableTh>Cases</TableTh>
             <TableTh></TableTh>
           </TableTr>
         </TableThead>
