@@ -1,5 +1,4 @@
 'use client';
-import ResourceForm from '@/components/ResourceForm';
 import {
   Button,
   Fieldset,
@@ -24,6 +23,7 @@ import {
   Weapon,
 } from '@prisma/client';
 import { useForm } from '@mantine/form';
+import axios from 'axios';
 
 type Props = {
   weapons?: Weapon[];
@@ -38,6 +38,7 @@ export default function Form({ weapons, crimeClassifications }: Props) {
   const [victim, setVictim] = React.useState<PersonalInformation>();
   const [suspect, setSuspect] = React.useState<PersonalInformation>();
   const { setValues, ...form } = useForm<Case>({});
+  const [isPending, startTransition] = React.useTransition();
 
   function handleSubmit(values: Case) {
     if (victim) values.victimId = victim.id;
@@ -45,7 +46,9 @@ export default function Form({ weapons, crimeClassifications }: Props) {
     if (values.occurrencePlace) {
       values.occurrencePlace = values.occurrencePlace.trim();
     }
-    console.log(values);
+    startTransition(async () => {
+      await axios.post('/api/cases', values);
+    });
   }
 
   return (
@@ -155,7 +158,7 @@ export default function Form({ weapons, crimeClassifications }: Props) {
           </Grid>
         </Fieldset>
 
-        <Button mt={'lg'} type='submit'>
+        <Button mt={'lg'} type='submit' loading={isPending}>
           Save
         </Button>
       </form>
