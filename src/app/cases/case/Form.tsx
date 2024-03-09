@@ -5,8 +5,14 @@ import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
 import PersonalInfoForm from './PersonalInfoForm';
 
+export type ReferenceType = {
+  id: string;
+  label: string;
+};
+
 export default function Form() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [victim, setVictim] = React.useState<ReferenceType | null>(null);
 
   return (
     <>
@@ -16,7 +22,7 @@ export default function Form() {
         onClose={close}
         title={'Personal Information'}
       >
-        <PersonalInfoForm />
+        <PersonalInfoForm setValue={setVictim} />
       </Modal>
       <Grid>
         <GridCol span={6}>
@@ -27,6 +33,7 @@ export default function Form() {
           <TextInput
             name='victim'
             label='Victim'
+            value={victim?.label}
             component={'button'}
             onClick={open}
             pointer

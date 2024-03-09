@@ -11,16 +11,27 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { Gender, NationalIdType, PersonalInformation } from '@prisma/client';
-import React from 'react';
-import { DateInput } from '@mantine/dates';
 import axios from 'axios';
+import React from 'react';
+import { ReferenceType } from './Form';
 
-export default function PersonalInfoForm() {
+type Props = {
+  setValue: (value: ReferenceType | null) => void;
+};
+
+export default function PersonalInfoForm({ setValue }: Props) {
   const form = useForm<PersonalInformation>({});
   const [lookingUp, setLookingUp] = React.useState(false);
+  const [isPending, startTransition] = React.useTransition();
 
   function handleSubmit(values: PersonalInformation) {
-    console.log(values);
+    startTransition(async () => {
+      await axios.post('/api/personal-info', values);
+      setValue({
+        id: values.nationalId,
+        label: `${values.firstName} ${values.surname}`,
+      });
+    });
   }
 
   function lookupByNationalId() {
@@ -45,6 +56,7 @@ export default function PersonalInfoForm() {
         <TextInput
           onBlurCapture={lookupByNationalId}
           label='ID'
+          required
           {...form.getInputProps('nationalId')}
         />
         <Radio.Group
@@ -114,7 +126,7 @@ export default function PersonalInfoForm() {
             </Stack>
           </GridCol>
         </Grid>
-        <Button mt={'xl'} type='submit'>
+        <Button mt={'xl'} type='submit' loading={isPending}>
           Save
         </Button>
       </Stack>

@@ -61,30 +61,30 @@ model Case {
 }
 
 model PersonalInformation {
-  id               Int            @id @default(autoincrement())
-  nationalId       String         @unique
-  nationalIdType   NationalIdType
-  surname          String
-  middleName       String
-  firstName        String
-  gender           Gender
-  phoneNumber      String
-  email            String
-  dateOfBirth      DateTime
-  nationality      String
-  meritalStatus    MeritalStatus
-  occupation       String
-  education        Education
-  placeOfBirth     String
-  areaChief        String
-  placeOfResidence String
-  headMan          String
-  principalChief   String
-  district         String
-  nextOfKin        String
-  nextOfKinPhone   String
-  victimCases      Case[]         @relation("CaseToVictim")
-  suspectCases     Case[]         @relation("CaseToSuspect")
+  id               Int             @id @default(autoincrement())
+  nationalId       String          @unique
+  nationalIdType   NationalIdType?
+  surname          String?
+  middleName       String?
+  firstName        String?
+  gender           Gender?
+  phoneNumber      String?
+  email            String?
+  dateOfBirth      DateTime?
+  nationality      String?
+  meritalStatus    MeritalStatus?
+  occupation       String?
+  education        Education?
+  placeOfBirth     String?
+  areaChief        String?
+  placeOfResidence String?
+  headMan          String?
+  principalChief   String?
+  district         String?
+  nextOfKin        String?
+  nextOfKinPhone   String?
+  victimCases      Case[]          @relation("CaseToVictim")
+  suspectCases     Case[]          @relation("CaseToSuspect")
 }
 
 enum Education {
