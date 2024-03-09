@@ -108,8 +108,8 @@ enum NationalIdType {
   DRIVING_LICENSE
   PASSPORT
   VOTERS_CARD
-  NONE
   OTHER
+  NONE
 }
 
 enum Gender {
