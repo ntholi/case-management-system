@@ -1,9 +1,11 @@
 'use client';
-import { Button, Modal, Stack } from '@mantine/core';
+import { Button, Group, Modal, Stack } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
+import { useRouter } from 'next/navigation';
 import React, { PropsWithChildren } from 'react';
 import { ZodObject, ZodTypeAny } from 'zod';
+import ThemedButton from './ThemedButton';
 
 type Resource = {};
 type ResourceCreate<T extends Resource> = Partial<T>;
@@ -11,16 +13,20 @@ type ResourceCreate<T extends Resource> = Partial<T>;
 export type CreateViewProps<T extends Resource> = {
   schema?: ZodObject<{ [K in any]: ZodTypeAny }>;
   initialValues?: ResourceCreate<T>;
-  onSubmit: (value: T) => Promise<void>;
+  onCreate?: (value: T) => Promise<void>;
+  onUpdate?: (value: T, id: any) => Promise<void>;
+  objectId?: string | number;
+  title: string;
   buttonLabel: string;
 };
 
 export default function FormModal<T extends Resource>(
   props: PropsWithChildren<CreateViewProps<T>>
 ) {
+  const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
   const [opened, { open, close }] = useDisclosure(false);
-  const { children, schema, initialValues, buttonLabel } = props;
+  const { children, schema, initialValues, buttonLabel, title } = props;
   const form = useForm<ResourceCreate<T>>({
     validate: schema && zodResolver(schema),
     initialValues,
@@ -28,15 +34,22 @@ export default function FormModal<T extends Resource>(
 
   const handleSubmit = async (values: ResourceCreate<T>) => {
     startTransition(async () => {
-      await props.onSubmit(values as T);
+      if (props.onCreate) {
+        await props.onCreate(values as T);
+      }
+      if (props.onUpdate && props.objectId) {
+        await props.onUpdate(values as T, props.objectId);
+      }
+      router.refresh();
+      close();
     });
   };
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title='Authentication'>
+      <Modal opened={opened} onClose={close} title={title}>
         <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack py={50} px={70} pb={120} gap={'lg'}>
+          <Stack gap={'lg'}>
             {React.Children.map(children, (child: React.ReactNode) => {
               if (!React.isValidElement(child)) return child;
               return React.cloneElement(child as React.ReactElement, {
@@ -45,12 +58,14 @@ export default function FormModal<T extends Resource>(
               });
             })}
           </Stack>
-          <Button type='submit' loading={isPending}>
-            Submit
-          </Button>
+          <Group align='flex-end' mt={'xl'} w={'100%'}>
+            <Button type='submit' loading={isPending} w={'100%'}>
+              Save
+            </Button>
+          </Group>
         </form>
       </Modal>
-      <Button onClick={open}>{buttonLabel}</Button>
+      <ThemedButton onClick={open}>{buttonLabel}</ThemedButton>
     </>
   );
 }

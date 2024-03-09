@@ -32,7 +32,11 @@ export default async function CasePage() {
   return (
     <>
       <Paper p='md' withBorder>
-        <FormModal buttonLabel='The Thing' onSubmit={create}>
+        <FormModal
+          title='Crime Classification'
+          buttonLabel='Create'
+          onCreate={create}
+        >
           <Form />
         </FormModal>
       </Paper>
