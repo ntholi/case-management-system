@@ -62,7 +62,7 @@ model Case {
 
 model PersonalInformation {
   id               Int            @id @default(autoincrement())
-  nationalId       String
+  nationalId       String         @unique
   nationalIdType   NationalIdType
   surname          String
   middleName       String
