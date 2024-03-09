@@ -2,35 +2,50 @@ import FormModal from '@/components/FormModal';
 import ThemedButton from '@/components/ThemedButton';
 
 import {
+  ActionIcon,
+  Box,
   Paper,
   Table,
   TableTbody,
+  TableTd,
   TableTh,
   TableThead,
   TableTr,
   TextInput,
 } from '@mantine/core';
 import prisma from '@/lib/prisma';
-import { createCrimeClassification } from './actions';
+import { create, remove } from './actions';
+import { IconEdit, IconTrashFilled } from '@tabler/icons-react';
+import ThemedIconButton from '@/components/ThemedIconButton';
+import DeleteIconButton from '@/components/DeleteIconButton';
 
 export default async function CasePage() {
   const data = await prisma.crimeClassification.findMany();
   const rows = data.map((row) => (
     <TableTr key={row.id}>
-      <TableTh>{row.name}</TableTh>
-      <TableTh>
-        <ThemedButton>Edit</ThemedButton>
-      </TableTh>
+      <TableTd>{row.name}</TableTd>
+      <TableTd align='right'>
+        <ThemedIconButton>
+          <IconEdit size={'1rem'} />
+        </ThemedIconButton>
+        <DeleteIconButton
+          ml={10}
+          action={async () => {
+            'use server';
+            await remove(row.id);
+          }}
+        />
+      </TableTd>
     </TableTr>
   ));
   return (
     <>
       <Paper p='md' withBorder>
-        <FormModal buttonLabel='The Thing' onSubmit={createCrimeClassification}>
+        <FormModal buttonLabel='The Thing' onSubmit={create}>
           <Form />
         </FormModal>
       </Paper>
-      <Table>
+      <Table withTableBorder mt={'xl'}>
         <TableThead>
           <TableTr>
             <TableTh>Element</TableTh>
