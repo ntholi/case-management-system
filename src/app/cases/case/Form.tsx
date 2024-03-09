@@ -4,6 +4,7 @@ import { Grid, GridCol, Modal, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
 import PersonalInfoForm from './PersonalInfoForm';
+import { PersonalInformation } from '@prisma/client';
 
 export type ReferenceType = {
   id: string;
@@ -12,7 +13,7 @@ export type ReferenceType = {
 
 export default function Form() {
   const [opened, { open, close }] = useDisclosure(false);
-  const [victim, setVictim] = React.useState<ReferenceType | null>(null);
+  const [victim, setVictim] = React.useState<PersonalInformation>();
 
   return (
     <>
@@ -22,7 +23,13 @@ export default function Form() {
         onClose={close}
         title={'Personal Information'}
       >
-        <PersonalInfoForm setValue={setVictim} />
+        <PersonalInfoForm
+          value={victim}
+          onSave={(it) => {
+            setVictim(it);
+            close();
+          }}
+        />
       </Modal>
       <Grid>
         <GridCol span={6}>
@@ -33,8 +40,7 @@ export default function Form() {
           <TextInput
             name='victim'
             label='Victim'
-            value={victim?.label}
-            component={'button'}
+            value={`${victim?.firstName || ''} ${victim?.surname || ''}`}
             onClick={open}
             pointer
           />

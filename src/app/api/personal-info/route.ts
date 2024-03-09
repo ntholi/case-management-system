@@ -17,8 +17,12 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const data = await request.json();
 
-  const res = await prisma.personalInformation.create({
-    data: { ...data },
+  const res = await prisma.personalInformation.upsert({
+    where: {
+      nationalId: data.nationalId,
+    },
+    update: data,
+    create: data,
   });
 
   return NextResponse.json(res);

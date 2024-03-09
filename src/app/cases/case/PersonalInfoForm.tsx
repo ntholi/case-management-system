@@ -12,25 +12,28 @@ import {
 import { useForm } from '@mantine/form';
 import { Gender, NationalIdType, PersonalInformation } from '@prisma/client';
 import axios from 'axios';
-import React from 'react';
-import { ReferenceType } from './Form';
+import React, { useEffect } from 'react';
 
 type Props = {
-  setValue: (value: ReferenceType | null) => void;
+  onSave: (value: PersonalInformation | undefined) => void;
+  value?: PersonalInformation;
 };
 
-export default function PersonalInfoForm({ setValue }: Props) {
-  const form = useForm<PersonalInformation>({});
+export default function PersonalInfoForm({ onSave, value }: Props) {
+  const { setValues, ...form } = useForm<PersonalInformation>({});
   const [lookingUp, setLookingUp] = React.useState(false);
   const [isPending, startTransition] = React.useTransition();
+
+  useEffect(() => {
+    if (value) {
+      setValues(value);
+    }
+  }, [setValues, value]);
 
   function handleSubmit(values: PersonalInformation) {
     startTransition(async () => {
       await axios.post('/api/personal-info', values);
-      setValue({
-        id: values.nationalId,
-        label: `${values.firstName} ${values.surname}`,
-      });
+      onSave(values);
     });
   }
 
@@ -41,8 +44,7 @@ export default function PersonalInfoForm({ setValue }: Props) {
       axios
         .get(`/api/personal-info?nationalId=${nationalId}`)
         .then((response) => {
-          console.log(response.data);
-          form.setValues(response.data);
+          setValues(response.data);
         })
         .finally(() => {
           setLookingUp(false);
