@@ -8,14 +8,14 @@ export async function create(data: Weapon) {
   });
 }
 
-export async function update(id: number, data: Weapon) {
+export async function update(id: string, data: Weapon) {
   await prisma.weapon.update({
     where: { id },
     data,
   });
 }
 
-export async function remove(id: number) {
+export async function remove(id: string) {
   await prisma.weapon.delete({
     where: { id },
   });
