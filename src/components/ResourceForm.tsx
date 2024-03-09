@@ -1,11 +1,9 @@
 'use client';
-import { Button, Group, Modal, Stack } from '@mantine/core';
+import { Button, Group, Stack } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
-import { useDisclosure } from '@mantine/hooks';
 import { useRouter } from 'next/navigation';
 import React, { PropsWithChildren } from 'react';
 import { ZodObject, ZodTypeAny } from 'zod';
-import ThemedButton from './ThemedButton';
 
 type Resource = {};
 type ResourceCreate<T extends Resource> = Partial<T>;
