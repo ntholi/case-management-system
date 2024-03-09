@@ -14,8 +14,9 @@ import {
   TextInput,
 } from '@mantine/core';
 import { IconEdit } from '@tabler/icons-react';
-import { create, remove } from './actions';
+import { create, remove, update } from './actions';
 import CreateButton from '@/components/CreateButton';
+import UpdateIconButton from '@/components/UpdateIconButton';
 
 export default async function CasePage() {
   const data = await prisma.crimeClassification.findMany();
@@ -23,9 +24,13 @@ export default async function CasePage() {
     <TableTr key={row.id}>
       <TableTd>{row.name}</TableTd>
       <TableTd align='right'>
-        <ThemedIconButton>
-          <IconEdit size={'1rem'} />
-        </ThemedIconButton>
+        <UpdateIconButton
+          title={'Crime Classification'}
+          form={<Form />}
+          initialValues={row}
+          objectId={row.id}
+          onUpdate={update}
+        />
         <DeleteIconButton ml={10} id={row.id} action={remove} />
       </TableTd>
     </TableTr>

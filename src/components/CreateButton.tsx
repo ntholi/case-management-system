@@ -10,7 +10,7 @@ type Resource = {};
 
 export type Props<T extends Resource> = {
   schema?: ZodObject<{ [K in any]: ZodTypeAny }>;
-  onCreate?: (value: T) => Promise<void>;
+  onCreate: (value: T) => Promise<void>;
   title: string;
   form: React.ReactNode;
 };
