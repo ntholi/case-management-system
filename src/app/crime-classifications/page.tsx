@@ -1,9 +1,9 @@
-import FormModal from '@/components/ResourceForm';
-
+import CreateButton from '@/components/CreateButton';
 import DeleteIconButton from '@/components/DeleteIconButton';
-import ThemedIconButton from '@/components/ThemedIconButton';
+import UpdateIconButton from '@/components/UpdateIconButton';
 import prisma from '@/lib/prisma';
 import {
+  Flex,
   Paper,
   Table,
   TableTbody,
@@ -13,10 +13,8 @@ import {
   TableTr,
   TextInput,
 } from '@mantine/core';
-import { IconEdit } from '@tabler/icons-react';
 import { create, remove, update } from './actions';
-import CreateButton from '@/components/CreateButton';
-import UpdateIconButton from '@/components/UpdateIconButton';
+import PageTitle from '@/components/PageTitle';
 
 export default async function CasePage() {
   const data = await prisma.crimeClassification.findMany();
@@ -38,11 +36,14 @@ export default async function CasePage() {
   return (
     <>
       <Paper p='md' withBorder>
-        <CreateButton
-          title='Crime Classification'
-          onCreate={create}
-          form={<Form />}
-        />
+        <Flex justify={'space-between'} align={'center'}>
+          <PageTitle text='Crime Classifications' />
+          <CreateButton
+            title='Crime Classification'
+            onCreate={create}
+            form={<Form />}
+          />
+        </Flex>
       </Paper>
       <Table withTableBorder mt={'xl'}>
         <TableThead>
