@@ -1,8 +1,6 @@
 import FormModal from '@/components/FormModal';
-import ThemedButton from '@/components/ThemedButton';
 
 import {
-  ActionIcon,
   Box,
   Paper,
   Table,
@@ -15,7 +13,7 @@ import {
 } from '@mantine/core';
 import prisma from '@/lib/prisma';
 import { create, remove } from './actions';
-import { IconEdit, IconTrashFilled } from '@tabler/icons-react';
+import { IconEdit } from '@tabler/icons-react';
 import ThemedIconButton from '@/components/ThemedIconButton';
 import DeleteIconButton from '@/components/DeleteIconButton';
 
@@ -28,13 +26,7 @@ export default async function CasePage() {
         <ThemedIconButton>
           <IconEdit size={'1rem'} />
         </ThemedIconButton>
-        <DeleteIconButton
-          ml={10}
-          action={async () => {
-            'use server';
-            await remove(row.id);
-          }}
-        />
+        <DeleteIconButton ml={10} id={row.id} action={remove} />
       </TableTd>
     </TableTr>
   ));

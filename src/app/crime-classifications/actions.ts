@@ -9,14 +9,14 @@ export async function create(data: CrimeClassification) {
 }
 
 export async function update(id: number, data: CrimeClassification) {
-  return await prisma.crimeClassification.update({
+  await prisma.crimeClassification.update({
     where: { id },
     data,
   });
 }
 
 export async function remove(id: number) {
-  return await prisma.crimeClassification.delete({
+  await prisma.crimeClassification.delete({
     where: { id },
   });
 }

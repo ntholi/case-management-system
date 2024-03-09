@@ -5,16 +5,17 @@ import { useRouter } from 'next/navigation';
 import React, { useTransition } from 'react';
 
 type Props = {
-  action: () => Promise<void>;
+  action: (id: any) => Promise<void>;
+  id: number | string;
 } & ActionIconProps;
 
-export default function DeleteIconButton({ action, ...props }: Props) {
+export default function DeleteIconButton({ action, id, ...props }: Props) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   function handleDelete() {
     startTransition(async () => {
-      await action();
+      await action(id);
       router.refresh();
     });
   }
