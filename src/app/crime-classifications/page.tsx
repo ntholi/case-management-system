@@ -1,4 +1,4 @@
-import FormModal from '@/components/FormModal';
+import FormModal from '@/components/ResourceForm';
 
 import DeleteIconButton from '@/components/DeleteIconButton';
 import ThemedIconButton from '@/components/ThemedIconButton';
@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import { IconEdit } from '@tabler/icons-react';
 import { create, remove } from './actions';
+import CreateButton from '@/components/CreateButton';
 
 export default async function CasePage() {
   const data = await prisma.crimeClassification.findMany();
@@ -32,13 +33,11 @@ export default async function CasePage() {
   return (
     <>
       <Paper p='md' withBorder>
-        <FormModal
+        <CreateButton
           title='Crime Classification'
-          buttonLabel='Create'
           onCreate={create}
-        >
-          <Form />
-        </FormModal>
+          form={<Form />}
+        />
       </Paper>
       <Table withTableBorder mt={'xl'}>
         <TableThead>

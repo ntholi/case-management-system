@@ -10,23 +10,21 @@ import ThemedButton from './ThemedButton';
 type Resource = {};
 type ResourceCreate<T extends Resource> = Partial<T>;
 
-export type CreateViewProps<T extends Resource> = {
+export type Props<T extends Resource> = {
   schema?: ZodObject<{ [K in any]: ZodTypeAny }>;
   initialValues?: ResourceCreate<T>;
   onCreate?: (value: T) => Promise<void>;
   onUpdate?: (value: T, id: any) => Promise<void>;
   objectId?: string | number;
   title: string;
-  buttonLabel: string;
 };
 
-export default function FormModal<T extends Resource>(
-  props: PropsWithChildren<CreateViewProps<T>>
+export default function ResourceForm<T extends Resource>(
+  props: PropsWithChildren<Props<T>>
 ) {
   const router = useRouter();
   const [isPending, startTransition] = React.useTransition();
-  const [opened, { open, close }] = useDisclosure(false);
-  const { children, schema, initialValues, buttonLabel, title } = props;
+  const { children, schema, initialValues, title } = props;
 
   const form = useForm<ResourceCreate<T>>({
     validate: schema && zodResolver(schema),
@@ -48,26 +46,21 @@ export default function FormModal<T extends Resource>(
   };
 
   return (
-    <>
-      <Modal opened={opened} onClose={close} title={title}>
-        <form onSubmit={form.onSubmit(handleSubmit)}>
-          <Stack gap={'lg'}>
-            {React.Children.map(children, (child: React.ReactNode) => {
-              if (!React.isValidElement(child)) return child;
-              return React.cloneElement(child as React.ReactElement, {
-                ...child.props,
-                ...form.getInputProps(child.props.name),
-              });
-            })}
-          </Stack>
-          <Group align='flex-end' mt={'xl'} w={'100%'}>
-            <Button type='submit' loading={isPending} w={'100%'}>
-              Save
-            </Button>
-          </Group>
-        </form>
-      </Modal>
-      <ThemedButton onClick={open}>{buttonLabel}</ThemedButton>
-    </>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Stack gap={'lg'}>
+        {React.Children.map(children, (child: React.ReactNode) => {
+          if (!React.isValidElement(child)) return child;
+          return React.cloneElement(child as React.ReactElement, {
+            ...child.props,
+            ...form.getInputProps(child.props.name),
+          });
+        })}
+      </Stack>
+      <Group align='flex-end' mt={'xl'} w={'100%'}>
+        <Button type='submit' loading={isPending} w={'100%'}>
+          Save
+        </Button>
+      </Group>
+    </form>
   );
 }
