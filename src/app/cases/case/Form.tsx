@@ -129,34 +129,34 @@ export default function Form({ weapons, crimeClassifications }: Props) {
             </Stack>
           </GridCol>
         </Grid>
-        <Fieldset legend='Modus Operandi' mt={'md'}>
-          <Grid>
-            <GridCol span={6}>
-              <Textarea
-                rows={5}
-                placeholder='Modus Operandi'
-                {...form.getInputProps('modusOperandi')}
-              />
-            </GridCol>
-            <GridCol span={6}>
-              <Radio.Group
-                description='Does Modus Operandi Contributed to Crime?'
-                {...form.getInputProps('nationalIdType')}
-              >
-                <Group mt='xs'>
-                  {Object.entries(ModusOperandiLined).map(([key, value]) => (
-                    <Radio key={key} value={value} label={value} />
-                  ))}
-                </Group>
-              </Radio.Group>
-              <TextInput
-                mt={'md'}
-                placeholder='How Modus Operandi Contributed to Crime?'
-                {...form.getInputProps('modusOperandiDetails')}
-              />
-            </GridCol>
-          </Grid>
-        </Fieldset>
+        <Grid>
+          <GridCol span={6}>
+            <Textarea
+              rows={5}
+              label='Modus Operandi'
+              {...form.getInputProps('modusOperandi')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <Radio.Group
+              mt={'lg'}
+              description='Does Modus Operandi Contributed to Crime?'
+              {...form.getInputProps('nationalIdType')}
+            >
+              <Group mt='xs'>
+                {Object.entries(ModusOperandiLined).map(([key, value]) => (
+                  <Radio key={key} value={value} label={value} />
+                ))}
+              </Group>
+            </Radio.Group>
+            <Textarea
+              cols={3}
+              mt={'md'}
+              placeholder='How Modus Operandi Contributed to Crime?'
+              {...form.getInputProps('modusOperandiDetails')}
+            />
+          </GridCol>
+        </Grid>
 
         <Button mt={'lg'} type='submit' loading={isPending}>
           Save
