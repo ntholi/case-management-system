@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^1.5.0",
     "@mantine/core": "^7.6.1",
     "@mantine/dates": "^7.6.1",
     "@mantine/form": "^7.6.1",

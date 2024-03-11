@@ -13,6 +13,7 @@ import {
   IconHome,
   IconLogout2,
   IconSwords,
+  IconUsers,
 } from '@tabler/icons-react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -47,6 +48,15 @@ export default function Navigation() {
           active={pathname.startsWith('/weapons')}
           href={'/weapons'}
           leftSection={<IconSwords size='1.1rem' />}
+          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+        />
+        <Divider mt={'lg'} mb={'sm'} />
+        <NavLink
+          label='Users'
+          component={Link}
+          active={pathname.startsWith('/users')}
+          href={'/users'}
+          leftSection={<IconUsers size='1.1rem' />}
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
       </AppShell.Section>
