@@ -20,7 +20,7 @@ export const ReportingPersonScalarFieldEnumSchema = z.enum(['id','name','idNo','
 
 export const CaseScalarFieldEnumSchema = z.enum(['id','rciNo','obNo','occurrencePlace','modusOperandi','modusOperandiDetails','modusOperandiLinked','createdAt','updatedAt','reportingPersonId','victimId','suspectId']);
 
-export const PersonalInformationScalarFieldEnumSchema = z.enum(['id','nationalId','nationalIdType','surname','middleName','firstName','gender','phoneNumber','email','dateOfBirth','nationality','meritalStatus','occupation','education','placeOfBirth','areaChief','placeOfResidence','headMan','principalChief','district','nextOfKin','nextOfKinPhone']);
+export const PersonalInformationScalarFieldEnumSchema = z.enum(['id','nationalId','nationalIdType','surname','middleName','firstName','gender','phoneNumber','email','dateOfBirth','nationality','meritalStatus','occupation','education','placeOfBirth','areaChief','placeOfResidence','headMan','principalChief','district','nextOfKin','nextOfKinPhone','createdAt','updatedAt']);
 
 export const SortOrderSchema = z.enum(['asc','desc']);
 
@@ -142,6 +142,8 @@ export const PersonalInformationSchema = z.object({
   district: z.string().nullable(),
   nextOfKin: z.string().nullable(),
   nextOfKinPhone: z.string().nullable(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
 })
 
 export type PersonalInformation = z.infer<typeof PersonalInformationSchema>
@@ -336,6 +338,8 @@ export const PersonalInformationSelectSchema: z.ZodType<Prisma.PersonalInformati
   district: z.boolean().optional(),
   nextOfKin: z.boolean().optional(),
   nextOfKinPhone: z.boolean().optional(),
+  createdAt: z.boolean().optional(),
+  updatedAt: z.boolean().optional(),
   victimCases: z.union([z.boolean(),z.lazy(() => CaseFindManyArgsSchema)]).optional(),
   suspectCases: z.union([z.boolean(),z.lazy(() => CaseFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => PersonalInformationCountOutputTypeArgsSchema)]).optional(),
@@ -655,6 +659,8 @@ export const PersonalInformationWhereInputSchema: z.ZodType<Prisma.PersonalInfor
   district: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   nextOfKin: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   victimCases: z.lazy(() => CaseListRelationFilterSchema).optional(),
   suspectCases: z.lazy(() => CaseListRelationFilterSchema).optional()
 }).strict();
@@ -682,6 +688,8 @@ export const PersonalInformationOrderByWithRelationInputSchema: z.ZodType<Prisma
   district: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   nextOfKin: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   nextOfKinPhone: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
   victimCases: z.lazy(() => CaseOrderByRelationAggregateInputSchema).optional(),
   suspectCases: z.lazy(() => CaseOrderByRelationAggregateInputSchema).optional()
 }).strict();
@@ -724,6 +732,8 @@ export const PersonalInformationWhereUniqueInputSchema: z.ZodType<Prisma.Persona
   district: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   nextOfKin: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   victimCases: z.lazy(() => CaseListRelationFilterSchema).optional(),
   suspectCases: z.lazy(() => CaseListRelationFilterSchema).optional()
 }).strict());
@@ -751,6 +761,8 @@ export const PersonalInformationOrderByWithAggregationInputSchema: z.ZodType<Pri
   district: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   nextOfKin: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   nextOfKinPhone: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => PersonalInformationCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => PersonalInformationAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => PersonalInformationMaxOrderByAggregateInputSchema).optional(),
@@ -784,6 +796,8 @@ export const PersonalInformationScalarWhereWithAggregatesInputSchema: z.ZodType<
   district: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   nextOfKin: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
+  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
 }).strict();
 
 export const WeaponCreateInputSchema: z.ZodType<Prisma.WeaponCreateInput> = z.object({
@@ -1092,6 +1106,8 @@ export const PersonalInformationCreateInputSchema: z.ZodType<Prisma.PersonalInfo
   district: z.string().optional().nullable(),
   nextOfKin: z.string().optional().nullable(),
   nextOfKinPhone: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   victimCases: z.lazy(() => CaseCreateNestedManyWithoutVictimInputSchema).optional(),
   suspectCases: z.lazy(() => CaseCreateNestedManyWithoutSuspectInputSchema).optional()
 }).strict();
@@ -1119,6 +1135,8 @@ export const PersonalInformationUncheckedCreateInputSchema: z.ZodType<Prisma.Per
   district: z.string().optional().nullable(),
   nextOfKin: z.string().optional().nullable(),
   nextOfKinPhone: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   victimCases: z.lazy(() => CaseUncheckedCreateNestedManyWithoutVictimInputSchema).optional(),
   suspectCases: z.lazy(() => CaseUncheckedCreateNestedManyWithoutSuspectInputSchema).optional()
 }).strict();
@@ -1145,6 +1163,8 @@ export const PersonalInformationUpdateInputSchema: z.ZodType<Prisma.PersonalInfo
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   victimCases: z.lazy(() => CaseUpdateManyWithoutVictimNestedInputSchema).optional(),
   suspectCases: z.lazy(() => CaseUpdateManyWithoutSuspectNestedInputSchema).optional()
 }).strict();
@@ -1172,6 +1192,8 @@ export const PersonalInformationUncheckedUpdateInputSchema: z.ZodType<Prisma.Per
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   victimCases: z.lazy(() => CaseUncheckedUpdateManyWithoutVictimNestedInputSchema).optional(),
   suspectCases: z.lazy(() => CaseUncheckedUpdateManyWithoutSuspectNestedInputSchema).optional()
 }).strict();
@@ -1198,7 +1220,9 @@ export const PersonalInformationCreateManyInputSchema: z.ZodType<Prisma.Personal
   principalChief: z.string().optional().nullable(),
   district: z.string().optional().nullable(),
   nextOfKin: z.string().optional().nullable(),
-  nextOfKinPhone: z.string().optional().nullable()
+  nextOfKinPhone: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
 }).strict();
 
 export const PersonalInformationUpdateManyMutationInputSchema: z.ZodType<Prisma.PersonalInformationUpdateManyMutationInput> = z.object({
@@ -1223,6 +1247,8 @@ export const PersonalInformationUpdateManyMutationInputSchema: z.ZodType<Prisma.
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const PersonalInformationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PersonalInformationUncheckedUpdateManyInput> = z.object({
@@ -1248,6 +1274,8 @@ export const PersonalInformationUncheckedUpdateManyInputSchema: z.ZodType<Prisma
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
 export const StringFilterSchema: z.ZodType<Prisma.StringFilter> = z.object({
@@ -1630,7 +1658,9 @@ export const PersonalInformationCountOrderByAggregateInputSchema: z.ZodType<Pris
   principalChief: z.lazy(() => SortOrderSchema).optional(),
   district: z.lazy(() => SortOrderSchema).optional(),
   nextOfKin: z.lazy(() => SortOrderSchema).optional(),
-  nextOfKinPhone: z.lazy(() => SortOrderSchema).optional()
+  nextOfKinPhone: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const PersonalInformationAvgOrderByAggregateInputSchema: z.ZodType<Prisma.PersonalInformationAvgOrderByAggregateInput> = z.object({
@@ -1659,7 +1689,9 @@ export const PersonalInformationMaxOrderByAggregateInputSchema: z.ZodType<Prisma
   principalChief: z.lazy(() => SortOrderSchema).optional(),
   district: z.lazy(() => SortOrderSchema).optional(),
   nextOfKin: z.lazy(() => SortOrderSchema).optional(),
-  nextOfKinPhone: z.lazy(() => SortOrderSchema).optional()
+  nextOfKinPhone: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const PersonalInformationMinOrderByAggregateInputSchema: z.ZodType<Prisma.PersonalInformationMinOrderByAggregateInput> = z.object({
@@ -1684,7 +1716,9 @@ export const PersonalInformationMinOrderByAggregateInputSchema: z.ZodType<Prisma
   principalChief: z.lazy(() => SortOrderSchema).optional(),
   district: z.lazy(() => SortOrderSchema).optional(),
   nextOfKin: z.lazy(() => SortOrderSchema).optional(),
-  nextOfKinPhone: z.lazy(() => SortOrderSchema).optional()
+  nextOfKinPhone: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.lazy(() => SortOrderSchema).optional(),
+  updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const PersonalInformationSumOrderByAggregateInputSchema: z.ZodType<Prisma.PersonalInformationSumOrderByAggregateInput> = z.object({
@@ -2618,6 +2652,8 @@ export const PersonalInformationCreateWithoutVictimCasesInputSchema: z.ZodType<P
   district: z.string().optional().nullable(),
   nextOfKin: z.string().optional().nullable(),
   nextOfKinPhone: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   suspectCases: z.lazy(() => CaseCreateNestedManyWithoutSuspectInputSchema).optional()
 }).strict();
 
@@ -2644,6 +2680,8 @@ export const PersonalInformationUncheckedCreateWithoutVictimCasesInputSchema: z.
   district: z.string().optional().nullable(),
   nextOfKin: z.string().optional().nullable(),
   nextOfKinPhone: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   suspectCases: z.lazy(() => CaseUncheckedCreateNestedManyWithoutSuspectInputSchema).optional()
 }).strict();
 
@@ -2674,6 +2712,8 @@ export const PersonalInformationCreateWithoutSuspectCasesInputSchema: z.ZodType<
   district: z.string().optional().nullable(),
   nextOfKin: z.string().optional().nullable(),
   nextOfKinPhone: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   victimCases: z.lazy(() => CaseCreateNestedManyWithoutVictimInputSchema).optional()
 }).strict();
 
@@ -2700,6 +2740,8 @@ export const PersonalInformationUncheckedCreateWithoutSuspectCasesInputSchema: z
   district: z.string().optional().nullable(),
   nextOfKin: z.string().optional().nullable(),
   nextOfKinPhone: z.string().optional().nullable(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional(),
   victimCases: z.lazy(() => CaseUncheckedCreateNestedManyWithoutVictimInputSchema).optional()
 }).strict();
 
@@ -2823,6 +2865,8 @@ export const PersonalInformationUpdateWithoutVictimCasesInputSchema: z.ZodType<P
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   suspectCases: z.lazy(() => CaseUpdateManyWithoutSuspectNestedInputSchema).optional()
 }).strict();
 
@@ -2849,6 +2893,8 @@ export const PersonalInformationUncheckedUpdateWithoutVictimCasesInputSchema: z.
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   suspectCases: z.lazy(() => CaseUncheckedUpdateManyWithoutSuspectNestedInputSchema).optional()
 }).strict();
 
@@ -2885,6 +2931,8 @@ export const PersonalInformationUpdateWithoutSuspectCasesInputSchema: z.ZodType<
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   victimCases: z.lazy(() => CaseUpdateManyWithoutVictimNestedInputSchema).optional()
 }).strict();
 
@@ -2911,6 +2959,8 @@ export const PersonalInformationUncheckedUpdateWithoutSuspectCasesInputSchema: z
   district: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKin: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   nextOfKinPhone: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   victimCases: z.lazy(() => CaseUncheckedUpdateManyWithoutVictimNestedInputSchema).optional()
 }).strict();
 
