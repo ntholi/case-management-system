@@ -15,6 +15,7 @@ import {
 } from '@mantine/core';
 import { IconEdit } from '@tabler/icons-react';
 import { remove } from './actions';
+import ThemedTableHead from '@/components/ThemedTableHead';
 
 export default async function CasePage() {
   const data = await prisma.case.findMany({});
@@ -37,14 +38,14 @@ export default async function CasePage() {
           <ThemedButton href='/cases/case'>New</ThemedButton>
         </Flex>
       </Paper>
-      <Table withTableBorder mt={'xl'}>
-        <TableThead>
+      <Table withTableBorder mt={'lg'}>
+        <ThemedTableHead>
           <TableTr>
             <TableTh>Case</TableTh>
             <TableTh>Cases</TableTh>
             <TableTh></TableTh>
           </TableTr>
-        </TableThead>
+        </ThemedTableHead>
         <TableTbody>{rows}</TableTbody>
       </Table>
     </>

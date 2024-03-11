@@ -19,7 +19,7 @@ export default async function CasePage() {
           </ThemedButton>
         </Flex>
       </Paper>
-      <Paper p='md' withBorder mt={'xl'}>
+      <Paper p='md' withBorder mt={'lg'}>
         <Form weapons={weapons} crimeClassifications={crimeClassifications} />
       </Paper>
     </>

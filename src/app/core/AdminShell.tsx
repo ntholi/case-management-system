@@ -2,6 +2,7 @@
 import {
   ActionIcon,
   AppShell,
+  Box,
   Burger,
   Flex,
   Group,
@@ -61,7 +62,7 @@ export default function AdminShell({ children }: PropsWithChildren) {
             <Loader />
           </Flex>
         ) : status === 'authenticated' ? (
-          children
+          <Box p={'lg'}>{children}</Box>
         ) : (
           <Text>Please sign in</Text>
         )}

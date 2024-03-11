@@ -17,6 +17,7 @@ import {
 import { create, remove, update } from './actions';
 import PageTitle from '@/components/PageTitle';
 import Link from 'next/link';
+import ThemedTableHead from '@/components/ThemedTableHead';
 
 export default async function CasePage() {
   const data = await prisma.crimeClassification.findMany({
@@ -56,14 +57,14 @@ export default async function CasePage() {
           />
         </Flex>
       </Paper>
-      <Table withTableBorder mt={'xl'}>
-        <TableThead>
+      <Table withTableBorder mt={'lg'}>
+        <ThemedTableHead>
           <TableTr>
             <TableTh>Classifications</TableTh>
             <TableTh>Cases</TableTh>
             <TableTh></TableTh>
           </TableTr>
-        </TableThead>
+        </ThemedTableHead>
         <TableTbody>{rows}</TableTbody>
       </Table>
     </>

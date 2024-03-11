@@ -17,6 +17,7 @@ import {
 import { create, remove, update } from './actions';
 import PageTitle from '@/components/PageTitle';
 import Link from 'next/link';
+import ThemedTableHead from '@/components/ThemedTableHead';
 
 export default async function CasePage() {
   const data = await prisma.weapon.findMany({
@@ -52,14 +53,14 @@ export default async function CasePage() {
           <CreateButton title='Weapon' onCreate={create} form={<Form />} />
         </Flex>
       </Paper>
-      <Table withTableBorder mt={'xl'}>
-        <TableThead>
+      <Table withTableBorder mt={'lg'}>
+        <ThemedTableHead>
           <TableTr>
             <TableTh>Weapon</TableTh>
             <TableTh>Cases</TableTh>
             <TableTh></TableTh>
           </TableTr>
-        </TableThead>
+        </ThemedTableHead>
         <TableTbody>{rows}</TableTbody>
       </Table>
     </>
