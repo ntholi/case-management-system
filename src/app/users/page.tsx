@@ -24,7 +24,9 @@ export default async function CasePage() {
   const data = await prisma.user.findMany();
   const rows = data.map((row) => (
     <TableTr key={row.id}>
-      <TableTd>{row.name}</TableTd>
+      <TableTd>
+        {row.firstName} {row.lastName}
+      </TableTd>
       <TableTd align='right'>
         <UpdateIconButton
           title={'User'}
