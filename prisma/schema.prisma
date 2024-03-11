@@ -30,9 +30,9 @@ model Weapon {
 model CrimeClassification {
   id        String   @id @default(cuid())
   name      String
-  cases     Case[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  cases     Case[]
 
   @@map("crime_classifications")
 }
@@ -58,8 +58,8 @@ model Case {
   crimeClassifications CrimeClassification[]
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   occurrencePlace      String?
-  victim               PersonalInformation   @relation("CaseToVictim", fields: [victimId], references: [id])
-  suspect              PersonalInformation   @relation("CaseToSuspect", fields: [suspectId], references: [id])
+  victim               PersonalInformation?  @relation("CaseToVictim", fields: [victimId], references: [id])
+  suspect              PersonalInformation?  @relation("CaseToSuspect", fields: [suspectId], references: [id])
   modusOperandi        String?
   modusOperandiDetails String?
   modusOperandiLinked  ModusOperandiLined?

@@ -545,8 +545,8 @@ export const CaseWhereInputSchema: z.ZodType<Prisma.CaseWhereInput> = z.object({
   weapons: z.lazy(() => WeaponListRelationFilterSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationListRelationFilterSchema).optional(),
   reportingPerson: z.union([ z.lazy(() => ReportingPersonRelationFilterSchema),z.lazy(() => ReportingPersonWhereInputSchema) ]).optional(),
-  victim: z.union([ z.lazy(() => PersonalInformationRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
-  suspect: z.union([ z.lazy(() => PersonalInformationRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
+  victim: z.union([ z.lazy(() => PersonalInformationNullableRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional().nullable(),
+  suspect: z.union([ z.lazy(() => PersonalInformationNullableRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const CaseOrderByWithRelationInputSchema: z.ZodType<Prisma.CaseOrderByWithRelationInput> = z.object({
@@ -591,8 +591,8 @@ export const CaseWhereUniqueInputSchema: z.ZodType<Prisma.CaseWhereUniqueInput> 
   weapons: z.lazy(() => WeaponListRelationFilterSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationListRelationFilterSchema).optional(),
   reportingPerson: z.union([ z.lazy(() => ReportingPersonRelationFilterSchema),z.lazy(() => ReportingPersonWhereInputSchema) ]).optional(),
-  victim: z.union([ z.lazy(() => PersonalInformationRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
-  suspect: z.union([ z.lazy(() => PersonalInformationRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
+  victim: z.union([ z.lazy(() => PersonalInformationNullableRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional().nullable(),
+  suspect: z.union([ z.lazy(() => PersonalInformationNullableRelationFilterSchema),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional().nullable(),
 }).strict());
 
 export const CaseOrderByWithAggregationInputSchema: z.ZodType<Prisma.CaseOrderByWithAggregationInput> = z.object({
@@ -989,8 +989,8 @@ export const CaseCreateInputSchema: z.ZodType<Prisma.CaseCreateInput> = z.object
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationCreateNestedManyWithoutCasesInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonCreateNestedOneWithoutCaseInputSchema),
-  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema),
-  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema)
+  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedCreateInputSchema: z.ZodType<Prisma.CaseUncheckedCreateInput> = z.object({
@@ -1022,8 +1022,8 @@ export const CaseUpdateInputSchema: z.ZodType<Prisma.CaseUpdateInput> = z.object
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationUpdateManyWithoutCasesNestedInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonUpdateOneRequiredWithoutCaseNestedInputSchema).optional(),
-  victim: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutVictimCasesNestedInputSchema).optional(),
-  suspect: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutSuspectCasesNestedInputSchema).optional()
+  victim: z.lazy(() => PersonalInformationUpdateOneWithoutVictimCasesNestedInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationUpdateOneWithoutSuspectCasesNestedInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedUpdateInputSchema: z.ZodType<Prisma.CaseUncheckedUpdateInput> = z.object({
@@ -1515,9 +1515,9 @@ export const ReportingPersonRelationFilterSchema: z.ZodType<Prisma.ReportingPers
   isNot: z.lazy(() => ReportingPersonWhereInputSchema).optional()
 }).strict();
 
-export const PersonalInformationRelationFilterSchema: z.ZodType<Prisma.PersonalInformationRelationFilter> = z.object({
-  is: z.lazy(() => PersonalInformationWhereInputSchema).optional(),
-  isNot: z.lazy(() => PersonalInformationWhereInputSchema).optional()
+export const PersonalInformationNullableRelationFilterSchema: z.ZodType<Prisma.PersonalInformationNullableRelationFilter> = z.object({
+  is: z.lazy(() => PersonalInformationWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => PersonalInformationWhereInputSchema).optional().nullable()
 }).strict();
 
 export const WeaponOrderByRelationAggregateInputSchema: z.ZodType<Prisma.WeaponOrderByRelationAggregateInput> = z.object({
@@ -1997,18 +1997,22 @@ export const ReportingPersonUpdateOneRequiredWithoutCaseNestedInputSchema: z.Zod
   update: z.union([ z.lazy(() => ReportingPersonUpdateToOneWithWhereWithoutCaseInputSchema),z.lazy(() => ReportingPersonUpdateWithoutCaseInputSchema),z.lazy(() => ReportingPersonUncheckedUpdateWithoutCaseInputSchema) ]).optional(),
 }).strict();
 
-export const PersonalInformationUpdateOneRequiredWithoutVictimCasesNestedInputSchema: z.ZodType<Prisma.PersonalInformationUpdateOneRequiredWithoutVictimCasesNestedInput> = z.object({
+export const PersonalInformationUpdateOneWithoutVictimCasesNestedInputSchema: z.ZodType<Prisma.PersonalInformationUpdateOneWithoutVictimCasesNestedInput> = z.object({
   create: z.union([ z.lazy(() => PersonalInformationCreateWithoutVictimCasesInputSchema),z.lazy(() => PersonalInformationUncheckedCreateWithoutVictimCasesInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => PersonalInformationCreateOrConnectWithoutVictimCasesInputSchema).optional(),
   upsert: z.lazy(() => PersonalInformationUpsertWithoutVictimCasesInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
   connect: z.lazy(() => PersonalInformationWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => PersonalInformationUpdateToOneWithWhereWithoutVictimCasesInputSchema),z.lazy(() => PersonalInformationUpdateWithoutVictimCasesInputSchema),z.lazy(() => PersonalInformationUncheckedUpdateWithoutVictimCasesInputSchema) ]).optional(),
 }).strict();
 
-export const PersonalInformationUpdateOneRequiredWithoutSuspectCasesNestedInputSchema: z.ZodType<Prisma.PersonalInformationUpdateOneRequiredWithoutSuspectCasesNestedInput> = z.object({
+export const PersonalInformationUpdateOneWithoutSuspectCasesNestedInputSchema: z.ZodType<Prisma.PersonalInformationUpdateOneWithoutSuspectCasesNestedInput> = z.object({
   create: z.union([ z.lazy(() => PersonalInformationCreateWithoutSuspectCasesInputSchema),z.lazy(() => PersonalInformationUncheckedCreateWithoutSuspectCasesInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => PersonalInformationCreateOrConnectWithoutSuspectCasesInputSchema).optional(),
   upsert: z.lazy(() => PersonalInformationUpsertWithoutSuspectCasesInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => PersonalInformationWhereInputSchema) ]).optional(),
   connect: z.lazy(() => PersonalInformationWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => PersonalInformationUpdateToOneWithWhereWithoutSuspectCasesInputSchema),z.lazy(() => PersonalInformationUpdateWithoutSuspectCasesInputSchema),z.lazy(() => PersonalInformationUncheckedUpdateWithoutSuspectCasesInputSchema) ]).optional(),
 }).strict();
@@ -2400,8 +2404,8 @@ export const CaseCreateWithoutWeaponsInputSchema: z.ZodType<Prisma.CaseCreateWit
   updatedAt: z.coerce.date().optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationCreateNestedManyWithoutCasesInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonCreateNestedOneWithoutCaseInputSchema),
-  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema),
-  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema)
+  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedCreateWithoutWeaponsInputSchema: z.ZodType<Prisma.CaseUncheckedCreateWithoutWeaponsInput> = z.object({
@@ -2470,8 +2474,8 @@ export const CaseCreateWithoutCrimeClassificationsInputSchema: z.ZodType<Prisma.
   updatedAt: z.coerce.date().optional(),
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonCreateNestedOneWithoutCaseInputSchema),
-  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema),
-  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema)
+  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedCreateWithoutCrimeClassificationsInputSchema: z.ZodType<Prisma.CaseUncheckedCreateWithoutCrimeClassificationsInput> = z.object({
@@ -2522,8 +2526,8 @@ export const CaseCreateWithoutReportingPersonInputSchema: z.ZodType<Prisma.CaseC
   updatedAt: z.coerce.date().optional(),
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationCreateNestedManyWithoutCasesInputSchema).optional(),
-  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema),
-  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema)
+  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedCreateWithoutReportingPersonInputSchema: z.ZodType<Prisma.CaseUncheckedCreateWithoutReportingPersonInput> = z.object({
@@ -2976,7 +2980,7 @@ export const CaseCreateWithoutVictimInputSchema: z.ZodType<Prisma.CaseCreateWith
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationCreateNestedManyWithoutCasesInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonCreateNestedOneWithoutCaseInputSchema),
-  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema)
+  suspect: z.lazy(() => PersonalInformationCreateNestedOneWithoutSuspectCasesInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedCreateWithoutVictimInputSchema: z.ZodType<Prisma.CaseUncheckedCreateWithoutVictimInput> = z.object({
@@ -3017,7 +3021,7 @@ export const CaseCreateWithoutSuspectInputSchema: z.ZodType<Prisma.CaseCreateWit
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationCreateNestedManyWithoutCasesInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonCreateNestedOneWithoutCaseInputSchema),
-  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema)
+  victim: z.lazy(() => PersonalInformationCreateNestedOneWithoutVictimCasesInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedCreateWithoutSuspectInputSchema: z.ZodType<Prisma.CaseUncheckedCreateWithoutSuspectInput> = z.object({
@@ -3089,8 +3093,8 @@ export const CaseUpdateWithoutWeaponsInputSchema: z.ZodType<Prisma.CaseUpdateWit
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationUpdateManyWithoutCasesNestedInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonUpdateOneRequiredWithoutCaseNestedInputSchema).optional(),
-  victim: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutVictimCasesNestedInputSchema).optional(),
-  suspect: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutSuspectCasesNestedInputSchema).optional()
+  victim: z.lazy(() => PersonalInformationUpdateOneWithoutVictimCasesNestedInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationUpdateOneWithoutSuspectCasesNestedInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedUpdateWithoutWeaponsInputSchema: z.ZodType<Prisma.CaseUncheckedUpdateWithoutWeaponsInput> = z.object({
@@ -3135,8 +3139,8 @@ export const CaseUpdateWithoutCrimeClassificationsInputSchema: z.ZodType<Prisma.
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonUpdateOneRequiredWithoutCaseNestedInputSchema).optional(),
-  victim: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutVictimCasesNestedInputSchema).optional(),
-  suspect: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutSuspectCasesNestedInputSchema).optional()
+  victim: z.lazy(() => PersonalInformationUpdateOneWithoutVictimCasesNestedInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationUpdateOneWithoutSuspectCasesNestedInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedUpdateWithoutCrimeClassificationsInputSchema: z.ZodType<Prisma.CaseUncheckedUpdateWithoutCrimeClassificationsInput> = z.object({
@@ -3195,8 +3199,8 @@ export const CaseUpdateWithoutReportingPersonInputSchema: z.ZodType<Prisma.CaseU
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationUpdateManyWithoutCasesNestedInputSchema).optional(),
-  victim: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutVictimCasesNestedInputSchema).optional(),
-  suspect: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutSuspectCasesNestedInputSchema).optional()
+  victim: z.lazy(() => PersonalInformationUpdateOneWithoutVictimCasesNestedInputSchema).optional(),
+  suspect: z.lazy(() => PersonalInformationUpdateOneWithoutSuspectCasesNestedInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedUpdateWithoutReportingPersonInputSchema: z.ZodType<Prisma.CaseUncheckedUpdateWithoutReportingPersonInput> = z.object({
@@ -3311,7 +3315,7 @@ export const CaseUpdateWithoutVictimInputSchema: z.ZodType<Prisma.CaseUpdateWith
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationUpdateManyWithoutCasesNestedInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonUpdateOneRequiredWithoutCaseNestedInputSchema).optional(),
-  suspect: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutSuspectCasesNestedInputSchema).optional()
+  suspect: z.lazy(() => PersonalInformationUpdateOneWithoutSuspectCasesNestedInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedUpdateWithoutVictimInputSchema: z.ZodType<Prisma.CaseUncheckedUpdateWithoutVictimInput> = z.object({
@@ -3356,7 +3360,7 @@ export const CaseUpdateWithoutSuspectInputSchema: z.ZodType<Prisma.CaseUpdateWit
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationUpdateManyWithoutCasesNestedInputSchema).optional(),
   reportingPerson: z.lazy(() => ReportingPersonUpdateOneRequiredWithoutCaseNestedInputSchema).optional(),
-  victim: z.lazy(() => PersonalInformationUpdateOneRequiredWithoutVictimCasesNestedInputSchema).optional()
+  victim: z.lazy(() => PersonalInformationUpdateOneWithoutVictimCasesNestedInputSchema).optional()
 }).strict();
 
 export const CaseUncheckedUpdateWithoutSuspectInputSchema: z.ZodType<Prisma.CaseUncheckedUpdateWithoutSuspectInput> = z.object({

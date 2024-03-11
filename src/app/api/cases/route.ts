@@ -19,10 +19,14 @@ const schema = z.object({
   victimId: z.number().optional(),
   suspectId: z.number().optional(),
   weaponId: z.string().optional(),
+  crimeClassificationId: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
   const data = schema.parse(await request.json());
+
+  console.log('data');
+  console.log(data);
 
   const res = await prisma.case.create({
     data: {
@@ -32,6 +36,20 @@ export async function POST(request: NextRequest) {
       modusOperandi: data.modusOperandi,
       modusOperandiDetails: data.modusOperandiDetails,
       modusOperandiLinked: data.modusOperandiLinked,
+      weapons: {
+        connect: data.weaponId
+          ? {
+              id: data.weaponId,
+            }
+          : undefined,
+      },
+      crimeClassifications: {
+        connect: data.crimeClassificationId
+          ? {
+              id: data.crimeClassificationId,
+            }
+          : undefined,
+      },
       reportingPerson: {
         create: data.reportingPerson,
       },
