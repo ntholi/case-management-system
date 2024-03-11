@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "ReportingPerson" ALTER COLUMN "name" DROP NOT NULL,
+ALTER COLUMN "idNo" DROP NOT NULL,
+ALTER COLUMN "phoneNumber" DROP NOT NULL,
+ALTER COLUMN "relationship" DROP NOT NULL;

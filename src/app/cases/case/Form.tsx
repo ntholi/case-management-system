@@ -38,6 +38,8 @@ export default function Form({ weapons, crimeClassifications }: Props) {
   const [victim, setVictim] = React.useState<PersonalInformation>();
   const [suspect, setSuspect] = React.useState<PersonalInformation>();
   const { setValues, ...form } = useForm<Case>({});
+  const { setValues: setReportingPerson, ...reportingPersonForm } =
+    useForm<Case>({});
   const [isPending, startTransition] = React.useTransition();
 
   function handleSubmit(values: Case) {
@@ -47,7 +49,10 @@ export default function Form({ weapons, crimeClassifications }: Props) {
       values.occurrencePlace = values.occurrencePlace.trim();
     }
     startTransition(async () => {
-      await axios.post('/api/cases', values);
+      await axios.post('/api/cases', {
+        ...values,
+        reportingPerson: reportingPersonForm.values,
+      });
     });
   }
 
@@ -157,6 +162,35 @@ export default function Form({ weapons, crimeClassifications }: Props) {
             />
           </GridCol>
         </Grid>
+
+        <Fieldset mt={'lg'} legend='Reporting Person'>
+          <Grid>
+            <GridCol span={6}>
+              <TextInput
+                label='Name'
+                {...reportingPersonForm.getInputProps('name')}
+              />
+            </GridCol>
+            <GridCol span={6}>
+              <TextInput
+                label='ID'
+                {...reportingPersonForm.getInputProps('idNo')}
+              />
+            </GridCol>
+            <GridCol span={6}>
+              <TextInput
+                label='Phone Number'
+                {...reportingPersonForm.getInputProps('phoneNumber')}
+              />
+            </GridCol>
+            <GridCol span={6}>
+              <TextInput
+                label='Relationship'
+                {...reportingPersonForm.getInputProps('relationship')}
+              />
+            </GridCol>
+          </Grid>
+        </Fieldset>
 
         <Button mt={'lg'} type='submit' loading={isPending}>
           Save
