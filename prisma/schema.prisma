@@ -49,12 +49,13 @@ model Session {
 
 model User {
   id             String    @id @default(cuid())
-  firstName      String?
-  lastName       String?
+  firstName      String?   @map("first_name")
+  lastName       String?   @map("last_name")
+  isAdmin        Boolean   @default(false) @map("is_admin")
   email          String    @unique
-  emailVerified  DateTime?
+  emailVerified  DateTime? @map("email_verified")
   image          String?
-  hashedPassword String?
+  hashedPassword String?   @map("hashed_password")
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
