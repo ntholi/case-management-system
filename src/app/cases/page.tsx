@@ -18,10 +18,23 @@ import { remove } from './actions';
 import ThemedTableHead from '@/components/ThemedTableHead';
 
 export default async function CasePage() {
-  const data = await prisma.case.findMany({});
+  const data = await prisma.case.findMany({
+    include: {
+      victim: true,
+      suspect: true,
+    },
+  });
   const rows = data.map((row) => (
     <TableTr key={row.id}>
       <TableTd>{row.obNo}</TableTd>
+      <TableTd>{row.rciNo}</TableTd>
+      <TableTd>
+        {row.victim?.firstName} {row.victim?.surname}
+      </TableTd>
+      <TableTd>
+        {row.suspect?.firstName} {row.suspect?.surname}
+      </TableTd>
+      <TableTd>{row.dateOfOccurrence?.toLocaleDateString()} </TableTd>
       <TableTd align='right'>
         <ThemedIconButton href={`/cases/case?id=${row.id}`}>
           <IconEdit size={'1rem'} />
@@ -41,8 +54,11 @@ export default async function CasePage() {
       <Table withTableBorder mt={'lg'}>
         <ThemedTableHead>
           <TableTr>
-            <TableTh>Case</TableTh>
-            <TableTh>Cases</TableTh>
+            <TableTh>RCI No.</TableTh>
+            <TableTh>OB No.</TableTh>
+            <TableTh>Victim</TableTh>
+            <TableTh>Suspect</TableTh>
+            <TableTh>Date of Occurrence</TableTh>
             <TableTh></TableTh>
           </TableTr>
         </ThemedTableHead>

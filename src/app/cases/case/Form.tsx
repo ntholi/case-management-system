@@ -12,6 +12,8 @@ import {
   TextInput,
   Textarea,
 } from '@mantine/core';
+import { DateTimePicker } from '@mantine/dates';
+
 import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
 import PersonalInfoForm from './PersonalInfoForm';
@@ -24,6 +26,7 @@ import {
 } from '@prisma/client';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 type Props = {
   weapons?: Weapon[];
@@ -41,6 +44,7 @@ export default function Form({ weapons, crimeClassifications }: Props) {
   const { setValues: setReportingPerson, ...reportingPersonForm } =
     useForm<Case>({});
   const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
 
   function handleSubmit(values: Case) {
     if (victim) values.victimId = victim.id;
@@ -53,6 +57,7 @@ export default function Form({ weapons, crimeClassifications }: Props) {
         ...values,
         reportingPerson: reportingPersonForm.values,
       });
+      router.push('/cases');
     });
   }
 
@@ -99,6 +104,7 @@ export default function Form({ weapons, crimeClassifications }: Props) {
                 onClick={openVictim}
                 pointer
               />
+
               <Select
                 label='Classification'
                 {...form.getInputProps('classificationId')}
@@ -108,6 +114,10 @@ export default function Form({ weapons, crimeClassifications }: Props) {
                     label: it.name,
                   })) || []
                 }
+              />
+              <DateTimePicker
+                label='Date of Occurrence'
+                {...form.getInputProps('dateOfOccurrence')}
               />
               <TextInput
                 label='Occurrence Place'
@@ -130,6 +140,10 @@ export default function Form({ weapons, crimeClassifications }: Props) {
                 data={
                   weapons?.map((it) => ({ value: it.id, label: it.name })) || []
                 }
+              />
+              <DateTimePicker
+                label='Date of Report'
+                {...form.getInputProps('dateOfReport')}
               />
             </Stack>
           </GridCol>

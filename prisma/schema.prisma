@@ -63,6 +63,8 @@ model Case {
   modusOperandi        String?
   modusOperandiDetails String?
   modusOperandiLinked  ModusOperandiLined?
+  dateOfOccurrence     DateTime?
+  dateOfReport         DateTime?
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt

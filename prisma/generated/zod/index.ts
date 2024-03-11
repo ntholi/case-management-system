@@ -18,7 +18,7 @@ export const CrimeClassificationScalarFieldEnumSchema = z.enum(['id','name','cre
 
 export const ReportingPersonScalarFieldEnumSchema = z.enum(['id','name','idNo','phoneNumber','relationship','createdAt','updatedAt']);
 
-export const CaseScalarFieldEnumSchema = z.enum(['id','rciNo','obNo','occurrencePlace','modusOperandi','modusOperandiDetails','modusOperandiLinked','createdAt','updatedAt','reportingPersonId','victimId','suspectId']);
+export const CaseScalarFieldEnumSchema = z.enum(['id','rciNo','obNo','occurrencePlace','modusOperandi','modusOperandiDetails','modusOperandiLinked','dateOfOccurrence','dateOfReport','createdAt','updatedAt','reportingPersonId','victimId','suspectId']);
 
 export const PersonalInformationScalarFieldEnumSchema = z.enum(['id','nationalId','nationalIdType','surname','middleName','firstName','gender','phoneNumber','email','dateOfBirth','nationality','meritalStatus','occupation','education','placeOfBirth','areaChief','placeOfResidence','headMan','principalChief','district','nextOfKin','nextOfKinPhone','createdAt','updatedAt']);
 
@@ -106,6 +106,8 @@ export const CaseSchema = z.object({
   occurrencePlace: z.string().nullable(),
   modusOperandi: z.string().nullable(),
   modusOperandiDetails: z.string().nullable(),
+  dateOfOccurrence: z.coerce.date().nullable(),
+  dateOfReport: z.coerce.date().nullable(),
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
   reportingPersonId: z.number().int(),
@@ -279,6 +281,8 @@ export const CaseSelectSchema: z.ZodType<Prisma.CaseSelect> = z.object({
   modusOperandi: z.boolean().optional(),
   modusOperandiDetails: z.boolean().optional(),
   modusOperandiLinked: z.boolean().optional(),
+  dateOfOccurrence: z.boolean().optional(),
+  dateOfReport: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
   reportingPersonId: z.boolean().optional(),
@@ -537,6 +541,8 @@ export const CaseWhereInputSchema: z.ZodType<Prisma.CaseWhereInput> = z.object({
   modusOperandi: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => EnumModusOperandiLinedNullableFilterSchema),z.lazy(() => ModusOperandiLinedSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
+  dateOfReport: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   reportingPersonId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
@@ -557,6 +563,8 @@ export const CaseOrderByWithRelationInputSchema: z.ZodType<Prisma.CaseOrderByWit
   modusOperandi: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   modusOperandiDetails: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   modusOperandiLinked: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  dateOfOccurrence: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  dateOfReport: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   reportingPersonId: z.lazy(() => SortOrderSchema).optional(),
@@ -583,6 +591,8 @@ export const CaseWhereUniqueInputSchema: z.ZodType<Prisma.CaseWhereUniqueInput> 
   modusOperandi: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => EnumModusOperandiLinedNullableFilterSchema),z.lazy(() => ModusOperandiLinedSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
+  dateOfReport: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   reportingPersonId: z.union([ z.lazy(() => IntFilterSchema),z.number().int() ]).optional(),
@@ -603,6 +613,8 @@ export const CaseOrderByWithAggregationInputSchema: z.ZodType<Prisma.CaseOrderBy
   modusOperandi: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   modusOperandiDetails: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   modusOperandiLinked: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  dateOfOccurrence: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  dateOfReport: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   reportingPersonId: z.lazy(() => SortOrderSchema).optional(),
@@ -626,6 +638,8 @@ export const CaseScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.CaseScal
   modusOperandi: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => EnumModusOperandiLinedNullableWithAggregatesFilterSchema),z.lazy(() => ModusOperandiLinedSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
+  dateOfReport: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.coerce.date() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.coerce.date() ]).optional(),
   reportingPersonId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
@@ -984,6 +998,8 @@ export const CaseCreateInputSchema: z.ZodType<Prisma.CaseCreateInput> = z.object
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
@@ -1001,6 +1017,8 @@ export const CaseUncheckedCreateInputSchema: z.ZodType<Prisma.CaseUncheckedCreat
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -1017,6 +1035,8 @@ export const CaseUpdateInputSchema: z.ZodType<Prisma.CaseUpdateInput> = z.object
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
@@ -1034,6 +1054,8 @@ export const CaseUncheckedUpdateInputSchema: z.ZodType<Prisma.CaseUncheckedUpdat
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -1051,6 +1073,8 @@ export const CaseCreateManyInputSchema: z.ZodType<Prisma.CaseCreateManyInput> = 
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -1065,6 +1089,8 @@ export const CaseUpdateManyMutationInputSchema: z.ZodType<Prisma.CaseUpdateManyM
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -1077,6 +1103,8 @@ export const CaseUncheckedUpdateManyInputSchema: z.ZodType<Prisma.CaseUncheckedU
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -1498,6 +1526,17 @@ export const EnumModusOperandiLinedNullableFilterSchema: z.ZodType<Prisma.EnumMo
   not: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NestedEnumModusOperandiLinedNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
+export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter> = z.object({
+  equals: z.coerce.date().optional().nullable(),
+  in: z.coerce.date().array().optional().nullable(),
+  notIn: z.coerce.date().array().optional().nullable(),
+  lt: z.coerce.date().optional(),
+  lte: z.coerce.date().optional(),
+  gt: z.coerce.date().optional(),
+  gte: z.coerce.date().optional(),
+  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
+}).strict();
+
 export const WeaponListRelationFilterSchema: z.ZodType<Prisma.WeaponListRelationFilter> = z.object({
   every: z.lazy(() => WeaponWhereInputSchema).optional(),
   some: z.lazy(() => WeaponWhereInputSchema).optional(),
@@ -1536,6 +1575,8 @@ export const CaseCountOrderByAggregateInputSchema: z.ZodType<Prisma.CaseCountOrd
   modusOperandi: z.lazy(() => SortOrderSchema).optional(),
   modusOperandiDetails: z.lazy(() => SortOrderSchema).optional(),
   modusOperandiLinked: z.lazy(() => SortOrderSchema).optional(),
+  dateOfOccurrence: z.lazy(() => SortOrderSchema).optional(),
+  dateOfReport: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   reportingPersonId: z.lazy(() => SortOrderSchema).optional(),
@@ -1558,6 +1599,8 @@ export const CaseMaxOrderByAggregateInputSchema: z.ZodType<Prisma.CaseMaxOrderBy
   modusOperandi: z.lazy(() => SortOrderSchema).optional(),
   modusOperandiDetails: z.lazy(() => SortOrderSchema).optional(),
   modusOperandiLinked: z.lazy(() => SortOrderSchema).optional(),
+  dateOfOccurrence: z.lazy(() => SortOrderSchema).optional(),
+  dateOfReport: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   reportingPersonId: z.lazy(() => SortOrderSchema).optional(),
@@ -1573,6 +1616,8 @@ export const CaseMinOrderByAggregateInputSchema: z.ZodType<Prisma.CaseMinOrderBy
   modusOperandi: z.lazy(() => SortOrderSchema).optional(),
   modusOperandiDetails: z.lazy(() => SortOrderSchema).optional(),
   modusOperandiLinked: z.lazy(() => SortOrderSchema).optional(),
+  dateOfOccurrence: z.lazy(() => SortOrderSchema).optional(),
+  dateOfReport: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional(),
   reportingPersonId: z.lazy(() => SortOrderSchema).optional(),
@@ -1597,6 +1642,20 @@ export const EnumModusOperandiLinedNullableWithAggregatesFilterSchema: z.ZodType
   _max: z.lazy(() => NestedEnumModusOperandiLinedNullableFilterSchema).optional()
 }).strict();
 
+export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter> = z.object({
+  equals: z.coerce.date().optional().nullable(),
+  in: z.coerce.date().array().optional().nullable(),
+  notIn: z.coerce.date().array().optional().nullable(),
+  lt: z.coerce.date().optional(),
+  lte: z.coerce.date().optional(),
+  gt: z.coerce.date().optional(),
+  gte: z.coerce.date().optional(),
+  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
+}).strict();
+
 export const EnumNationalIdTypeNullableFilterSchema: z.ZodType<Prisma.EnumNationalIdTypeNullableFilter> = z.object({
   equals: z.lazy(() => NationalIdTypeSchema).optional().nullable(),
   in: z.lazy(() => NationalIdTypeSchema).array().optional().nullable(),
@@ -1609,17 +1668,6 @@ export const EnumGenderNullableFilterSchema: z.ZodType<Prisma.EnumGenderNullable
   in: z.lazy(() => GenderSchema).array().optional().nullable(),
   notIn: z.lazy(() => GenderSchema).array().optional().nullable(),
   not: z.union([ z.lazy(() => GenderSchema),z.lazy(() => NestedEnumGenderNullableFilterSchema) ]).optional().nullable(),
-}).strict();
-
-export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter> = z.object({
-  equals: z.coerce.date().optional().nullable(),
-  in: z.coerce.date().array().optional().nullable(),
-  notIn: z.coerce.date().array().optional().nullable(),
-  lt: z.coerce.date().optional(),
-  lte: z.coerce.date().optional(),
-  gt: z.coerce.date().optional(),
-  gte: z.coerce.date().optional(),
-  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
 export const EnumMeritalStatusNullableFilterSchema: z.ZodType<Prisma.EnumMeritalStatusNullableFilter> = z.object({
@@ -1743,20 +1791,6 @@ export const EnumGenderNullableWithAggregatesFilterSchema: z.ZodType<Prisma.Enum
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumGenderNullableFilterSchema).optional(),
   _max: z.lazy(() => NestedEnumGenderNullableFilterSchema).optional()
-}).strict();
-
-export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter> = z.object({
-  equals: z.coerce.date().optional().nullable(),
-  in: z.coerce.date().array().optional().nullable(),
-  notIn: z.coerce.date().array().optional().nullable(),
-  lt: z.coerce.date().optional(),
-  lte: z.coerce.date().optional(),
-  gt: z.coerce.date().optional(),
-  gte: z.coerce.date().optional(),
-  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
-  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
 }).strict();
 
 export const EnumMeritalStatusNullableWithAggregatesFilterSchema: z.ZodType<Prisma.EnumMeritalStatusNullableWithAggregatesFilter> = z.object({
@@ -1963,6 +1997,10 @@ export const NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema: z.Z
   set: z.lazy(() => ModusOperandiLinedSchema).optional().nullable()
 }).strict();
 
+export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput> = z.object({
+  set: z.coerce.date().optional().nullable()
+}).strict();
+
 export const WeaponUpdateManyWithoutCasesNestedInputSchema: z.ZodType<Prisma.WeaponUpdateManyWithoutCasesNestedInput> = z.object({
   create: z.union([ z.lazy(() => WeaponCreateWithoutCasesInputSchema),z.lazy(() => WeaponCreateWithoutCasesInputSchema).array(),z.lazy(() => WeaponUncheckedCreateWithoutCasesInputSchema),z.lazy(() => WeaponUncheckedCreateWithoutCasesInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => WeaponCreateOrConnectWithoutCasesInputSchema),z.lazy(() => WeaponCreateOrConnectWithoutCasesInputSchema).array() ]).optional(),
@@ -2077,10 +2115,6 @@ export const NullableEnumNationalIdTypeFieldUpdateOperationsInputSchema: z.ZodTy
 
 export const NullableEnumGenderFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumGenderFieldUpdateOperationsInput> = z.object({
   set: z.lazy(() => GenderSchema).optional().nullable()
-}).strict();
-
-export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput> = z.object({
-  set: z.coerce.date().optional().nullable()
 }).strict();
 
 export const NullableEnumMeritalStatusFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableEnumMeritalStatusFieldUpdateOperationsInput> = z.object({
@@ -2290,6 +2324,17 @@ export const NestedEnumModusOperandiLinedNullableFilterSchema: z.ZodType<Prisma.
   not: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NestedEnumModusOperandiLinedNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
+export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter> = z.object({
+  equals: z.coerce.date().optional().nullable(),
+  in: z.coerce.date().array().optional().nullable(),
+  notIn: z.coerce.date().array().optional().nullable(),
+  lt: z.coerce.date().optional(),
+  lte: z.coerce.date().optional(),
+  gt: z.coerce.date().optional(),
+  gte: z.coerce.date().optional(),
+  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
+}).strict();
+
 export const NestedEnumModusOperandiLinedNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumModusOperandiLinedNullableWithAggregatesFilter> = z.object({
   equals: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
   in: z.lazy(() => ModusOperandiLinedSchema).array().optional().nullable(),
@@ -2298,6 +2343,20 @@ export const NestedEnumModusOperandiLinedNullableWithAggregatesFilterSchema: z.Z
   _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
   _min: z.lazy(() => NestedEnumModusOperandiLinedNullableFilterSchema).optional(),
   _max: z.lazy(() => NestedEnumModusOperandiLinedNullableFilterSchema).optional()
+}).strict();
+
+export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableWithAggregatesFilter> = z.object({
+  equals: z.coerce.date().optional().nullable(),
+  in: z.coerce.date().array().optional().nullable(),
+  notIn: z.coerce.date().array().optional().nullable(),
+  lt: z.coerce.date().optional(),
+  lte: z.coerce.date().optional(),
+  gt: z.coerce.date().optional(),
+  gte: z.coerce.date().optional(),
+  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
 }).strict();
 
 export const NestedEnumNationalIdTypeNullableFilterSchema: z.ZodType<Prisma.NestedEnumNationalIdTypeNullableFilter> = z.object({
@@ -2312,17 +2371,6 @@ export const NestedEnumGenderNullableFilterSchema: z.ZodType<Prisma.NestedEnumGe
   in: z.lazy(() => GenderSchema).array().optional().nullable(),
   notIn: z.lazy(() => GenderSchema).array().optional().nullable(),
   not: z.union([ z.lazy(() => GenderSchema),z.lazy(() => NestedEnumGenderNullableFilterSchema) ]).optional().nullable(),
-}).strict();
-
-export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter> = z.object({
-  equals: z.coerce.date().optional().nullable(),
-  in: z.coerce.date().array().optional().nullable(),
-  notIn: z.coerce.date().array().optional().nullable(),
-  lt: z.coerce.date().optional(),
-  lte: z.coerce.date().optional(),
-  gt: z.coerce.date().optional(),
-  gte: z.coerce.date().optional(),
-  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
 export const NestedEnumMeritalStatusNullableFilterSchema: z.ZodType<Prisma.NestedEnumMeritalStatusNullableFilter> = z.object({
@@ -2359,20 +2407,6 @@ export const NestedEnumGenderNullableWithAggregatesFilterSchema: z.ZodType<Prism
   _max: z.lazy(() => NestedEnumGenderNullableFilterSchema).optional()
 }).strict();
 
-export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableWithAggregatesFilter> = z.object({
-  equals: z.coerce.date().optional().nullable(),
-  in: z.coerce.date().array().optional().nullable(),
-  notIn: z.coerce.date().array().optional().nullable(),
-  lt: z.coerce.date().optional(),
-  lte: z.coerce.date().optional(),
-  gt: z.coerce.date().optional(),
-  gte: z.coerce.date().optional(),
-  not: z.union([ z.coerce.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
-  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
-}).strict();
-
 export const NestedEnumMeritalStatusNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedEnumMeritalStatusNullableWithAggregatesFilter> = z.object({
   equals: z.lazy(() => MeritalStatusSchema).optional().nullable(),
   in: z.lazy(() => MeritalStatusSchema).array().optional().nullable(),
@@ -2400,6 +2434,8 @@ export const CaseCreateWithoutWeaponsInputSchema: z.ZodType<Prisma.CaseCreateWit
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationCreateNestedManyWithoutCasesInputSchema).optional(),
@@ -2416,6 +2452,8 @@ export const CaseUncheckedCreateWithoutWeaponsInputSchema: z.ZodType<Prisma.Case
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -2456,6 +2494,8 @@ export const CaseScalarWhereInputSchema: z.ZodType<Prisma.CaseScalarWhereInput> 
   modusOperandi: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => EnumModusOperandiLinedNullableFilterSchema),z.lazy(() => ModusOperandiLinedSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
+  dateOfReport: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.coerce.date() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.coerce.date() ]).optional(),
   reportingPersonId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
@@ -2470,6 +2510,8 @@ export const CaseCreateWithoutCrimeClassificationsInputSchema: z.ZodType<Prisma.
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
@@ -2486,6 +2528,8 @@ export const CaseUncheckedCreateWithoutCrimeClassificationsInputSchema: z.ZodTyp
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -2522,6 +2566,8 @@ export const CaseCreateWithoutReportingPersonInputSchema: z.ZodType<Prisma.CaseC
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
@@ -2538,6 +2584,8 @@ export const CaseUncheckedCreateWithoutReportingPersonInputSchema: z.ZodType<Pri
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   victimId: z.number().int(),
@@ -2975,6 +3023,8 @@ export const CaseCreateWithoutVictimInputSchema: z.ZodType<Prisma.CaseCreateWith
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
@@ -2991,6 +3041,8 @@ export const CaseUncheckedCreateWithoutVictimInputSchema: z.ZodType<Prisma.CaseU
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -3016,6 +3068,8 @@ export const CaseCreateWithoutSuspectInputSchema: z.ZodType<Prisma.CaseCreateWit
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   weapons: z.lazy(() => WeaponCreateNestedManyWithoutCasesInputSchema).optional(),
@@ -3032,6 +3086,8 @@ export const CaseUncheckedCreateWithoutSuspectInputSchema: z.ZodType<Prisma.Case
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -3089,6 +3145,8 @@ export const CaseUpdateWithoutWeaponsInputSchema: z.ZodType<Prisma.CaseUpdateWit
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   crimeClassifications: z.lazy(() => CrimeClassificationUpdateManyWithoutCasesNestedInputSchema).optional(),
@@ -3105,6 +3163,8 @@ export const CaseUncheckedUpdateWithoutWeaponsInputSchema: z.ZodType<Prisma.Case
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3121,6 +3181,8 @@ export const CaseUncheckedUpdateManyWithoutWeaponsInputSchema: z.ZodType<Prisma.
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3135,6 +3197,8 @@ export const CaseUpdateWithoutCrimeClassificationsInputSchema: z.ZodType<Prisma.
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
@@ -3151,6 +3215,8 @@ export const CaseUncheckedUpdateWithoutCrimeClassificationsInputSchema: z.ZodTyp
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3167,6 +3233,8 @@ export const CaseUncheckedUpdateManyWithoutCrimeClassificationsInputSchema: z.Zo
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3182,6 +3250,8 @@ export const CaseCreateManyReportingPersonInputSchema: z.ZodType<Prisma.CaseCrea
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   victimId: z.number().int(),
@@ -3195,6 +3265,8 @@ export const CaseUpdateWithoutReportingPersonInputSchema: z.ZodType<Prisma.CaseU
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
@@ -3211,6 +3283,8 @@ export const CaseUncheckedUpdateWithoutReportingPersonInputSchema: z.ZodType<Pri
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   victimId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3227,6 +3301,8 @@ export const CaseUncheckedUpdateManyWithoutReportingPersonInputSchema: z.ZodType
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   victimId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3283,6 +3359,8 @@ export const CaseCreateManyVictimInputSchema: z.ZodType<Prisma.CaseCreateManyVic
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -3297,6 +3375,8 @@ export const CaseCreateManySuspectInputSchema: z.ZodType<Prisma.CaseCreateManySu
   modusOperandi: z.string().optional().nullable(),
   modusOperandiDetails: z.string().optional().nullable(),
   modusOperandiLinked: z.lazy(() => ModusOperandiLinedSchema).optional().nullable(),
+  dateOfOccurrence: z.coerce.date().optional().nullable(),
+  dateOfReport: z.coerce.date().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   reportingPersonId: z.number().int(),
@@ -3310,6 +3390,8 @@ export const CaseUpdateWithoutVictimInputSchema: z.ZodType<Prisma.CaseUpdateWith
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
@@ -3326,6 +3408,8 @@ export const CaseUncheckedUpdateWithoutVictimInputSchema: z.ZodType<Prisma.CaseU
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3342,6 +3426,8 @@ export const CaseUncheckedUpdateManyWithoutVictimInputSchema: z.ZodType<Prisma.C
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3355,6 +3441,8 @@ export const CaseUpdateWithoutSuspectInputSchema: z.ZodType<Prisma.CaseUpdateWit
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   weapons: z.lazy(() => WeaponUpdateManyWithoutCasesNestedInputSchema).optional(),
@@ -3371,6 +3459,8 @@ export const CaseUncheckedUpdateWithoutSuspectInputSchema: z.ZodType<Prisma.Case
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
@@ -3387,6 +3477,8 @@ export const CaseUncheckedUpdateManyWithoutSuspectInputSchema: z.ZodType<Prisma.
   modusOperandi: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiDetails: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   modusOperandiLinked: z.union([ z.lazy(() => ModusOperandiLinedSchema),z.lazy(() => NullableEnumModusOperandiLinedFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfOccurrence: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  dateOfReport: z.union([ z.coerce.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   updatedAt: z.union([ z.coerce.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   reportingPersonId: z.union([ z.number().int(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
