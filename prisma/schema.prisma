@@ -51,7 +51,7 @@ model User {
   id             String    @id @default(cuid())
   firstName      String?   @map("first_name")
   lastName       String?   @map("last_name")
-  isAdmin        Boolean   @default(false) @map("is_admin")
+  role           Role      @default(USER)
   email          String    @unique
   emailVerified  DateTime? @map("email_verified")
   image          String?
@@ -199,4 +199,9 @@ enum ModusOperandiLined {
   YES
   NO
   UNKNOWN
+}
+
+enum Role {
+  ADMIN
+  USER
 }

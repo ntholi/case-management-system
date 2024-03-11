@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
-import { AuthOptions } from 'next-auth';
+import { AuthOptions, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcrypt';
 
@@ -37,17 +37,17 @@ export const authOptions = {
           user.hashedPassword
         );
 
-        // if password does not match
         if (!passwordMatch) {
           throw new Error('Incorrect password');
         }
 
         return {
           id: user.id,
+          role: user.role,
           email: user.email,
           name: `${user.firstName} ${user.lastName}`,
           image: user.image,
-        } as any;
+        } as User;
       },
     }),
   ],
