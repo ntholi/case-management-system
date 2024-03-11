@@ -16,6 +16,7 @@ import {
 import { IconEdit } from '@tabler/icons-react';
 import { remove } from './actions';
 import ThemedTableHead from '@/components/ThemedTableHead';
+import { dateTime } from '@/lib/format';
 
 export default async function CasePage() {
   const data = await prisma.case.findMany({
@@ -34,7 +35,7 @@ export default async function CasePage() {
       <TableTd>
         {row.suspect?.firstName} {row.suspect?.surname}
       </TableTd>
-      <TableTd>{row.dateOfOccurrence?.toLocaleDateString()} </TableTd>
+      <TableTd>{dateTime(row.dateOfOccurrence)} </TableTd>
       <TableTd align='right'>
         <ThemedIconButton href={`/cases/case?id=${row.id}`}>
           <IconEdit size={'1rem'} />
