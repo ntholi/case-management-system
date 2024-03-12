@@ -192,7 +192,7 @@ enum NationalIdType {
 
 enum Gender {
   MALE
-  FEAMLE
+  FEMALE
   OTHER
 }
 
