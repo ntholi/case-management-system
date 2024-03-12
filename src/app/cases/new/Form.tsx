@@ -20,6 +20,7 @@ import PersonalInfoForm from './PersonalInfoForm';
 import {
   Case,
   CrimeClassification,
+  District,
   ModusOperandiLined,
   PersonalInformation,
   Weapon,
@@ -97,7 +98,11 @@ export default function Form({ weapons, crimeClassifications }: Props) {
         <Grid>
           <GridCol span={6}>
             <Stack gap={'sm'}>
-              <TextInput label='RCI No.' {...form.getInputProps('rciNo')} />
+              <TextInput
+                label='RCI No.'
+                {...form.getInputProps('rciNo')}
+                required
+              />
               <TextInput
                 label='Victim'
                 value={`${victim?.firstName || ''} ${victim?.surname || ''}`}
@@ -123,11 +128,26 @@ export default function Form({ weapons, crimeClassifications }: Props) {
                 label='Occurrence Place'
                 {...form.getInputProps('occurrencePlace')}
               />
+
+              <Select
+                label='District'
+                {...form.getInputProps('district')}
+                data={
+                  Object.entries(District).map(([key, value]) => ({
+                    value: value,
+                    label: value,
+                  })) || []
+                }
+              />
             </Stack>
           </GridCol>
           <GridCol span={6}>
             <Stack gap={'sm'}>
-              <TextInput label='OB No.' {...form.getInputProps('obNo')} />
+              <TextInput
+                label='OB No.'
+                {...form.getInputProps('obNo')}
+                required
+              />
               <TextInput
                 label='Suspect'
                 value={`${suspect?.firstName || ''} ${suspect?.surname || ''}`}

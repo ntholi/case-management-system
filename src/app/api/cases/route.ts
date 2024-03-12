@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma';
-import { ModusOperandiLined } from '@prisma/client';
+import { District, ModusOperandiLined } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
@@ -21,6 +22,7 @@ const schema = z.object({
   weaponId: z.string().optional(),
   crimeClassificationId: z.string().optional(),
   dateOfOccurrence: z.string().optional(),
+  district: z.nativeEnum(District).optional(),
   dateOfReport: z.string().optional(),
 });
 
@@ -42,6 +44,7 @@ export async function POST(request: NextRequest) {
       modusOperandiLinked: data.modusOperandiLinked,
       dateOfOccurrence: dateOfOccurrence,
       dateOfReport: dateOfReport,
+      district: data.district,
       weapons: {
         connect: data.weaponId
           ? {
@@ -71,6 +74,8 @@ export async function POST(request: NextRequest) {
       },
     },
   });
+
+  revalidatePath('/cases');
 
   return NextResponse.json(res);
 }
