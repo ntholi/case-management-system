@@ -4,7 +4,9 @@ import ThemedButton from '@/components/ThemedButton';
 import ThemedIconButton from '@/components/ThemedIconButton';
 import prisma from '@/lib/prisma';
 import {
+  Anchor,
   Flex,
+  Group,
   Paper,
   Table,
   TableTbody,
@@ -17,6 +19,7 @@ import { IconEdit } from '@tabler/icons-react';
 import { remove } from './actions';
 import ThemedTableHead from '@/components/ThemedTableHead';
 import { dateTime } from '@/lib/format';
+import Link from 'next/link';
 
 export default async function CasePage() {
   const data = await prisma.case.findMany({
@@ -37,10 +40,15 @@ export default async function CasePage() {
       </TableTd>
       <TableTd>{dateTime(row.dateOfOccurrence)} </TableTd>
       <TableTd align='right'>
-        <ThemedIconButton href={`/cases/case?id=${row.id}`}>
-          <IconEdit size={'1rem'} />
-        </ThemedIconButton>
-        <DeleteIconButton ml={10} id={row.id} action={remove} />
+        <Group gap={1} justify='end'>
+          <Anchor mr={'lg'} href={`/cases/${row.id}`} component={Link}>
+            View
+          </Anchor>
+          <ThemedIconButton href={`/cases/case?id=${row.id}`}>
+            <IconEdit size={'1rem'} />
+          </ThemedIconButton>
+          <DeleteIconButton ml={10} id={row.id} action={remove} />
+        </Group>
       </TableTd>
     </TableTr>
   ));
