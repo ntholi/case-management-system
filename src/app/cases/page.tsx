@@ -2,6 +2,8 @@ import DeleteIconButton from '@/components/DeleteIconButton';
 import PageTitle from '@/components/PageTitle';
 import ThemedButton from '@/components/ThemedButton';
 import ThemedIconButton from '@/components/ThemedIconButton';
+import ThemedTableHead from '@/components/ThemedTableHead';
+import { dateTime } from '@/lib/format';
 import prisma from '@/lib/prisma';
 import {
   Anchor,
@@ -12,14 +14,11 @@ import {
   TableTbody,
   TableTd,
   TableTh,
-  TableThead,
   TableTr,
 } from '@mantine/core';
 import { IconEdit } from '@tabler/icons-react';
-import { remove } from './actions';
-import ThemedTableHead from '@/components/ThemedTableHead';
-import { dateTime } from '@/lib/format';
 import Link from 'next/link';
+import { remove } from './actions';
 
 export default async function CasePage() {
   const data = await prisma.case.findMany({
@@ -44,7 +43,7 @@ export default async function CasePage() {
           <Anchor mr={'lg'} href={`/cases/${row.id}`} component={Link}>
             View
           </Anchor>
-          <ThemedIconButton href={`/cases/case?id=${row.id}`}>
+          <ThemedIconButton href={`/cases/${row.id}/edit`}>
             <IconEdit size={'1rem'} />
           </ThemedIconButton>
           <DeleteIconButton ml={10} id={row.id} action={remove} />
@@ -57,7 +56,7 @@ export default async function CasePage() {
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
           <PageTitle text='Cases' />
-          <ThemedButton href='/cases/case'>New</ThemedButton>
+          <ThemedButton href='/cases/new'>New</ThemedButton>
         </Flex>
       </Paper>
       <Table withTableBorder mt={'lg'}>
