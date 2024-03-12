@@ -114,7 +114,7 @@ model ReportingPerson {
   relationship String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  Case         Case[]
+  case         Case?
 
   @@map("reporting_persons")
 }
@@ -125,7 +125,6 @@ model Case {
   obNo                 String
   weapons              Weapon[]
   crimeClassifications CrimeClassification[]
-  reportingPerson      ReportingPerson?      @relation(fields: [reportingPersonId], references: [id])
   policeStation        PoliceStation         @relation(fields: [policeStationId], references: [id])
   occurrencePlace      String?
   victim               PersonalInformation?  @relation("CaseToVictim", fields: [victimId], references: [id])
@@ -135,13 +134,13 @@ model Case {
   modusOperandiLinked  ModusOperandiLined?
   dateOfOccurrence     DateTime?
   dateOfReport         DateTime?
-
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  reportingPersonId Int
-  victimId          Int?
-  suspectId         Int?
-  policeStationId   String
+  victimId             Int?
+  suspectId            Int?
+  policeStationId      String
+  reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
+  reportingPersonId    Int                   @unique
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 
   @@map("cases")
 }
