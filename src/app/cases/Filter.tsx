@@ -94,7 +94,7 @@ function StationFilter({ setFilter }: FilterProps) {
       label='Police Station'
       disabled={isLoading}
       rightSection={isLoading && <Loader size={'xs'} />}
-      onChange={(it) => setFilter({ type: 'station', value: it })}
+      onChange={(it) => setFilter({ type: 'policeStation', value: it })}
       data={
         items?.map((it) => ({
           value: it.id,
@@ -120,7 +120,7 @@ function ClassificationFilter({ setFilter }: FilterProps) {
   return (
     <Select
       label='Classification'
-      onChange={(it) => setFilter({ type: 'station', value: it })}
+      onChange={(it) => setFilter({ type: 'crimeClassifications', value: it })}
       disabled={isLoading}
       rightSection={isLoading && <Loader size={'xs'} />}
       data={items?.map((it) => ({ value: it.id, label: it.name })) || []}
@@ -143,7 +143,7 @@ function WeaponFilter({ setFilter }: FilterProps) {
   return (
     <Select
       label='Weapon'
-      onChange={(it) => setFilter({ type: 'station', value: it })}
+      onChange={(it) => setFilter({ type: 'weapons', value: it })}
       disabled={isLoading}
       rightSection={isLoading && <Loader size={'xs'} />}
       data={items?.map((it) => ({ value: it.id, label: it.name })) || []}

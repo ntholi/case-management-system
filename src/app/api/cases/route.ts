@@ -27,6 +27,38 @@ const schema = z.object({
   dateOfReport: z.string().optional(),
 });
 
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url || '');
+  const filter = searchParams.get('filter');
+
+  if (filter && filter != 'undefined' && filter != 'null') {
+    const [field, value] = filter.split(':');
+    const data = await prisma.case.findMany({
+      include: {
+        victim: true,
+        suspect: true,
+        policeStation: true,
+      },
+      where: {
+        [field]: {
+          some: {
+            id: value,
+          },
+        },
+      },
+    });
+    return NextResponse.json(data);
+  }
+  const data = await prisma.case.findMany({
+    include: {
+      victim: true,
+      suspect: true,
+      policeStation: true,
+    },
+  });
+  return NextResponse.json(data);
+}
+
 export async function POST(request: NextRequest) {
   const data = schema.parse(await request.json());
 
