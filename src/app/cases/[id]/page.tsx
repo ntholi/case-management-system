@@ -1,0 +1,83 @@
+import FieldView from '@/components/FieldView';
+import PageTitle from '@/components/PageTitle';
+import ThemedButton from '@/components/ThemedButton';
+import prisma from '@/lib/prisma';
+import { Card, Flex, Grid, GridCol, Paper, Stack } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
+import { notFound } from 'next/navigation';
+
+type Props = { params: { id: number } };
+
+export default async function CasePage({ params: { id } }: Props) {
+  const item = await prisma.case.findUnique({
+    where: { id: Number(id) },
+    include: {
+      victim: true,
+      suspect: true,
+      weapons: true,
+      crimeClassifications: true,
+    },
+  });
+
+  if (!item) return notFound();
+
+  return (
+    <>
+      <Paper p='md' withBorder>
+        <Flex justify={'space-between'} align={'center'}>
+          <PageTitle text='New Case' />
+          <ThemedButton icon={<IconArrowLeft />} href='/cases'>
+            Back
+          </ThemedButton>
+        </Flex>
+      </Paper>
+      <Paper p='md' withBorder mt={'lg'}>
+        <Grid p='lg'>
+          <GridCol span={6}>
+            <Card shadow='sm' padding='lg' radius='md' withBorder>
+              <Stack>
+                <FieldView label='RCI No' value={item.rciNo} />
+                <FieldView label='OB No' value={item.obNo} />
+                <FieldView
+                  label='Occurrence Place'
+                  value={item.occurrencePlace}
+                />
+                <FieldView label='District' value={item.district} />
+                <FieldView
+                  label='Weapons'
+                  value={item.weapons?.map((w) => w.name).join(', ')}
+                />
+                <FieldView
+                  label='Crime Classifications'
+                  value={item.crimeClassifications
+                    ?.map((c) => c.name)
+                    .join(', ')}
+                />
+                <FieldView
+                  label='Date of Occurrence'
+                  value={item.dateOfOccurrence}
+                />
+                <FieldView label='Date of Report' value={item.dateOfReport} />
+              </Stack>
+            </Card>
+          </GridCol>
+          <GridCol span={6}>
+            <Card shadow='sm' padding='lg' radius='md' withBorder>
+              <Stack>
+                <FieldView label='Modus Operandi' value={item.modusOperandi} />
+                <FieldView
+                  label='Contributing to Crime?'
+                  value={item.modusOperandiLinked}
+                />
+                <FieldView
+                  label='How it contributes to Crime'
+                  value={item.modusOperandiDetails}
+                />
+              </Stack>
+            </Card>
+          </GridCol>
+        </Grid>
+      </Paper>
+    </>
+  );
+}

@@ -116,6 +116,7 @@ model Case {
   crimeClassifications CrimeClassification[]
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   occurrencePlace      String?
+  district             Destrict?
   victim               PersonalInformation?  @relation("CaseToVictim", fields: [victimId], references: [id])
   suspect              PersonalInformation?  @relation("CaseToSuspect", fields: [suspectId], references: [id])
   modusOperandi        String?
@@ -207,7 +208,7 @@ enum Role {
   USER
 }
 
-enum LesothoDestricts {
+enum Destrict {
   BEREA
   BUTHA_BUTHE
   LERIBE
