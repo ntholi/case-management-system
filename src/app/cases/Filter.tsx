@@ -2,15 +2,19 @@
 import {
   Box,
   Button,
+  Chip,
+  Divider,
+  Group,
   Loader,
   Modal,
   NativeSelect,
+  Pill,
   Select,
   Stack,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CrimeClassification, PoliceStation, Weapon } from '@prisma/client';
-import { IconPlus } from '@tabler/icons-react';
+import { IconFilter, IconPlus } from '@tabler/icons-react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
@@ -60,16 +64,30 @@ export default function Filter() {
           <Button onClick={applyFilter}>Apply</Button>
         </Stack>
       </Modal>
-      <Box>
+      <Group>
         <Button
-          size='sm'
+          size='xs'
           variant='light'
           onClick={open}
-          rightSection={<IconPlus size={'1rem'} />}
+          rightSection={<IconFilter size={'1rem'} />}
         >
-          Add Filter
+          Filter
         </Button>
-      </Box>
+
+        {filter && (
+          <>
+            <Chip
+              size='xs'
+              color='gray'
+              variant='light'
+              onClick={() => setFilter(null)}
+              defaultChecked
+            >
+              {filter.split(':')[0]}
+            </Chip>
+          </>
+        )}
+      </Group>
     </>
   );
 }
