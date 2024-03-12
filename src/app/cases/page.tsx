@@ -20,6 +20,8 @@ import { IconEdit } from '@tabler/icons-react';
 import Link from 'next/link';
 import { remove } from './actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CasePage() {
   const data = await prisma.case.findMany({
     include: {

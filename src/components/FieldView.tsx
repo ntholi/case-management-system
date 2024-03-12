@@ -4,7 +4,7 @@ import { dateTime } from '@/lib/format';
 
 type Props = {
   label: string;
-  value: string | number | Date | null | undefined;
+  value: any;
   valueProps?: TextProps;
 };
 
@@ -22,7 +22,7 @@ export default function FieldView({ label, value, valueProps }: Props) {
   );
 }
 
-function formatValue(value: string | number | Date | null | undefined) {
+function formatValue(value: any) {
   if (!value) return '(None)';
 
   if (value instanceof Date) {

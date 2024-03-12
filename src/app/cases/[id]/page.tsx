@@ -2,9 +2,12 @@ import FieldView from '@/components/FieldView';
 import PageTitle from '@/components/PageTitle';
 import ThemedButton from '@/components/ThemedButton';
 import prisma from '@/lib/prisma';
-import { Card, Flex, Grid, GridCol, Paper, Stack } from '@mantine/core';
+import { Card, Flex, Grid, GridCol, Paper, Stack, Title } from '@mantine/core';
+import { PersonalInformation } from '@prisma/client';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { notFound } from 'next/navigation';
+
+export const dynamic = 'force-dynamic';
 
 type Props = { params: { id: number } };
 
@@ -76,8 +79,57 @@ export default async function CasePage({ params: { id } }: Props) {
               </Stack>
             </Card>
           </GridCol>
+          <GridCol span={6}>
+            <Card shadow='sm' padding='lg' radius='md' withBorder>
+              <Stack>
+                <Title order={4} fw={100}>
+                  Victim
+                </Title>
+                <PersonalInfoCard item={item.victim} />
+              </Stack>
+            </Card>
+          </GridCol>
+          <GridCol span={6}>
+            <Card shadow='sm' padding='lg' radius='md' withBorder>
+              <Stack>
+                <Title order={4} fw={100}>
+                  Suspect
+                </Title>
+                <PersonalInfoCard item={item.suspect} />
+              </Stack>
+            </Card>
+          </GridCol>
         </Grid>
       </Paper>
+    </>
+  );
+}
+
+function PersonalInfoCard({ item }: { item: PersonalInformation | null }) {
+  if (!item) return null;
+  return (
+    <>
+      <FieldView label='National ID' value={item.nationalId} />
+      <FieldView label='National Type' value={item.nationalIdType} />
+      <FieldView label='Surname' value={item.surname} />
+      <FieldView label='Middle Name' value={item.middleName} />
+      <FieldView label='First Name' value={item.firstName} />
+      <FieldView label='Gender' value={item.gender} />
+      <FieldView label='Phone Number' value={item.phoneNumber} />
+      <FieldView label='Email' value={item.email} />
+      <FieldView label='Date of Birth' value={item.dateOfBirth} />
+      <FieldView label='Nationality' value={item.nationality} />
+      <FieldView label='Marital Status' value={item.maritalStatus} />
+      <FieldView label='Occupation' value={item.occupation} />
+      <FieldView label='Education Level' value={item.education} />
+      <FieldView label='Place of Birth' value={item.placeOfBirth} />
+      <FieldView label='Area Chief' value={item.areaChief} />
+      <FieldView label='Place of Residence' value={item.placeOfResidence} />
+      <FieldView label='Head Man' value={item.headMan} />
+      <FieldView label='Principle Chief' value={item.principalChief} />
+      <FieldView label='District' value={item.district} />
+      <FieldView label='Next Of Kin' value={item.nextOfKin} />
+      <FieldView label='Next Of Kin Phone' value={item.nextOfKinPhone} />
     </>
   );
 }

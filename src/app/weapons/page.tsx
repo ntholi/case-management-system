@@ -19,6 +19,8 @@ import PageTitle from '@/components/PageTitle';
 import Link from 'next/link';
 import ThemedTableHead from '@/components/ThemedTableHead';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CasePage() {
   const data = await prisma.weapon.findMany({
     include: {

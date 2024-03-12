@@ -146,7 +146,7 @@ model PersonalInformation {
   email            String?
   dateOfBirth      DateTime?
   nationality      String?
-  meritalStatus    MeritalStatus?
+  maritalStatus    MaritalStatus?
   occupation       String?
   education        Education?
   placeOfBirth     String?
@@ -174,7 +174,7 @@ enum Education {
   OTHER
 }
 
-enum MeritalStatus {
+enum MaritalStatus {
   SINGLE
   MARRIED
   DIVORCED

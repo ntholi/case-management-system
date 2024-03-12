@@ -17,6 +17,8 @@ import {
 } from '@mantine/core';
 import { create, remove, update } from './actions';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CasePage() {
   const data = await prisma.user.findMany();
   const rows = data.map((row) => (
