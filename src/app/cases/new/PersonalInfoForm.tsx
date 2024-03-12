@@ -32,8 +32,8 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
 
   function handleSubmit(values: PersonalInformation) {
     startTransition(async () => {
-      await axios.post('/api/personal-info', values);
-      onSave(values);
+      const res = await axios.post('/api/personal-info', values);
+      onSave(res.data);
     });
   }
 
