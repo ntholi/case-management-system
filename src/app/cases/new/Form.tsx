@@ -128,17 +128,6 @@ export default function Form({ weapons, crimeClassifications }: Props) {
                 label='Occurrence Place'
                 {...form.getInputProps('occurrencePlace')}
               />
-
-              <Select
-                label='District'
-                {...form.getInputProps('district')}
-                data={
-                  Object.entries(District).map(([key, value]) => ({
-                    value: value,
-                    label: value,
-                  })) || []
-                }
-              />
             </Stack>
           </GridCol>
           <GridCol span={6}>
@@ -164,6 +153,16 @@ export default function Form({ weapons, crimeClassifications }: Props) {
               <DateTimePicker
                 label='Date of Report'
                 {...form.getInputProps('dateOfReport')}
+              />
+              <Select
+                label='District'
+                {...form.getInputProps('district')}
+                data={
+                  Object.entries(District).map(([key, value]) => ({
+                    value: value,
+                    label: value,
+                  })) || []
+                }
               />
             </Stack>
           </GridCol>
