@@ -7,6 +7,7 @@ import { dateTime } from '@/lib/format';
 import prisma from '@/lib/prisma';
 import {
   Anchor,
+  Divider,
   Flex,
   Group,
   Paper,
@@ -19,6 +20,7 @@ import {
 import { IconEdit } from '@tabler/icons-react';
 import Link from 'next/link';
 import { remove } from './actions';
+import Filter from './Filter';
 
 export const dynamic = 'force-dynamic';
 
@@ -58,7 +60,11 @@ export default async function CasePage() {
     <>
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
-          <PageTitle text='Cases' />
+          <Group>
+            <PageTitle text='Cases' />
+            <Divider orientation='vertical' />
+            <Filter />
+          </Group>
           <ThemedButton href='/cases/new'>New</ThemedButton>
         </Flex>
       </Paper>
