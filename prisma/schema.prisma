@@ -125,7 +125,7 @@ model Case {
   obNo                 String
   weapons              Weapon[]
   crimeClassifications CrimeClassification[]
-  reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
+  reportingPerson      ReportingPerson?      @relation(fields: [reportingPersonId], references: [id])
   policeStation        PoliceStation         @relation(fields: [policeStationId], references: [id])
   occurrencePlace      String?
   victim               PersonalInformation?  @relation("CaseToVictim", fields: [victimId], references: [id])
@@ -139,8 +139,8 @@ model Case {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
   reportingPersonId Int
-  victimId          Int
-  suspectId         Int
+  victimId          Int?
+  suspectId         Int?
   policeStationId   String
 
   @@map("cases")

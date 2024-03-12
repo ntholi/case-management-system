@@ -62,16 +62,20 @@ export async function POST(request: NextRequest) {
       reportingPerson: {
         create: data.reportingPerson,
       },
-      victim: {
-        connect: {
-          id: data.victimId,
-        },
-      },
-      suspect: {
-        connect: {
-          id: data.suspectId,
-        },
-      },
+      victim: data.victimId
+        ? {
+            connect: {
+              id: data.victimId,
+            },
+          }
+        : undefined,
+      suspect: data.suspectId
+        ? {
+            connect: {
+              id: data.suspectId,
+            },
+          }
+        : undefined,
       policeStation: {
         connect: {
           id: data.policeStationId,
