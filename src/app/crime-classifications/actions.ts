@@ -11,7 +11,9 @@ export async function create(data: CrimeClassification) {
 export async function update(id: string, data: CrimeClassification) {
   await prisma.crimeClassification.update({
     where: { id },
-    data,
+    data: {
+      name: data.name,
+    },
   });
 }
 

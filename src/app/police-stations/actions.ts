@@ -8,14 +8,17 @@ export async function create(data: PoliceStation) {
   });
 }
 
-export async function update(id: number, data: PoliceStation) {
+export async function update(id: string, data: PoliceStation) {
   await prisma.policeStation.update({
     where: { id },
-    data,
+    data: {
+      name: data.name,
+      district: data.district,
+    },
   });
 }
 
-export async function remove(id: number) {
+export async function remove(id: string) {
   await prisma.policeStation.delete({
     where: { id },
   });

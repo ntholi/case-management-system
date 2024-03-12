@@ -11,7 +11,9 @@ export async function create(data: Weapon) {
 export async function update(id: string, data: Weapon) {
   await prisma.weapon.update({
     where: { id },
-    data,
+    data: {
+      name: data.name,
+    },
   });
 }
 
