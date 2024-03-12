@@ -28,3 +28,11 @@ export function dateTime(date: Date | undefined | null) {
     return 'Invalid Date';
   }
 }
+
+// Converts to title case even if it was in upper case latters, and also converts snake_case to Title Case
+export function titleCase(str: string) {
+  return str
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}

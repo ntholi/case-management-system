@@ -23,7 +23,7 @@ const schema = z.object({
   crimeClassificationId: z.string().optional(),
   dateOfOccurrence: z.string().optional(),
   district: z.nativeEnum(District).optional(),
-  policeStationId: z.number(),
+  policeStationId: z.string(),
   dateOfReport: z.string().optional(),
 });
 

@@ -29,6 +29,7 @@ import {
 import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { titleCase } from '@/lib/format';
 
 type Props = {
   weapons?: Weapon[];
@@ -36,7 +37,11 @@ type Props = {
   crimeClassifications?: CrimeClassification[];
 };
 
-export default function Form({ weapons, crimeClassifications }: Props) {
+export default function Form({
+  weapons,
+  crimeClassifications,
+  policeStations,
+}: Props) {
   const [victimOpened, { open: openVictim, close: closeVictim }] =
     useDisclosure(false);
   const [suspectOpened, { open: openSuspect, close: closeSuspect }] =
@@ -158,9 +163,13 @@ export default function Form({ weapons, crimeClassifications }: Props) {
               />
               <Select
                 label='Police Station'
+                required
                 {...form.getInputProps('policeStationId')}
                 data={
-                  weapons?.map((it) => ({ value: it.id, label: it.name })) || []
+                  policeStations?.map((it) => ({
+                    value: it.id,
+                    label: `${it.name} (${it.district})`,
+                  })) || []
                 }
               />
             </Stack>

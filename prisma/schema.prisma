@@ -95,6 +95,17 @@ model CrimeClassification {
   @@map("crime_classifications")
 }
 
+model PoliceStation {
+  id        String   @id @default(cuid())
+  name      String
+  district  District
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cases     Case[]
+
+  @@map("police_stations")
+}
+
 model ReportingPerson {
   id           Int      @id @default(autoincrement())
   name         String?
@@ -115,8 +126,8 @@ model Case {
   weapons              Weapon[]
   crimeClassifications CrimeClassification[]
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
-  occurrencePlace      String?
   policeStation        PoliceStation         @relation(fields: [policeStationId], references: [id])
+  occurrencePlace      String?
   victim               PersonalInformation?  @relation("CaseToVictim", fields: [victimId], references: [id])
   suspect              PersonalInformation?  @relation("CaseToSuspect", fields: [suspectId], references: [id])
   modusOperandi        String?
@@ -130,7 +141,7 @@ model Case {
   reportingPersonId Int
   victimId          Int
   suspectId         Int
-  policeStationId   Int
+  policeStationId   String
 
   @@map("cases")
 }
@@ -165,13 +176,6 @@ model PersonalInformation {
   updatedAt DateTime @updatedAt
 
   @@map("personal_informations")
-}
-
-model PoliceStation {
-  id       Int      @id @default(autoincrement())
-  name     String
-  district District
-  cases    Case[]
 }
 
 enum Education {

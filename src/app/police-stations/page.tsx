@@ -39,7 +39,7 @@ export default async function CasePage() {
       </TableTd>
       <TableTd align='right'>
         <UpdateIconButton
-          title={'PoliceStation'}
+          title={'Police Station'}
           form={<Form />}
           initialValues={row}
           objectId={row.id}
@@ -53,7 +53,7 @@ export default async function CasePage() {
     <>
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
-          <PageTitle text='PoliceStations' />
+          <PageTitle text='Police Stations' />
           <CreateButton
             title='PoliceStation'
             onCreate={create}

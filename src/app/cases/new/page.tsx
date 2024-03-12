@@ -8,6 +8,7 @@ import Form from './Form';
 export default async function CasePage() {
   const weapons = await prisma?.weapon.findMany();
   const crimeClassifications = await prisma?.crimeClassification.findMany();
+  const policeStations = await prisma?.policeStation.findMany();
 
   return (
     <>
@@ -20,7 +21,11 @@ export default async function CasePage() {
         </Flex>
       </Paper>
       <Paper p='md' withBorder mt={'lg'}>
-        <Form weapons={weapons} crimeClassifications={crimeClassifications} />
+        <Form
+          weapons={weapons}
+          crimeClassifications={crimeClassifications}
+          policeStations={policeStations}
+        />
       </Paper>
     </>
   );
