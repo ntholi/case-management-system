@@ -23,6 +23,7 @@ import {
   District,
   ModusOperandiLined,
   PersonalInformation,
+  PoliceStation,
   Weapon,
 } from '@prisma/client';
 import { useForm } from '@mantine/form';
@@ -31,6 +32,7 @@ import { useRouter } from 'next/navigation';
 
 type Props = {
   weapons?: Weapon[];
+  policeStations?: PoliceStation[];
   crimeClassifications?: CrimeClassification[];
 };
 
@@ -155,13 +157,10 @@ export default function Form({ weapons, crimeClassifications }: Props) {
                 {...form.getInputProps('dateOfReport')}
               />
               <Select
-                label='District'
-                {...form.getInputProps('district')}
+                label='Police Station'
+                {...form.getInputProps('policeStationId')}
                 data={
-                  Object.entries(District).map(([key, value]) => ({
-                    value: value,
-                    label: value,
-                  })) || []
+                  weapons?.map((it) => ({ value: it.id, label: it.name })) || []
                 }
               />
             </Stack>

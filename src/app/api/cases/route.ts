@@ -23,6 +23,7 @@ const schema = z.object({
   crimeClassificationId: z.string().optional(),
   dateOfOccurrence: z.string().optional(),
   district: z.nativeEnum(District).optional(),
+  policeStationId: z.number(),
   dateOfReport: z.string().optional(),
 });
 
@@ -44,7 +45,6 @@ export async function POST(request: NextRequest) {
       modusOperandiLinked: data.modusOperandiLinked,
       dateOfOccurrence: dateOfOccurrence,
       dateOfReport: dateOfReport,
-      district: data.district,
       weapons: {
         connect: data.weaponId
           ? {
@@ -70,6 +70,11 @@ export async function POST(request: NextRequest) {
       suspect: {
         connect: {
           id: data.suspectId,
+        },
+      },
+      policeStation: {
+        connect: {
+          id: data.policeStationId,
         },
       },
     },

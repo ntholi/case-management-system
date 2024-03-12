@@ -9,6 +9,8 @@ import {
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import {
+  IconBuilding,
+  IconBuildingBank,
   IconChevronRight,
   IconHome,
   IconLogout2,
@@ -48,6 +50,14 @@ export default function Navigation() {
           active={pathname.startsWith('/weapons')}
           href={'/weapons'}
           leftSection={<IconSwords size='1.1rem' />}
+          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+        />
+        <NavLink
+          label='Police Stations'
+          component={Link}
+          active={pathname.startsWith('/police-stations')}
+          href={'/police-stations'}
+          leftSection={<IconBuildingBank size='1.1rem' />}
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
         <Divider mt={'lg'} mb={'sm'} />

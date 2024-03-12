@@ -27,6 +27,7 @@ export default async function CasePage() {
     include: {
       victim: true,
       suspect: true,
+      policeStation: true,
     },
   });
   const rows = data.map((row) => (

@@ -116,7 +116,7 @@ model Case {
   crimeClassifications CrimeClassification[]
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   occurrencePlace      String?
-  district             District?
+  policeStation        PoliceStation         @relation(fields: [policeStationId], references: [id])
   victim               PersonalInformation?  @relation("CaseToVictim", fields: [victimId], references: [id])
   suspect              PersonalInformation?  @relation("CaseToSuspect", fields: [suspectId], references: [id])
   modusOperandi        String?
@@ -130,6 +130,7 @@ model Case {
   reportingPersonId Int
   victimId          Int
   suspectId         Int
+  policeStationId   Int
 
   @@map("cases")
 }
@@ -164,6 +165,13 @@ model PersonalInformation {
   updatedAt DateTime @updatedAt
 
   @@map("personal_informations")
+}
+
+model PoliceStation {
+  id       Int      @id @default(autoincrement())
+  name     String
+  district District
+  cases    Case[]
 }
 
 enum Education {
