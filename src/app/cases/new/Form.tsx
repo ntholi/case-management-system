@@ -48,7 +48,14 @@ export default function Form({
     useDisclosure(false);
   const [victim, setVictim] = React.useState<PersonalInformation>();
   const [suspect, setSuspect] = React.useState<PersonalInformation>();
-  const { setValues, ...form } = useForm<Case>({});
+  const { setValues, ...form } = useForm<Case>({
+    validate: {
+      policeStationId: (value) => {
+        if (!value) return 'Police Station is required';
+        return undefined;
+      },
+    },
+  });
   const { setValues: setReportingPerson, ...reportingPersonForm } =
     useForm<Case>({});
   const [isPending, startTransition] = React.useTransition();
