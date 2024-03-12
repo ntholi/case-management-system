@@ -1,5 +1,0 @@
--- CreateEnum
-CREATE TYPE "Destrict" AS ENUM ('BEREA', 'BUTHA_BUTHE', 'LERIBE', 'MASERU_URBAN', 'MASERU_RURAL', 'MAFETENG', 'MOHALES_HOEK', 'MOKHOTLONG', 'QACHAS_NEK', 'QUTHING', 'THABA_TSEKA');
-
--- AlterTable
-ALTER TABLE "cases" ADD COLUMN     "district" "Destrict";
