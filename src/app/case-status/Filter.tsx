@@ -2,11 +2,18 @@
 import { ActionIcon, CloseButton, Group, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { useQueryState } from 'nuqs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function Filter() {
   const [rciNo, setRciNo] = useQueryState('rciNo');
   const [value, setValue] = useState('');
+
+  useEffect(() => {
+    if (rciNo) {
+      setValue(rciNo);
+    }
+  }, [rciNo]);
+
   return (
     <Group gap={5}>
       <TextInput

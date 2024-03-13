@@ -1,12 +1,13 @@
+'use client';
 import DeleteIconButton from '@/components/DeleteIconButton';
 import PageTitle from '@/components/PageTitle';
 import ThemedTableHead from '@/components/ThemedTableHead';
 import UpdateIconButton from '@/components/UpdateIconButton';
-import prisma from '@/lib/prisma';
 import {
   Anchor,
   Flex,
   Group,
+  Loader,
   Paper,
   Select,
   Table,
@@ -15,19 +16,38 @@ import {
   TableTh,
   TableTr,
 } from '@mantine/core';
-import { CourtCaseStatus, PoliceCaseStatus } from '@prisma/client';
+import {
+  CaseStatus as BaseCaseStatus,
+  Case,
+  CourtCaseStatus,
+  PoliceCaseStatus,
+} from '@prisma/client';
 import Link from 'next/link';
 import Filter from './Filter';
 import { remove, update } from './actions';
+import { useEffect, useState } from 'react';
+import { useQueryState } from 'nuqs';
 
 export const dynamic = 'force-dynamic';
 
-export default async function CasePage() {
-  const data = await prisma.caseStatus.findMany({
-    include: {
-      case: true,
-    },
-  });
+export type CaseStatus = BaseCaseStatus & {
+  case: Case;
+};
+export default function CasePage() {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<CaseStatus[]>([]);
+  const [rciNo] = useQueryState('rciNo');
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`/api/case-status?rciNo=${rciNo}`);
+      const data = await response.json();
+      setData(data);
+      setLoading(false);
+    }
+    fetchData();
+  }, [rciNo]);
+
   const rows = data.map((row) => (
     <TableTr key={row.id}>
       <TableTd>
@@ -49,6 +69,14 @@ export default async function CasePage() {
       </TableTd>
     </TableTr>
   ));
+
+  if (loading)
+    return (
+      <Flex w={'100%'} justify={'center'} mt={250}>
+        <Loader />
+      </Flex>
+    );
+
   return (
     <>
       <Paper p='md' withBorder>

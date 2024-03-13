@@ -125,7 +125,7 @@ model ReportingPerson {
 
 model Case {
   id                   Int                   @id @default(autoincrement())
-  rciNo                String
+  rciNo                String                @unique
   obNo                 String
   weapons              Weapon[]
   crimeClassifications CrimeClassification[]
