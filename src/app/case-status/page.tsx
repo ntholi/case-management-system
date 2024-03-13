@@ -14,12 +14,10 @@ import {
   TableTd,
   TableTh,
   TableTr,
-  TextInput,
 } from '@mantine/core';
+import { CourtCaseStatus, PoliceCaseStatus } from '@prisma/client';
 import Link from 'next/link';
 import { create, remove, update } from './actions';
-import { CourtCaseStatus, PoliceCaseStatus } from '@prisma/client';
-import Form from './Form';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,16 +30,15 @@ export default async function CasePage() {
   const rows = data.map((row) => (
     <TableTr key={row.id}>
       <TableTd>
-        <Anchor component={Link} href={`/cases/${row.case.id}`} size='sm'>
+        <Anchor component={Link} href={`/cases/${row.case.id}`}>
           {row.case.rciNo}
         </Anchor>
       </TableTd>
-      <TableTd>{row.case.rciNo}</TableTd>
       <TableTd>{row.policeCaseStatus}</TableTd>
       <TableTd>{row.courtCaseStatus}</TableTd>
       <TableTd align='right'>
         <UpdateIconButton
-          title={'Case Management'}
+          title={'Crime Classification'}
           form={<Form />}
           initialValues={row}
           objectId={row.id}
@@ -55,9 +52,9 @@ export default async function CasePage() {
     <>
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
-          <PageTitle text='Case Management' />
+          <PageTitle text='Crime Classifications' />
           <CreateButton
-            title='Case Management'
+            title='Crime Classification'
             onCreate={create}
             form={<Form />}
           />
@@ -66,7 +63,7 @@ export default async function CasePage() {
       <Table withTableBorder mt={'lg'}>
         <ThemedTableHead>
           <TableTr>
-            <TableTh>RCI No.</TableTh>
+            <TableTh>Case</TableTh>
             <TableTh>Police Case Status</TableTh>
             <TableTh>Court Case Status</TableTh>
             <TableTh></TableTh>
@@ -74,6 +71,33 @@ export default async function CasePage() {
         </ThemedTableHead>
         <TableTbody>{rows}</TableTbody>
       </Table>
+    </>
+  );
+}
+
+function Form() {
+  return (
+    <>
+      <Select
+        label='Police Case Status'
+        name='policeCaseStatus'
+        data={
+          Object.entries(PoliceCaseStatus).map(([key, value]) => ({
+            value: value,
+            label: value,
+          })) || []
+        }
+      />
+      <Select
+        label='Court Case Status'
+        name='courtCaseStatus'
+        data={
+          Object.entries(CourtCaseStatus).map(([key, value]) => ({
+            value: value,
+            label: value,
+          })) || []
+        }
+      />
     </>
   );
 }

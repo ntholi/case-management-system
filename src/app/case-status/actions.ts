@@ -13,7 +13,6 @@ export async function update(id: string, data: CaseStatus) {
     where: { id },
     data: {
       courtCaseStatus: data.courtCaseStatus,
-      crNumber: data.crNumber,
       policeCaseStatus: data.policeCaseStatus,
     },
   });
