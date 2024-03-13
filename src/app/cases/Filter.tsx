@@ -95,7 +95,7 @@ function StationFilter({ close }: { close: () => void }) {
       label='Police Station'
       disabled={isLoading}
       onChange={(it) => {
-        setValue(it);
+        setValue(items.find((i) => i.id === it)?.name || '');
         close();
       }}
       rightSection={isLoading && <Loader size={'xs'} />}
@@ -127,7 +127,7 @@ function ClassificationFilter({ close }: { close: () => void }) {
       label='Classification'
       disabled={isLoading}
       onChange={(it) => {
-        setValue(it);
+        setValue(items.find((i) => i.id === it)?.name || '');
         close();
       }}
       rightSection={isLoading && <Loader size={'xs'} />}
@@ -154,7 +154,7 @@ function WeaponFilter({ close }: { close: () => void }) {
       label='Weapon'
       disabled={isLoading}
       onChange={(it) => {
-        setValue(it);
+        setValue(items.find((i) => i.id === it)?.name || '');
         close();
       }}
       rightSection={isLoading && <Loader size={'xs'} />}

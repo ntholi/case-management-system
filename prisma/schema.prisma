@@ -77,7 +77,7 @@ model VerificationToken {
 
 model Weapon {
   id        String   @id @default(cuid())
-  name      String
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   cases     Case[]
@@ -87,7 +87,7 @@ model Weapon {
 
 model CrimeClassification {
   id        String   @id @default(cuid())
-  name      String
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   cases     Case[]
@@ -103,6 +103,7 @@ model PoliceStation {
   updatedAt DateTime @updatedAt
   cases     Case[]
 
+  @@unique([name, district])
   @@map("police_stations")
 }
 
