@@ -19,6 +19,7 @@ export default async function CasePage({ params: { id } }: Props) {
       suspect: true,
       weapons: true,
       crimeClassifications: true,
+      policeStation: true,
     },
   });
 
@@ -45,7 +46,10 @@ export default async function CasePage({ params: { id } }: Props) {
                   label='Occurrence Place'
                   value={item.occurrencePlace}
                 />
-                <FieldView label='District' value={item.district} />
+                <FieldView
+                  label='Police Station'
+                  value={`${item.policeStation?.name}, ${item.policeStation?.district}`}
+                />
                 <FieldView
                   label='Weapons'
                   value={item.weapons?.map((w) => w.name).join(', ')}

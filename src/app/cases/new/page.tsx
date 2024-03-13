@@ -5,6 +5,8 @@ import { Flex, Paper } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
 import Form from './Form';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CasePage() {
   const weapons = await prisma?.weapon.findMany();
   const crimeClassifications = await prisma?.crimeClassification.findMany();
