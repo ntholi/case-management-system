@@ -1,23 +1,27 @@
 'use client';
 import {
-  Box,
   Button,
-  Chip,
-  Divider,
   Group,
   Loader,
   Modal,
   NativeSelect,
-  Pill,
+  Paper,
   Select,
   Stack,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { CrimeClassification, PoliceStation, Weapon } from '@prisma/client';
-import { IconFilter, IconPlus } from '@tabler/icons-react';
+import { IconFilter } from '@tabler/icons-react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
+import React, { useEffect, useState } from 'react';
+import FiltersDisplay from './FiltersDisplay';
+
+export const Filters = {
+  station: 'station',
+  classification: 'classification',
+  weapon: 'weapon',
+};
 
 type Filter = {
   type: string;
@@ -28,32 +32,25 @@ export default function Filter() {
   const [opened, { open, close }] = useDisclosure(false);
   const [selected, setSelected] = React.useState('Weapon');
   const [component, setComponent] = useState<React.ReactNode | null>(null);
-  const [selectedFilter, setSelectedFilter] = useState<Filter | null>();
-  const [filter, setFilter] = useQueryState('filter');
 
   useEffect(() => {
     switch (selected) {
       case 'Weapon':
-        setComponent(<WeaponFilter setFilter={setSelectedFilter} />);
+        setComponent(<WeaponFilter close={close} />);
         break;
       case 'Classification':
-        setComponent(<ClassificationFilter setFilter={setSelectedFilter} />);
+        setComponent(<ClassificationFilter close={close} />);
         break;
       case 'Station':
-        setComponent(<StationFilter setFilter={setSelectedFilter} />);
+        setComponent(<StationFilter close={close} />);
         break;
     }
-  }, [selected]);
-
-  function applyFilter() {
-    setFilter(`${selectedFilter?.type}:${selectedFilter?.value}`);
-    close();
-  }
+  }, [selected, close]);
 
   return (
     <>
-      <Modal opened={opened} onClose={close}>
-        <Stack>
+      <Modal opened={opened} onClose={close} title='Filter'>
+        <Stack pb={'xl'}>
           <NativeSelect
             label='Filter By'
             data={['Weapon', 'Classification', 'Station']}
@@ -61,43 +58,29 @@ export default function Filter() {
             onChange={(event) => setSelected(event.currentTarget.value)}
           />
           {component && component}
-          <Button onClick={applyFilter}>Apply</Button>
         </Stack>
       </Modal>
-      <Group>
-        <Button
-          size='xs'
-          variant='light'
-          onClick={open}
-          rightSection={<IconFilter size={'1rem'} />}
-        >
-          Filter
-        </Button>
-
-        {filter && (
-          <>
-            <Chip
-              size='xs'
-              color='gray'
-              variant='light'
-              onClick={() => setFilter(null)}
-              defaultChecked
-            >
-              {filter.split(':')[0]}
-            </Chip>
-          </>
-        )}
-      </Group>
+      <Paper withBorder p={3}>
+        <Group>
+          <Button
+            size='sm'
+            variant='subtle'
+            onClick={open}
+            rightSection={<IconFilter size={'1rem'} />}
+          >
+            Filter
+          </Button>
+          <FiltersDisplay />
+        </Group>
+      </Paper>
     </>
   );
 }
-type FilterProps = {
-  setFilter: (value: Filter | null) => void;
-};
 
-function StationFilter({ setFilter }: FilterProps) {
+function StationFilter({ close }: { close: () => void }) {
   const [items, setItems] = useState<PoliceStation[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [_, setValue] = useQueryState(Filters.station);
 
   React.useEffect(() => {
     setLoading(true);
@@ -111,8 +94,11 @@ function StationFilter({ setFilter }: FilterProps) {
     <Select
       label='Police Station'
       disabled={isLoading}
+      onChange={(it) => {
+        setValue(it);
+        close();
+      }}
       rightSection={isLoading && <Loader size={'xs'} />}
-      onChange={(it) => setFilter({ type: 'policeStation', value: it })}
       data={
         items?.map((it) => ({
           value: it.id,
@@ -123,9 +109,10 @@ function StationFilter({ setFilter }: FilterProps) {
   );
 }
 
-function ClassificationFilter({ setFilter }: FilterProps) {
+function ClassificationFilter({ close }: { close: () => void }) {
   const [items, setItems] = useState<CrimeClassification[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [_, setValue] = useQueryState(Filters.classification);
 
   React.useEffect(() => {
     setLoading(true);
@@ -138,17 +125,21 @@ function ClassificationFilter({ setFilter }: FilterProps) {
   return (
     <Select
       label='Classification'
-      onChange={(it) => setFilter({ type: 'crimeClassifications', value: it })}
       disabled={isLoading}
+      onChange={(it) => {
+        setValue(it);
+        close();
+      }}
       rightSection={isLoading && <Loader size={'xs'} />}
       data={items?.map((it) => ({ value: it.id, label: it.name })) || []}
     />
   );
 }
 
-function WeaponFilter({ setFilter }: FilterProps) {
+function WeaponFilter({ close }: { close: () => void }) {
   const [items, setItems] = useState<Weapon[]>([]);
   const [isLoading, setLoading] = useState(true);
+  const [_, setValue] = useQueryState(Filters.weapon);
 
   React.useEffect(() => {
     setLoading(true);
@@ -161,8 +152,11 @@ function WeaponFilter({ setFilter }: FilterProps) {
   return (
     <Select
       label='Weapon'
-      onChange={(it) => setFilter({ type: 'weapons', value: it })}
       disabled={isLoading}
+      onChange={(it) => {
+        setValue(it);
+        close();
+      }}
       rightSection={isLoading && <Loader size={'xs'} />}
       data={items?.map((it) => ({ value: it.id, label: it.name })) || []}
     />
