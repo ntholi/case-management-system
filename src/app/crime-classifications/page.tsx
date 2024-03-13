@@ -31,7 +31,11 @@ export default async function CasePage() {
     <TableTr key={row.id}>
       <TableTd>{row.name}</TableTd>
       <TableTd>
-        <Anchor component={Link} href={`#`} size='sm'>
+        <Anchor
+          component={Link}
+          href={`/cases?crime-classifications=${row.name}`}
+          size='sm'
+        >
           {row.cases.length} Cases
         </Anchor>
       </TableTd>

@@ -10,8 +10,6 @@ export async function GET(request: NextRequest) {
   const classification = searchParams.get('classification');
   const station = searchParams.get('station');
 
-  console.log({ weapon, classification, station });
-
   const data = await prisma.case.findMany({
     where: {
       weapons: weapon

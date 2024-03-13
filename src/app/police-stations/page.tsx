@@ -33,7 +33,11 @@ export default async function CasePage() {
       <TableTd>{row.name}</TableTd>
       <TableTd>{row.district}</TableTd>
       <TableTd>
-        <Anchor component={Link} href={`#`} size='sm'>
+        <Anchor
+          component={Link}
+          href={`/cases?police-stations=${row.id}:${row.name}`}
+          size='sm'
+        >
           {row.cases.length} Cases
         </Anchor>
       </TableTd>
