@@ -44,7 +44,10 @@ export default function AdminShell({ children }: PropsWithChildren) {
               hiddenFrom='md'
               size='sm'
             />
-            <Logo size='sm' />
+            <Group>
+              <Logo size='sm' />
+              <Text size='0.87rem'>GBV Management Information System</Text>
+            </Group>
           </Group>
           <ActionIcon variant='default' size='lg'>
             {colorScheme === 'dark' ? (

@@ -19,7 +19,6 @@ export default function Logo({ size = 'xs' }: Props) {
     <Link href='/'>
       <Group>
         <Image h={sizeMap[size]} src={'./logo.png'} alt='Logo' />
-        <Text>Case Management System</Text>
       </Group>
     </Link>
   );
