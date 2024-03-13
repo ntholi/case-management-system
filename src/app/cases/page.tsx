@@ -18,7 +18,7 @@ import {
   TableTh,
   TableTr,
 } from '@mantine/core';
-import { IconEdit } from '@tabler/icons-react';
+import { IconEdit, IconPlus } from '@tabler/icons-react';
 import Link from 'next/link';
 import { remove } from './actions';
 import Filter, { Filters } from './Filter';
@@ -96,7 +96,9 @@ export default function CasePage() {
             <Divider orientation='vertical' />
             <Filter />
           </Group>
-          <ThemedButton href='/cases/new'>New</ThemedButton>
+          <ThemedButton href='/cases/new' icon={<IconPlus className='1rem' />}>
+            New
+          </ThemedButton>
         </Flex>
       </Paper>
       <Table withTableBorder mt={'lg'}>

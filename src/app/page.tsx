@@ -8,8 +8,8 @@ export default function AdminPage() {
   return (
     <Stack h={'70vh'} w={'100%'} justify='center' align='center'>
       <div>
-        <Group>
-          <Logo size='lg' />
+        <Group gap={'lg'}>
+          <Logo size='xl' />
           <div>
             <Title size={'1.8rem'} fw={'lighter'}>
               GBV Management Information System
