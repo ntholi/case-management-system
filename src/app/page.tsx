@@ -5,6 +5,9 @@ import React, { Suspense } from 'react';
 import Logo from './core/Logo';
 
 export default function AdminPage() {
+  const { data: session } = useSession();
+  console.log('session', session);
+
   return (
     <Stack h={'70vh'} w={'100%'} justify='center' align='center'>
       <div>
