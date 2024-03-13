@@ -145,8 +145,22 @@ model Case {
   reportingPersonId    Int                   @unique
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
+  caseStatus           CaseStatus?
 
   @@map("cases")
+}
+
+model CaseStatus {
+  id               String           @id @default(cuid())
+  crNumber         Int              @unique @default(autoincrement()) @map("cr_number")
+  policeCaseStatus PoliceCaseStatus @default(PENDING_ALLOCATION) @map("police_case_status")
+  courtCaseStatus  CourtCaseStatus? @map("court_case_status")
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  case             Case             @relation(fields: [caseId], references: [id])
+  caseId           Int              @unique
+
+  @@map("case_statuses")
 }
 
 model PersonalInformation {
@@ -235,4 +249,20 @@ enum District {
   QACHAS_NEK
   QUTHING
   THABA_TSEKA
+}
+
+enum PoliceCaseStatus {
+  PENDING_ALLOCATION
+  PENDING_INVESTIGATION
+  PENDING_ARREST
+  PENDING_STATEMENT
+  AWAITS_EXHIBIT
+}
+
+enum CourtCaseStatus {
+  REMANDED_FF_INVESTIGATION
+  PENDING_HEARING
+  PENDING_SET_DOWN
+  DIVERTED
+  PART_HEARD
 }

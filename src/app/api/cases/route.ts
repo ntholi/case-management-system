@@ -82,6 +82,11 @@ export async function POST(request: NextRequest) {
       modusOperandiLinked: data.modusOperandiLinked,
       dateOfOccurrence: dateOfOccurrence,
       dateOfReport: dateOfReport,
+      caseStatus: {
+        create: {
+          policeCaseStatus: 'PENDING_ALLOCATION',
+        },
+      },
       weapons: {
         connect: data.weaponId
           ? {

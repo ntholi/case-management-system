@@ -40,6 +40,14 @@ export default function Navigation() {
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
         <NavLink
+          label='Case Management'
+          component={Link}
+          active={pathname.startsWith('/case-status')}
+          href={'/case-status'}
+          leftSection={<IconSubtask size='1.1rem' />}
+          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+        />
+        <NavLink
           label='Crime Classifications'
           component={Link}
           active={pathname.startsWith('/crime-classifications')}
@@ -61,24 +69,6 @@ export default function Navigation() {
           active={pathname.startsWith('/police-stations')}
           href={'/police-stations'}
           leftSection={<IconBuildingBank size='1.1rem' />}
-          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
-        />
-        <NavLink
-          label='Cases Management'
-          description='Under development'
-          component={Link}
-          active={pathname.startsWith('/cases-management')}
-          href={'#'}
-          leftSection={<IconSubtask size='1.1rem' />}
-          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
-        />
-        <NavLink
-          label='Reports'
-          description='Under development'
-          component={Link}
-          active={pathname.startsWith('/reports')}
-          href={'#'}
-          leftSection={<IconChartInfographic size='1.1rem' />}
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
         <Divider mt={'lg'} mb={'sm'} />
