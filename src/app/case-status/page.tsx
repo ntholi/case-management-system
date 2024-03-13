@@ -1,4 +1,3 @@
-import CreateButton from '@/components/CreateButton';
 import DeleteIconButton from '@/components/DeleteIconButton';
 import PageTitle from '@/components/PageTitle';
 import ThemedTableHead from '@/components/ThemedTableHead';
@@ -18,8 +17,8 @@ import {
 } from '@mantine/core';
 import { CourtCaseStatus, PoliceCaseStatus } from '@prisma/client';
 import Link from 'next/link';
-import { create, remove, update } from './actions';
 import Filter from './Filter';
+import { remove, update } from './actions';
 
 export const dynamic = 'force-dynamic';
 
