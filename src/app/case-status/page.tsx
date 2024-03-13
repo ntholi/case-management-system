@@ -7,6 +7,7 @@ import prisma from '@/lib/prisma';
 import {
   Anchor,
   Flex,
+  Group,
   Paper,
   Select,
   Table,
@@ -18,6 +19,7 @@ import {
 import { CourtCaseStatus, PoliceCaseStatus } from '@prisma/client';
 import Link from 'next/link';
 import { create, remove, update } from './actions';
+import Filter from './Filter';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,7 +40,7 @@ export default async function CasePage() {
       <TableTd>{row.courtCaseStatus}</TableTd>
       <TableTd align='right'>
         <UpdateIconButton
-          title={'Crime Classification'}
+          title={'Case Management'}
           form={<Form />}
           initialValues={row}
           objectId={row.id}
@@ -52,12 +54,10 @@ export default async function CasePage() {
     <>
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
-          <PageTitle text='Crime Classifications' />
-          <CreateButton
-            title='Crime Classification'
-            onCreate={create}
-            form={<Form />}
-          />
+          <Group>
+            <PageTitle text='Case Management' />
+            <Filter />
+          </Group>
         </Flex>
       </Paper>
       <Table withTableBorder mt={'lg'}>
