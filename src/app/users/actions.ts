@@ -10,7 +10,7 @@ const schema = z.object({
   firstName: z.string(),
   lastName: z.string(),
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string(),
 });
 
 export async function create(data: any) {

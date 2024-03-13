@@ -16,6 +16,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { create, remove, update } from './actions';
+import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
 
