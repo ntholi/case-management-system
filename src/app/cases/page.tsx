@@ -6,7 +6,9 @@ import ThemedIconButton from '@/components/ThemedIconButton';
 import ThemedTableHead from '@/components/ThemedTableHead';
 import { dateTime } from '@/lib/format';
 import {
+  ActionIcon,
   Anchor,
+  Button,
   Divider,
   Flex,
   Group,
@@ -18,7 +20,7 @@ import {
   TableTh,
   TableTr,
 } from '@mantine/core';
-import { IconEdit, IconPlus } from '@tabler/icons-react';
+import { IconEdit, IconFileSpreadsheet, IconPlus } from '@tabler/icons-react';
 import Link from 'next/link';
 import { remove } from './actions';
 import Filter, { Filters } from './Filter';
@@ -96,9 +98,17 @@ export default function CasePage() {
             <Divider orientation='vertical' />
             <Filter />
           </Group>
-          <ThemedButton href='/cases/new' icon={<IconPlus className='1rem' />}>
-            New
-          </ThemedButton>
+          <Group>
+            <Button
+              variant='light'
+              leftSection={<IconFileSpreadsheet size={'1rem'} />}
+            >
+              Report
+            </Button>
+            <ThemedButton href='/cases/new' icon={<IconPlus size={'1rem'} />}>
+              New
+            </ThemedButton>
+          </Group>
         </Flex>
       </Paper>
       <Table withTableBorder mt={'lg'}>
