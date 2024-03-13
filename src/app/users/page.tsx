@@ -6,8 +6,10 @@ import UpdateIconButton from '@/components/UpdateIconButton';
 import prisma from '@/lib/prisma';
 import {
   Flex,
+  LoadingOverlay,
   Paper,
   PasswordInput,
+  Select,
   Table,
   TableTbody,
   TableTd,
@@ -16,12 +18,15 @@ import {
   TextInput,
 } from '@mantine/core';
 import { create, remove, update } from './actions';
-import { z } from 'zod';
+import { Suspense } from 'react';
+import { PoliceStation } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
 export default async function CasePage() {
   const data = await prisma.user.findMany();
+  const policeStations = await prisma.policeStation.findMany();
+
   const rows = data.map((row) => (
     <TableTr key={row.id}>
       <TableTd>{row.firstName}</TableTd>
@@ -31,7 +36,7 @@ export default async function CasePage() {
       <TableTd align='right'>
         <UpdateIconButton
           title={'User'}
-          form={<Form />}
+          form={<Form policeStations={policeStations} />}
           initialValues={row}
           objectId={row.id}
           onUpdate={update}
@@ -45,7 +50,11 @@ export default async function CasePage() {
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
           <PageTitle text='Users' />
-          <CreateButton title='User' onCreate={create} form={<Form />} />
+          <CreateButton
+            title='User'
+            onCreate={create}
+            form={<Form policeStations={policeStations} />}
+          />
         </Flex>
       </Paper>
       <Table withTableBorder mt={'lg'}>
@@ -64,12 +73,23 @@ export default async function CasePage() {
   );
 }
 
-function Form() {
+function Form({ policeStations }: { policeStations: PoliceStation[] }) {
   return (
     <>
       <TextInput name='firstName' label='First Name' required />
       <TextInput name='lastName' label='Last Name' required />
       <TextInput name='email' label='Email' type='email' required />
+      <Select
+        label='Police Station'
+        required
+        name='policeStationId'
+        data={
+          policeStations?.map((it) => ({
+            value: it.id,
+            label: `${it.name} (${it.district})`,
+          })) || []
+        }
+      />
       <PasswordInput name='password' label='Password' required />
     </>
   );

@@ -11,6 +11,7 @@ const schema = z.object({
   lastName: z.string(),
   email: z.string().email(),
   password: z.string(),
+  policeStationId: z.string(),
 });
 
 export async function create(data: any) {
@@ -20,7 +21,8 @@ export async function create(data: any) {
     throw new Error("You don't have permission to create a user.");
   }
 
-  const { email, firstName, lastName, password } = schema.parse(data);
+  const { email, firstName, lastName, password, policeStationId } =
+    schema.parse(data);
 
   const exist = await prisma.user.findUnique({
     where: {
@@ -40,6 +42,7 @@ export async function create(data: any) {
       hashedPassword,
       firstName,
       lastName,
+      policeStationId,
     },
   });
 }
