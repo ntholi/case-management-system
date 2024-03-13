@@ -24,7 +24,11 @@ import { PoliceStation } from '@prisma/client';
 export const dynamic = 'force-dynamic';
 
 export default async function CasePage() {
-  const data = await prisma.user.findMany();
+  const data = await prisma.user.findMany({
+    include: {
+      policeStation: true,
+    },
+  });
   const policeStations = await prisma.policeStation.findMany();
 
   const rows = data.map((row) => (
@@ -33,6 +37,7 @@ export default async function CasePage() {
       <TableTd>{row.lastName}</TableTd>
       <TableTd>{row.email}</TableTd>
       <TableTd>{row.role}</TableTd>
+      <TableTd>{row.policeStation.name}</TableTd>
       <TableTd align='right'>
         <UpdateIconButton
           title={'User'}
@@ -64,6 +69,7 @@ export default async function CasePage() {
             <TableTh>Last Name</TableTh>
             <TableTh>Email</TableTh>
             <TableTh>Role</TableTh>
+            <TableTh>Police Station</TableTh>
             <TableTh></TableTh>
           </TableTr>
         </ThemedTableHead>
