@@ -21,7 +21,7 @@ import {
 import { IconEdit } from '@tabler/icons-react';
 import Link from 'next/link';
 import { remove } from './actions';
-import Filter from './Filter';
+import Filter, { Filters } from './Filter';
 import { Case as BaseCase, PersonalInformation, Prisma } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
@@ -36,17 +36,24 @@ export type Case = BaseCase & {
 export default function CasePage() {
   const [data, setData] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useQueryState('filter');
+  const [weapon] = useQueryState(Filters.weapon);
+  const [classification] = useQueryState(Filters.classification);
+  const [station] = useQueryState(Filters.station);
 
   useEffect(() => {
+    const filter = new URLSearchParams();
+    if (weapon) filter.set(Filters.weapon, weapon);
+    if (classification) filter.set(Filters.classification, classification);
+    if (station) filter.set(Filters.station, station.split(':')[0]);
+
     async function fetchData() {
-      const response = await fetch(`/api/cases?filter=${filter}`);
+      const response = await fetch(`/api/cases?${filter}`);
       const data = await response.json();
       setData(data);
       setLoading(false);
     }
     fetchData();
-  }, [filter]);
+  }, [weapon, classification, station]);
 
   const rows = data.map((row) => (
     <TableTr key={row.id}>

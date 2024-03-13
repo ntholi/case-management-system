@@ -19,7 +19,7 @@ export default function FiltersDisplay() {
         <Pill.Group mt={7}>
           {station && (
             <Pill onRemove={() => setStation(null)} withRemoveButton>
-              Station: {station}
+              Station: {station.split(':')[1]}
             </Pill>
           )}
           {classification && (

@@ -4,6 +4,45 @@ import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url || '');
+  const weapon = searchParams.get('weapon');
+  const classification = searchParams.get('classification');
+  const station = searchParams.get('station');
+
+  console.log({ weapon, classification, station });
+
+  const data = await prisma.case.findMany({
+    where: {
+      weapons: weapon
+        ? {
+            some: {
+              name: weapon,
+            },
+          }
+        : undefined,
+      crimeClassifications: classification
+        ? {
+            some: {
+              name: classification,
+            },
+          }
+        : undefined,
+      policeStationId: station ? station : undefined,
+    },
+    include: {
+      reportingPerson: true,
+      victim: true,
+      suspect: true,
+      weapons: true,
+      crimeClassifications: true,
+      policeStation: true,
+    },
+  });
+
+  return NextResponse.json(data);
+}
+
 const schema = z.object({
   rciNo: z.string(),
   obNo: z.string(),
@@ -26,38 +65,6 @@ const schema = z.object({
   policeStationId: z.string(),
   dateOfReport: z.string().optional(),
 });
-
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url || '');
-  const filter = searchParams.get('filter');
-
-  if (filter && filter != 'undefined' && filter != 'null') {
-    const [field, value] = filter.split(':');
-    const data = await prisma.case.findMany({
-      include: {
-        victim: true,
-        suspect: true,
-        policeStation: true,
-      },
-      where: {
-        [field]: {
-          some: {
-            id: value,
-          },
-        },
-      },
-    });
-    return NextResponse.json(data);
-  }
-  const data = await prisma.case.findMany({
-    include: {
-      victim: true,
-      suspect: true,
-      policeStation: true,
-    },
-  });
-  return NextResponse.json(data);
-}
 
 export async function POST(request: NextRequest) {
   const data = schema.parse(await request.json());

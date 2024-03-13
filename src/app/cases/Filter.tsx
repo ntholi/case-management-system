@@ -95,7 +95,10 @@ function StationFilter({ close }: { close: () => void }) {
       label='Police Station'
       disabled={isLoading}
       onChange={(it) => {
-        setValue(items.find((i) => i.id === it)?.name || '');
+        setValue(() => {
+          const item = items.find((i) => i.id === it);
+          return item ? `${item.id}:${item.name}` : '';
+        });
         close();
       }}
       rightSection={isLoading && <Loader size={'xs'} />}
