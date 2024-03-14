@@ -27,12 +27,13 @@ import Filter, { Filters } from './Filter';
 import { Case as BaseCase, PersonalInformation, Prisma } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
+import { exportToExcel } from './export';
 
 export const dynamic = 'force-dynamic';
 
 export type Case = BaseCase & {
-  victim: PersonalInformation;
-  suspect: PersonalInformation;
+  victim?: PersonalInformation;
+  suspect?: PersonalInformation;
 };
 
 export default function CasePage() {
@@ -101,6 +102,7 @@ export default function CasePage() {
           <Group>
             <Button
               variant='light'
+              onClick={() => exportToExcel(data)}
               leftSection={<IconFileSpreadsheet size={'1rem'} />}
             >
               Report
