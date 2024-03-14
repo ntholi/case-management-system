@@ -37,7 +37,7 @@ export default async function CasePage() {
       <TableTd>{row.lastName}</TableTd>
       <TableTd>{row.email}</TableTd>
       <TableTd>{row.role}</TableTd>
-      <TableTd>{row.policeStation.name}</TableTd>
+      <TableTd>{row.policeStation?.name}</TableTd>
       <TableTd align='right'>
         <UpdateIconButton
           title={'User'}

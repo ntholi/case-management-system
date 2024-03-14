@@ -49,21 +49,21 @@ model Session {
 }
 
 model User {
-  id             String        @id @default(cuid())
-  firstName      String?       @map("first_name")
-  lastName       String?       @map("last_name")
-  role           Role          @default(USER)
-  email          String        @unique
-  emailVerified  DateTime?     @map("email_verified")
+  id             String         @id @default(cuid())
+  firstName      String?        @map("first_name")
+  lastName       String?        @map("last_name")
+  role           Role           @default(USER)
+  email          String         @unique
+  emailVerified  DateTime?      @map("email_verified")
   image          String?
-  hashedPassword String?       @map("hashed_password")
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  policeStation  PoliceStation @relation(fields: [policeStationId], references: [id])
+  hashedPassword String?        @map("hashed_password")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  policeStation  PoliceStation? @relation(fields: [policeStationId], references: [id])
 
   accounts        Account[]
   sessions        Session[]
-  policeStationId String
+  policeStationId String?
 
   @@map("users")
 }
