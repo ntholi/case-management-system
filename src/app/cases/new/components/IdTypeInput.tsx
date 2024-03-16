@@ -29,15 +29,9 @@ export default function IdTypeInput(props: Props) {
     if (notOther.includes(value)) {
       setSelected(value);
     } else {
-      setSelected('Other');
+      // setSelected('Other');
     }
   }, [value]);
-
-  useEffect(() => {
-    if (selected === 'Other') {
-      onChange('');
-    } else onChange(selected);
-  }, [selected]);
 
   return (
     <Group>
@@ -46,6 +40,9 @@ export default function IdTypeInput(props: Props) {
         multiple={false}
         onChange={(it) => {
           setSelected(it as IDType);
+          if (it === 'Other') {
+            onChange('');
+          } else onChange(it);
         }}
       >
         <Group mt='xs'>
