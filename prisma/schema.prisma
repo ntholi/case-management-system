@@ -164,9 +164,9 @@ model CaseStatus {
 }
 
 model PersonalInformation {
-  id               Int             @id @default(autoincrement())
-  nationalId       String          @unique
-  nationalIdType   NationalIdType?
+  id               Int            @id @default(autoincrement())
+  nationalId       String         @unique
+  nationalIdType   String
   surname          String?
   middleName       String?
   firstName        String?
@@ -186,8 +186,8 @@ model PersonalInformation {
   district         String?
   nextOfKin        String?
   nextOfKinPhone   String?
-  victimCases      Case[]          @relation("CaseToVictim")
-  suspectCases     Case[]          @relation("CaseToSuspect")
+  victimCases      Case[]         @relation("CaseToVictim")
+  suspectCases     Case[]         @relation("CaseToSuspect")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -209,15 +209,6 @@ enum MaritalStatus {
   DIVORCED
   WIDOWED
   OTHER
-}
-
-enum NationalIdType {
-  ID_CARD
-  DRIVING_LICENSE
-  PASSPORT
-  VOTERS_CARD
-  OTHER
-  NONE
 }
 
 enum Gender {

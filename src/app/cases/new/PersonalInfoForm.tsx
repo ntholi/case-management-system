@@ -13,7 +13,7 @@ import { useForm } from '@mantine/form';
 import { Gender, PersonalInformation } from '@prisma/client';
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import IdTypeInput from './components/IDTypeInput';
+import IdTypeInput from './components/IdTypeInput';
 
 type Props = {
   onSave: (value: PersonalInformation | undefined) => void;

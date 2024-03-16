@@ -1,5 +1,5 @@
 import { Chip, Group, Radio, TextInput } from '@mantine/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
   onChange: any;
@@ -10,16 +10,34 @@ type Props = {
   onBlur?: any;
 };
 
-type IDType =
-  | 'ID Card'
-  | 'Divers License'
-  | 'Passport'
-  | 'Voters Card'
-  | 'None'
-  | 'Other';
+const IdOptions = [
+  'ID Card',
+  'Drivers License',
+  'Passport',
+  'Voters Card',
+  'None',
+  'Other',
+];
+type IDType = (typeof IdOptions)[number];
 
 export default function IdTypeInput(props: Props) {
   const [selected, setSelected] = useState<IDType>('ID Card');
+  const { value, onChange } = props;
+
+  useEffect(() => {
+    const notOther = IdOptions.filter((it) => it !== 'Other');
+    if (notOther.includes(value)) {
+      setSelected(value);
+    } else {
+      setSelected('Other');
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (selected === 'Other') {
+      onChange('');
+    } else onChange(selected);
+  }, [selected]);
 
   return (
     <Group>
@@ -57,7 +75,6 @@ export default function IdTypeInput(props: Props) {
         mt={10}
         {...props}
         disabled={selected !== 'Other'}
-        value={selected === 'Other' ? '' : selected}
       />
     </Group>
   );
