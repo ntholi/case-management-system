@@ -49,7 +49,7 @@ export default function IdTypeInput(props: Props) {
           <Chip size='xs' value='ID Card'>
             ID Card
           </Chip>
-          <Chip size='xs' value='Divers License'>
+          <Chip size='xs' value='Drivers License'>
             Drivers License
           </Chip>
           <Chip size='xs' value='Passport'>
