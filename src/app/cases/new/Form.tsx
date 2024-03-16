@@ -79,7 +79,7 @@ export default function Form({
   return (
     <>
       <Modal
-        size={'xl'}
+        size={850}
         opened={victimOpened}
         onClose={closeVictim}
         title={'Personal Information'}

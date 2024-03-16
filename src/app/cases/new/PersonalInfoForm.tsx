@@ -10,9 +10,10 @@ import {
   TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Gender, NationalIdType, PersonalInformation } from '@prisma/client';
+import { Gender, PersonalInformation } from '@prisma/client';
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import IdTypeInput from './components/IDTypeInput';
 
 type Props = {
   onSave: (value: PersonalInformation | undefined) => void;
@@ -61,16 +62,7 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
           required
           {...form.getInputProps('nationalId')}
         />
-        <Radio.Group
-          description='ID Type'
-          {...form.getInputProps('nationalIdType')}
-        >
-          <Group mt='xs'>
-            {Object.entries(NationalIdType).map(([key, value]) => (
-              <Radio key={key} value={value} label={value} />
-            ))}
-          </Group>
-        </Radio.Group>
+        <IdTypeInput {...form.getInputProps('nationalIdType')} />
         <Grid pos={'relative'}>
           <LoadingOverlay visible={lookingUp} />
           <GridCol span={6}>
