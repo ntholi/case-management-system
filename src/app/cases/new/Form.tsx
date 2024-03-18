@@ -6,6 +6,8 @@ import {
   GridCol,
   Group,
   Modal,
+  Pill,
+  PillsInput,
   Radio,
   Select,
   Stack,
@@ -28,6 +30,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import PersonalInfoForm from './PersonalInfoForm';
+import PersonalInfoInput from './PersonalInfoInput';
 
 type Props = {
   weapons?: Weapon[];
@@ -149,12 +152,7 @@ export default function Form({
                 {...form.getInputProps('obNo')}
                 required
               />
-              <TextInput
-                label='Suspect'
-                value={`${suspect?.firstName || ''} ${suspect?.surname || ''}`}
-                onClick={openSuspect}
-                pointer
-              />
+              <PersonalInfoInput />
               <Select
                 label='Weapon Used'
                 {...form.getInputProps('weaponId')}
