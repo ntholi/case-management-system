@@ -35,7 +35,7 @@ export default function IdTypeInput(props: Props) {
   }, [value]);
 
   return (
-    <Group>
+    <Group wrap='nowrap' align='center'>
       <Chip.Group
         value={selected}
         multiple={false}
@@ -46,7 +46,7 @@ export default function IdTypeInput(props: Props) {
           } else onChange(it);
         }}
       >
-        <Group mt='xs'>
+        <Group mt='xs' wrap='nowrap' align='flex-start'>
           <Chip size='xs' value='ID Card'>
             ID Card
           </Chip>
