@@ -8,6 +8,7 @@ type Props = {
   error?: any;
   onFocus?: any;
   onBlur?: any;
+  required?: any;
 };
 
 const IdOptions = [
@@ -21,7 +22,7 @@ const IdOptions = [
 type IDType = (typeof IdOptions)[number];
 
 export default function IdTypeInput(props: Props) {
-  const [selected, setSelected] = useState<IDType>('ID Card');
+  const [selected, setSelected] = useState<IDType>();
   const { value, onChange } = props;
 
   useEffect(() => {

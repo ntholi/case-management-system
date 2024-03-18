@@ -79,10 +79,10 @@ export default function Form({
   return (
     <>
       <Modal
-        size={850}
+        size={'xl'}
         opened={victimOpened}
         onClose={closeVictim}
-        title={'Personal Information'}
+        title={'Victim'}
       >
         <PersonalInfoForm
           value={victim}
@@ -97,7 +97,7 @@ export default function Form({
         size={'xl'}
         opened={suspectOpened}
         onClose={closeSuspect}
-        title={'Personal Information'}
+        title={'Suspect'}
       >
         <PersonalInfoForm
           value={suspect}

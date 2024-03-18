@@ -14,6 +14,7 @@ import { Gender, PersonalInformation } from '@prisma/client';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import IdTypeInput from './components/IdTypeInput';
+import { DateInput } from '@mantine/dates';
 
 type Props = {
   onSave: (value: PersonalInformation | undefined) => void;
@@ -62,7 +63,7 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
           required
           {...form.getInputProps('nationalId')}
         />
-        <IdTypeInput {...form.getInputProps('nationalIdType')} />
+        <IdTypeInput required {...form.getInputProps('nationalIdType')} />
         <Grid pos={'relative'}>
           <LoadingOverlay visible={lookingUp} />
           <GridCol span={6}>
@@ -76,10 +77,10 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
                 label='Phone Number'
                 {...form.getInputProps('phoneNumber')}
               />
-              {/* <DateInput
+              <DateInput
                 label='Date of Birth'
                 {...form.getInputProps('dateOfBirth')}
-              /> */}
+              />
               <TextInput
                 label='Nationality'
                 {...form.getInputProps('nationality')}
