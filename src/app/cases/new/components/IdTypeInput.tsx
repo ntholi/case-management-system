@@ -8,7 +8,7 @@ type Props = {
   error?: any;
   onFocus?: any;
   onBlur?: any;
-  required?: any;
+  required?: boolean;
 };
 
 const IdOptions = [
@@ -67,13 +67,7 @@ export default function IdTypeInput(props: Props) {
           </Chip>
         </Group>
       </Chip.Group>
-      <TextInput
-        w={160}
-        required
-        mt={10}
-        {...props}
-        disabled={selected !== 'Other'}
-      />
+      <TextInput w={160} mt={10} {...props} disabled={selected !== 'Other'} />
     </Group>
   );
 }

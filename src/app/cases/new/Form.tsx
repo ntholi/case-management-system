@@ -14,22 +14,20 @@ import {
 } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 
+import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import React from 'react';
-import PersonalInfoForm from './PersonalInfoForm';
 import {
   Case,
   CrimeClassification,
-  District,
   ModusOperandiLined,
   PersonalInformation,
   PoliceStation,
   Weapon,
 } from '@prisma/client';
-import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { titleCase } from '@/lib/format';
+import React from 'react';
+import PersonalInfoForm from './PersonalInfoForm';
 
 type Props = {
   weapons?: Weapon[];

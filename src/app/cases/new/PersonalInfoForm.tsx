@@ -22,7 +22,13 @@ type Props = {
 };
 
 export default function PersonalInfoForm({ onSave, value }: Props) {
-  const { setValues, ...form } = useForm<PersonalInformation>({});
+  const { setValues, ...form } = useForm<PersonalInformation>({
+    validate: {
+      nationalIdType: (value) => {
+        if (!value) return 'ID Type is required';
+      },
+    },
+  });
   const [lookingUp, setLookingUp] = React.useState(false);
   const [isPending, startTransition] = React.useTransition();
 
