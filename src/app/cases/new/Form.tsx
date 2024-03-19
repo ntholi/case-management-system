@@ -47,8 +47,8 @@ export default function Form({
     useDisclosure(false);
   const [suspectOpened, { open: openSuspect, close: closeSuspect }] =
     useDisclosure(false);
-  const [victim, setVictim] = React.useState<PersonalInformation>();
-  const [suspect, setSuspect] = React.useState<PersonalInformation>();
+  const [victims, setVictims] = React.useState<PersonalInformation[]>([]);
+  const [suspects, setSuspects] = React.useState<PersonalInformation[]>([]);
   const { setValues, ...form } = useForm<Case>({
     validate: {
       policeStationId: (value) => {
@@ -63,14 +63,14 @@ export default function Form({
   const router = useRouter();
 
   function handleSubmit(values: Case) {
-    if (victim) values.victimId = victim.id;
-    if (suspect) values.suspectId = suspect.id;
     if (values.occurrencePlace) {
       values.occurrencePlace = values.occurrencePlace.trim();
     }
     startTransition(async () => {
       await axios.post('/api/cases', {
         ...values,
+        victimIds: victims?.map((it) => it.id),
+        suspectIds: suspects?.map((it) => it.id),
         reportingPerson: reportingPersonForm.values,
       });
       router.push('/cases');
@@ -78,168 +78,139 @@ export default function Form({
   }
 
   return (
-    <>
-      <Modal
-        size={'xl'}
-        opened={victimOpened}
-        onClose={closeVictim}
-        title={'Victim'}
-      >
-        <PersonalInfoForm
-          value={victim}
-          onSave={(it) => {
-            setVictim(it);
-            closeVictim();
-          }}
-        />
-      </Modal>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Grid>
+        <GridCol span={6}>
+          <Stack gap={'sm'}>
+            <TextInput
+              label='RCI No.'
+              {...form.getInputProps('rciNo')}
+              required
+            />
+            <PersonalInfoInput
+              title='Victims'
+              items={victims}
+              setItems={setVictims}
+            />
 
-      <Modal
-        size={'xl'}
-        opened={suspectOpened}
-        onClose={closeSuspect}
-        title={'Suspect'}
-      >
-        <PersonalInfoForm
-          value={suspect}
-          onSave={(it) => {
-            setSuspect(it);
-            closeSuspect();
-          }}
-        />
-      </Modal>
+            <Select
+              label='Classification'
+              {...form.getInputProps('classificationId')}
+              data={
+                crimeClassifications?.map((it) => ({
+                  value: it.id,
+                  label: it.name,
+                })) || []
+              }
+            />
+            <DateTimePicker
+              label='Date of Occurrence'
+              {...form.getInputProps('dateOfOccurrence')}
+            />
+            <TextInput
+              label='Occurrence Place'
+              {...form.getInputProps('occurrencePlace')}
+            />
+          </Stack>
+        </GridCol>
+        <GridCol span={6}>
+          <Stack gap={'sm'}>
+            <TextInput
+              label='OB No.'
+              {...form.getInputProps('obNo')}
+              required
+            />
+            <PersonalInfoInput
+              title='Suspect'
+              items={suspects}
+              setItems={setSuspects}
+            />
+            <Select
+              label='Weapon Used'
+              {...form.getInputProps('weaponId')}
+              data={
+                weapons?.map((it) => ({ value: it.id, label: it.name })) || []
+              }
+            />
+            <DateTimePicker
+              label='Date of Report'
+              {...form.getInputProps('dateOfReport')}
+            />
+            <Select
+              label='Police Station'
+              required
+              {...form.getInputProps('policeStationId')}
+              data={
+                policeStations?.map((it) => ({
+                  value: it.id,
+                  label: `${it.name} (${it.district})`,
+                })) || []
+              }
+            />
+          </Stack>
+        </GridCol>
+      </Grid>
+      <Grid>
+        <GridCol span={6}>
+          <Textarea
+            rows={5}
+            label='Modus Operandi'
+            {...form.getInputProps('modusOperandi')}
+          />
+        </GridCol>
+        <GridCol span={6}>
+          <Radio.Group
+            mt={'lg'}
+            description='Does Modus Operandi Contributed to Crime?'
+            {...form.getInputProps('nationalIdType')}
+          >
+            <Group mt='xs'>
+              {Object.entries(ModusOperandiLined).map(([key, value]) => (
+                <Radio key={key} value={value} label={value} />
+              ))}
+            </Group>
+          </Radio.Group>
+          <Textarea
+            cols={3}
+            mt={'md'}
+            placeholder='How Modus Operandi Contributed to Crime?'
+            {...form.getInputProps('modusOperandiDetails')}
+          />
+        </GridCol>
+      </Grid>
 
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Fieldset mt={'lg'} legend='Reporting Person'>
         <Grid>
           <GridCol span={6}>
-            <Stack gap={'sm'}>
-              <TextInput
-                label='RCI No.'
-                {...form.getInputProps('rciNo')}
-                required
-              />
-              <TextInput
-                label='Victim'
-                value={`${victim?.firstName || ''} ${victim?.surname || ''}`}
-                onClick={openVictim}
-                pointer
-              />
-
-              <Select
-                label='Classification'
-                {...form.getInputProps('classificationId')}
-                data={
-                  crimeClassifications?.map((it) => ({
-                    value: it.id,
-                    label: it.name,
-                  })) || []
-                }
-              />
-              <DateTimePicker
-                label='Date of Occurrence'
-                {...form.getInputProps('dateOfOccurrence')}
-              />
-              <TextInput
-                label='Occurrence Place'
-                {...form.getInputProps('occurrencePlace')}
-              />
-            </Stack>
-          </GridCol>
-          <GridCol span={6}>
-            <Stack gap={'sm'}>
-              <TextInput
-                label='OB No.'
-                {...form.getInputProps('obNo')}
-                required
-              />
-              <PersonalInfoInput title='Suspect' />
-              <Select
-                label='Weapon Used'
-                {...form.getInputProps('weaponId')}
-                data={
-                  weapons?.map((it) => ({ value: it.id, label: it.name })) || []
-                }
-              />
-              <DateTimePicker
-                label='Date of Report'
-                {...form.getInputProps('dateOfReport')}
-              />
-              <Select
-                label='Police Station'
-                required
-                {...form.getInputProps('policeStationId')}
-                data={
-                  policeStations?.map((it) => ({
-                    value: it.id,
-                    label: `${it.name} (${it.district})`,
-                  })) || []
-                }
-              />
-            </Stack>
-          </GridCol>
-        </Grid>
-        <Grid>
-          <GridCol span={6}>
-            <Textarea
-              rows={5}
-              label='Modus Operandi'
-              {...form.getInputProps('modusOperandi')}
+            <TextInput
+              label='Name'
+              {...reportingPersonForm.getInputProps('name')}
             />
           </GridCol>
           <GridCol span={6}>
-            <Radio.Group
-              mt={'lg'}
-              description='Does Modus Operandi Contributed to Crime?'
-              {...form.getInputProps('nationalIdType')}
-            >
-              <Group mt='xs'>
-                {Object.entries(ModusOperandiLined).map(([key, value]) => (
-                  <Radio key={key} value={value} label={value} />
-                ))}
-              </Group>
-            </Radio.Group>
-            <Textarea
-              cols={3}
-              mt={'md'}
-              placeholder='How Modus Operandi Contributed to Crime?'
-              {...form.getInputProps('modusOperandiDetails')}
+            <TextInput
+              label='ID'
+              {...reportingPersonForm.getInputProps('idNo')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Phone Number'
+              {...reportingPersonForm.getInputProps('phoneNumber')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Relationship'
+              {...reportingPersonForm.getInputProps('relationship')}
             />
           </GridCol>
         </Grid>
+      </Fieldset>
 
-        <Fieldset mt={'lg'} legend='Reporting Person'>
-          <Grid>
-            <GridCol span={6}>
-              <TextInput
-                label='Name'
-                {...reportingPersonForm.getInputProps('name')}
-              />
-            </GridCol>
-            <GridCol span={6}>
-              <TextInput
-                label='ID'
-                {...reportingPersonForm.getInputProps('idNo')}
-              />
-            </GridCol>
-            <GridCol span={6}>
-              <TextInput
-                label='Phone Number'
-                {...reportingPersonForm.getInputProps('phoneNumber')}
-              />
-            </GridCol>
-            <GridCol span={6}>
-              <TextInput
-                label='Relationship'
-                {...reportingPersonForm.getInputProps('relationship')}
-              />
-            </GridCol>
-          </Grid>
-        </Fieldset>
-
-        <Button mt={'lg'} type='submit' loading={isPending}>
-          Save
-        </Button>
-      </form>
-    </>
+      <Button mt={'lg'} type='submit' loading={isPending}>
+        Save
+      </Button>
+    </form>
   );
 }

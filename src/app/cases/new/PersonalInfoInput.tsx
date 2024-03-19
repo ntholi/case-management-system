@@ -7,12 +7,13 @@ import PersonalInfoForm from './PersonalInfoForm';
 
 type Props = {
   title: string;
+  items: PersonalInformation[];
+  setItems: React.Dispatch<React.SetStateAction<PersonalInformation[]>>;
 };
 
 export default function PersonalInfoInput(props: Props) {
-  const { title } = props;
+  const { title, items, setItems } = props;
   const [opened, { open, close }] = useDisclosure(false);
-  const [items, setItems] = useState<PersonalInformation[]>([]);
   const [current, setCurrent] = useState<PersonalInformation>();
 
   const handleValueRemove = (val: PersonalInformation) =>

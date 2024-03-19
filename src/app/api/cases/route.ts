@@ -30,8 +30,8 @@ export async function GET(request: NextRequest) {
     },
     include: {
       reportingPerson: true,
-      victim: true,
-      suspect: true,
+      victims: true,
+      suspects: true,
       weapons: true,
       crimeClassifications: true,
       policeStation: true,
@@ -54,8 +54,8 @@ const schema = z.object({
     phoneNumber: z.string().optional(),
     relationship: z.string().optional(),
   }),
-  victimId: z.number().optional(),
-  suspectId: z.number().optional(),
+  victimIds: z.array(z.number()).optional(),
+  suspectIds: z.array(z.number()).optional(),
   weaponId: z.string().optional(),
   crimeClassificationId: z.string().optional(),
   dateOfOccurrence: z.string().optional(),
@@ -104,20 +104,12 @@ export async function POST(request: NextRequest) {
       reportingPerson: {
         create: data.reportingPerson,
       },
-      victim: data.victimId
-        ? {
-            connect: {
-              id: data.victimId,
-            },
-          }
-        : undefined,
-      suspect: data.suspectId
-        ? {
-            connect: {
-              id: data.suspectId,
-            },
-          }
-        : undefined,
+      victims: {
+        connect: data?.victimIds?.map((id) => ({ id })),
+      },
+      suspects: {
+        connect: data?.suspectIds?.map((id) => ({ id })),
+      },
       policeStation: {
         connect: {
           id: data.policeStationId,

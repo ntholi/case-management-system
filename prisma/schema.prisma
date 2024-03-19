@@ -131,15 +131,13 @@ model Case {
   crimeClassifications CrimeClassification[]
   policeStation        PoliceStation         @relation(fields: [policeStationId], references: [id])
   occurrencePlace      String?
-  victim               PersonalInformation?  @relation("CaseToVictim", fields: [victimId], references: [id])
-  suspect              PersonalInformation?  @relation("CaseToSuspect", fields: [suspectId], references: [id])
+  victims              PersonalInformation[] @relation("CaseToVictim")
+  suspects             PersonalInformation[] @relation("CaseToSuspect")
   modusOperandi        String?
   modusOperandiDetails String?
   modusOperandiLinked  ModusOperandiLined?
   dateOfOccurrence     DateTime?
   dateOfReport         DateTime?
-  victimId             Int?
-  suspectId            Int?
   policeStationId      String
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   reportingPersonId    Int                   @unique

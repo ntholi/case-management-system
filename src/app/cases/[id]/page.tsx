@@ -2,7 +2,16 @@ import FieldView from '@/components/FieldView';
 import PageTitle from '@/components/PageTitle';
 import ThemedButton from '@/components/ThemedButton';
 import prisma from '@/lib/prisma';
-import { Card, Flex, Grid, GridCol, Paper, Stack, Title } from '@mantine/core';
+import {
+  Card,
+  Divider,
+  Flex,
+  Grid,
+  GridCol,
+  Paper,
+  Stack,
+  Title,
+} from '@mantine/core';
 import { PersonalInformation } from '@prisma/client';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { notFound } from 'next/navigation';
@@ -15,8 +24,8 @@ export default async function CasePage({ params: { id } }: Props) {
   const item = await prisma.case.findUnique({
     where: { id: Number(id) },
     include: {
-      victim: true,
-      suspect: true,
+      victims: true,
+      suspects: true,
       weapons: true,
       crimeClassifications: true,
       policeStation: true,
@@ -84,24 +93,38 @@ export default async function CasePage({ params: { id } }: Props) {
             </Card>
           </GridCol>
           <GridCol span={6}>
-            <Card shadow='sm' padding='lg' radius='md' withBorder>
-              <Stack>
-                <Title order={4} fw={100}>
-                  Victim
-                </Title>
-                <PersonalInfoCard item={item.victim} />
-              </Stack>
-            </Card>
+            <Title order={3} fw={100}>
+              Victims
+            </Title>
+            {item.victims?.map((it) => (
+              <Card
+                key={it.id}
+                shadow='sm'
+                my={'xs'}
+                padding='lg'
+                radius='md'
+                withBorder
+              >
+                <PersonalInfoCard item={it} />
+              </Card>
+            ))}
           </GridCol>
           <GridCol span={6}>
-            <Card shadow='sm' padding='lg' radius='md' withBorder>
-              <Stack>
-                <Title order={4} fw={100}>
-                  Suspect
-                </Title>
-                <PersonalInfoCard item={item.suspect} />
-              </Stack>
-            </Card>
+            <Title order={3} fw={100}>
+              Suspects
+            </Title>
+            {item.suspects?.map((it) => (
+              <Card
+                key={it.id}
+                shadow='sm'
+                my={'xs'}
+                padding='lg'
+                radius='md'
+                withBorder
+              >
+                <PersonalInfoCard item={it} />
+              </Card>
+            ))}
           </GridCol>
         </Grid>
       </Paper>
