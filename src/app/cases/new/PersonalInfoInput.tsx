@@ -1,7 +1,7 @@
 import { PillsInput, Pill, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React, { useState } from 'react';
-import PersonalInfoForm from './PersonalInfoForm';
+import classes from './PersonalInfoInput.module.css';
 
 type Props = {
   title?: string;
@@ -16,7 +16,14 @@ export default function PersonalInfoInput(props: Props) {
     setValue((current) => current.filter((v) => v !== val));
 
   const values = value.map((item) => (
-    <Pill key={item} withRemoveButton onRemove={() => handleValueRemove(item)}>
+    <Pill
+      key={item}
+      withRemoveButton
+      classNames={{
+        remove: classes.remove,
+      }}
+      onRemove={() => handleValueRemove(item)}
+    >
       <Text
         size={'xs'}
         mt={2}
@@ -49,7 +56,7 @@ export default function PersonalInfoInput(props: Props) {
       <PillsInput label='PillsInput'>
         <Pill.Group>
           {values}
-          <PillsInput.Field placeholder='Enter tags' pointer />
+          <PillsInput.Field placeholder='Enter tags' pointer onClick={open} />
         </Pill.Group>
       </PillsInput>
     </>
