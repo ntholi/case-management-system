@@ -27,7 +27,7 @@ export default function PersonalInfoInput(props: Props) {
       <Text
         size={'xs'}
         mt={2}
-        style={{ cursor: 'pointer' }}
+        className={classes.pillText}
         onClick={() => {
           console.log('Clicked');
         }}

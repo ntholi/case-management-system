@@ -2,3 +2,11 @@
   color: #f87171;
   cursor: pointer;
 }
+
+.pillText {
+  cursor: pointer;
+}
+
+.pillText:hover {
+  color: #9ca3af;
+}
