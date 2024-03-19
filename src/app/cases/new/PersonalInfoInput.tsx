@@ -2,22 +2,25 @@ import { PillsInput, Pill, Modal, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React, { useState } from 'react';
 import classes from './PersonalInfoInput.module.css';
+import { PersonalInformation } from '@prisma/client';
+import PersonalInfoForm from './PersonalInfoForm';
 
 type Props = {
-  title?: string;
+  title: string;
 };
 
 export default function PersonalInfoInput(props: Props) {
   const { title } = props;
   const [opened, { open, close }] = useDisclosure(false);
-  const [value, setValue] = useState<string[]>(['Thabo', 'Lebese']);
+  const [items, setItems] = useState<PersonalInformation[]>([]);
+  const [current, setCurrent] = useState<PersonalInformation>();
 
-  const handleValueRemove = (val: string) =>
-    setValue((current) => current.filter((v) => v !== val));
+  const handleValueRemove = (val: PersonalInformation) =>
+    setItems((current) => current.filter((v) => v.id !== val.id));
 
-  const values = value.map((item) => (
+  const values = items.map((item) => (
     <Pill
-      key={item}
+      key={item.id}
       withRemoveButton
       classNames={{
         remove: classes.remove,
@@ -29,34 +32,42 @@ export default function PersonalInfoInput(props: Props) {
         mt={2}
         className={classes.pillText}
         onClick={() => {
-          console.log('Clicked');
+          setCurrent(item);
+          open();
         }}
       >
-        {item}
+        {item.firstName} {item.surname}
       </Text>
     </Pill>
   ));
 
   return (
     <>
-      <Modal
-        size={'xl'}
-        opened={opened}
-        onClose={close}
-        title={title ? title : 'Personal Information'}
-      >
-        {/* <PersonalInfoForm
-          value={victim}
+      <Modal size={'xl'} opened={opened} onClose={close} title={title}>
+        <PersonalInfoForm
+          value={current}
           onSave={(it) => {
-            setVictim(it);
-            closeVictim();
+            setCurrent(it);
+            if (it) {
+              const exists = items.find((i) => i.id === it.id);
+              if (!exists) {
+                setItems((current) => [...current, it]);
+              }
+            }
+            close();
           }}
-        /> */}
+        />
       </Modal>
-      <PillsInput label='PillsInput'>
+      <PillsInput label={title}>
         <Pill.Group>
           {values}
-          <PillsInput.Field placeholder='Enter tags' pointer onClick={open} />
+          <PillsInput.Field
+            pointer
+            onClick={() => {
+              setCurrent(undefined);
+              open();
+            }}
+          />
         </Pill.Group>
       </PillsInput>
     </>

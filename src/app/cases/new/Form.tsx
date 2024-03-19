@@ -152,7 +152,7 @@ export default function Form({
                 {...form.getInputProps('obNo')}
                 required
               />
-              <PersonalInfoInput />
+              <PersonalInfoInput title='Suspect' />
               <Select
                 label='Weapon Used'
                 {...form.getInputProps('weaponId')}
