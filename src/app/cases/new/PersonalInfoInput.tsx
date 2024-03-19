@@ -49,10 +49,8 @@ export default function PersonalInfoInput(props: Props) {
           onSave={(it) => {
             setCurrent(it);
             if (it) {
-              const exists = items.find((i) => i.id === it.id);
-              if (!exists) {
-                setItems((current) => [...current, it]);
-              }
+              const allButCurrent = items.filter((i) => i.id !== it.id);
+              setItems([...allButCurrent, it]);
             }
             close();
           }}
