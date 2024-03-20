@@ -27,7 +27,7 @@ import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
   const pathname = usePathname();
-  const { status } = useSession();
+  const { status, data: session } = useSession();
 
   return (
     <AppShell.Navbar p='xs'>
@@ -72,23 +72,27 @@ export default function Navigation() {
           leftSection={<IconBuildingBank size='1.1rem' />}
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
-        <Divider mt={'lg'} mb={'sm'} />
-        <NavLink
-          label='Unpublished Cases'
-          component={Link}
-          active={pathname.startsWith('/unpublished-cases')}
-          href={'/unpublished-cases'}
-          leftSection={<IconHourglass size='1.1rem' />}
-          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
-        />
-        <NavLink
-          label='Users'
-          component={Link}
-          active={pathname.startsWith('/users')}
-          href={'/users'}
-          leftSection={<IconUsers size='1.1rem' />}
-          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
-        />
+        {session?.user?.role === 'ADMIN' && (
+          <>
+            <Divider mt={'lg'} mb={'sm'} />
+            <NavLink
+              label='Unpublished Cases'
+              component={Link}
+              active={pathname.startsWith('/unpublished-cases')}
+              href={'/unpublished-cases'}
+              leftSection={<IconHourglass size='1.1rem' />}
+              rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+            />
+            <NavLink
+              label='Users'
+              component={Link}
+              active={pathname.startsWith('/users')}
+              href={'/users'}
+              leftSection={<IconUsers size='1.1rem' />}
+              rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+            />
+          </>
+        )}
       </AppShell.Section>
       <AppShell.Section>
         <Divider mb='md' />

@@ -90,7 +90,7 @@ function Form({ policeStations }: { policeStations: PoliceStation[] }) {
         required
         name='policeStationId'
         data={
-          policeStations?.map((it) => ({
+          policeStations.map((it) => ({
             value: it.id,
             label: `${it.name} (${it.district})`,
           })) || []
