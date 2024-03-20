@@ -20,8 +20,10 @@ import Navigation from './Navigation';
 
 export default function AdminShell({ children }: PropsWithChildren) {
   const [opened, { toggle }] = useDisclosure();
-  const { setColorScheme } = useMantineColorScheme();
-  const colorScheme = useComputedColorScheme('dark');
+  const { setColorScheme, colorScheme } = useMantineColorScheme();
+  const computedColorScheme = useComputedColorScheme('dark', {
+    getInitialValueInEffect: true,
+  });
 
   const { status } = useSession();
 
@@ -50,7 +52,7 @@ export default function AdminShell({ children }: PropsWithChildren) {
             </Group>
           </Group>
           <ActionIcon variant='default' size='lg'>
-            {colorScheme === 'dark' ? (
+            {computedColorScheme === 'dark' ? (
               <IconSun onClick={() => setColorScheme('light')} />
             ) : (
               <IconMoon onClick={() => setColorScheme('dark')} />

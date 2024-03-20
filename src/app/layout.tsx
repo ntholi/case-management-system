@@ -17,7 +17,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='en'>
       <head>
-        <ColorSchemeScript />
+        <ColorSchemeScript defaultColorScheme='dark' />
       </head>
       <body>
         <Providers>
