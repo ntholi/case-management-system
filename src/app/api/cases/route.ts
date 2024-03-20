@@ -9,9 +9,11 @@ export async function GET(request: NextRequest) {
   const weapon = searchParams.get('weapon');
   const classification = searchParams.get('classification');
   const station = searchParams.get('station');
+  const publish = !(searchParams.get('published') === 'false');
 
   const data = await prisma.case.findMany({
     where: {
+      published: publish,
       weapons: weapon
         ? {
             some: {

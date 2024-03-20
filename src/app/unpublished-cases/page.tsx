@@ -47,7 +47,7 @@ export default function CasePage() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`/api/cases`);
+      const response = await fetch(`/api/cases?published=false`);
       const data = await response.json();
       setData(data);
       setLoading(false);
