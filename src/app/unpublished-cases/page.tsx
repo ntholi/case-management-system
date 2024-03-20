@@ -1,15 +1,12 @@
 'use client';
 import DeleteIconButton from '@/components/DeleteIconButton';
 import PageTitle from '@/components/PageTitle';
-import ThemedButton from '@/components/ThemedButton';
 import ThemedIconButton from '@/components/ThemedIconButton';
 import ThemedTableHead from '@/components/ThemedTableHead';
 import { dateTime } from '@/lib/format';
 import {
-  ActionIcon,
   Anchor,
   Button,
-  Divider,
   Flex,
   Group,
   Loader,
@@ -20,18 +17,12 @@ import {
   TableTh,
   TableTr,
 } from '@mantine/core';
-import {
-  IconEdit,
-  IconFileSpreadsheet,
-  IconPlus,
-  IconUpload,
-} from '@tabler/icons-react';
+import { Case as BaseCase, PersonalInformation } from '@prisma/client';
+import { IconEdit, IconUpload } from '@tabler/icons-react';
 import Link from 'next/link';
-import { remove, publish } from './actions';
-import { Case as BaseCase, PersonalInformation, Prisma } from '@prisma/client';
-import { useEffect, useState } from 'react';
-import { useQueryState } from 'nuqs';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState, useTransition } from 'react';
+import { publish, remove } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,10 +31,12 @@ export type Case = BaseCase & {
   suspect?: PersonalInformation;
 };
 
-export default function CasePage() {
+export default function UnpublishedCasePage() {
   const [data, setData] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [deleting, startDelete] = useTransition();
+  const [publishing, startPublish] = useTransition();
 
   useEffect(() => {
     async function fetchData() {
@@ -78,9 +71,12 @@ export default function CasePage() {
             ml={'sm'}
             size='xs'
             variant='light'
-            onClick={async () => {
-              await publish(row.id);
-              router.refresh();
+            disabled={publishing}
+            onClick={() => {
+              startPublish(async () => {
+                await publish(row.id);
+                router.refresh();
+              });
             }}
             rightSection={<IconUpload size={'1rem'} />}
           >
@@ -89,9 +85,12 @@ export default function CasePage() {
           <DeleteIconButton
             ml={10}
             id={row.id}
+            disabled={deleting}
             action={async (id) => {
-              await remove(id);
-              router.refresh();
+              startDelete(async () => {
+                await remove(id);
+                router.refresh();
+              });
             }}
           />
         </Group>
