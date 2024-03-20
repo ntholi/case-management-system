@@ -81,76 +81,84 @@ export default function Form({
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Grid>
         <GridCol span={6}>
-          <Stack gap={'sm'}>
-            <TextInput
-              label='RCI No.'
-              {...form.getInputProps('rciNo')}
-              required
-            />
-            <PersonalInfoInput
-              title='Victims'
-              items={victims}
-              setItems={setVictims}
-            />
-
-            <Select
-              label='Classification'
-              {...form.getInputProps('classificationId')}
-              data={
-                crimeClassifications?.map((it) => ({
-                  value: it.id,
-                  label: it.name,
-                })) || []
-              }
-            />
-            <DateTimePicker
-              label='Date of Occurrence'
-              {...form.getInputProps('dateOfOccurrence')}
-            />
-            <TextInput
-              label='Occurrence Place'
-              {...form.getInputProps('occurrencePlace')}
-            />
-          </Stack>
+          <TextInput
+            label='RCI No.'
+            {...form.getInputProps('rciNo')}
+            required
+          />
         </GridCol>
         <GridCol span={6}>
-          <Stack gap={'sm'}>
-            <TextInput
-              label='OB No.'
-              {...form.getInputProps('obNo')}
-              required
-            />
-            <PersonalInfoInput
-              title='Suspect'
-              items={suspects}
-              setItems={setSuspects}
-            />
-            <Select
-              label='Weapon Used'
-              {...form.getInputProps('weaponId')}
-              data={
-                weapons?.map((it) => ({ value: it.id, label: it.name })) || []
-              }
-            />
-            <DateTimePicker
-              label='Date of Report'
-              {...form.getInputProps('dateOfReport')}
-            />
-            <Select
-              label='Police Station'
-              required
-              {...form.getInputProps('policeStationId')}
-              data={
-                policeStations?.map((it) => ({
-                  value: it.id,
-                  label: `${it.name} (${it.district})`,
-                })) || []
-              }
-            />
-          </Stack>
+          <TextInput label='OB No.' {...form.getInputProps('obNo')} required />
+        </GridCol>
+        <GridCol span={6}>
+          <PersonalInfoInput
+            title='Victims'
+            items={victims}
+            setItems={setVictims}
+          />
+        </GridCol>
+        <GridCol span={6}>
+          <PersonalInfoInput
+            title='Suspect'
+            items={suspects}
+            setItems={setSuspects}
+          />
+        </GridCol>
+        <GridCol span={6}>
+          {' '}
+          <Select
+            label='Classification'
+            {...form.getInputProps('classificationId')}
+            data={
+              crimeClassifications?.map((it) => ({
+                value: it.id,
+                label: it.name,
+              })) || []
+            }
+          />
+        </GridCol>
+        <GridCol span={6}>
+          <Select
+            label='Weapon Used'
+            {...form.getInputProps('weaponId')}
+            data={
+              weapons?.map((it) => ({ value: it.id, label: it.name })) || []
+            }
+          />
+        </GridCol>
+        <GridCol span={6}>
+          <DateTimePicker
+            label='Date of Occurrence'
+            {...form.getInputProps('dateOfOccurrence')}
+          />
+        </GridCol>
+        <GridCol span={6}>
+          <DateTimePicker
+            label='Date of Report'
+            {...form.getInputProps('dateOfReport')}
+          />
+        </GridCol>
+        <GridCol span={6}>
+          <TextInput
+            label='Occurrence Place'
+            {...form.getInputProps('occurrencePlace')}
+          />
+        </GridCol>
+        <GridCol span={6}>
+          <Select
+            label='Police Station'
+            required
+            {...form.getInputProps('policeStationId')}
+            data={
+              policeStations?.map((it) => ({
+                value: it.id,
+                label: `${it.name} (${it.district})`,
+              })) || []
+            }
+          />
         </GridCol>
       </Grid>
-      <Grid>
+      <Grid mt={'lg'}>
         <GridCol span={6}>
           <Textarea
             rows={5}
