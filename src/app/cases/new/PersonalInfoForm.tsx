@@ -42,6 +42,7 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
     values: PersonalInformation,
     event: React.FormEvent<HTMLFormElement> | undefined
   ) {
+    event?.preventDefault();
     event?.stopPropagation();
     startTransition(async () => {
       const res = await axios.post('/api/personal-info', values);
