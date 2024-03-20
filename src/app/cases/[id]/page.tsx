@@ -15,6 +15,7 @@ import {
 import { PersonalInformation } from '@prisma/client';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { notFound } from 'next/navigation';
+import BackButton from './BackButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,9 +40,7 @@ export default async function CasePage({ params: { id } }: Props) {
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
           <PageTitle text='New Case' />
-          <ThemedButton icon={<IconArrowLeft />} href='/cases'>
-            Back
-          </ThemedButton>
+          <BackButton />
         </Flex>
       </Paper>
       <Paper p='md' withBorder mt={'lg'}>
