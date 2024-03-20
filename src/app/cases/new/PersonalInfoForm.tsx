@@ -77,58 +77,69 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
         <Grid pos={'relative'}>
           <LoadingOverlay visible={lookingUp} />
           <GridCol span={6}>
-            <Stack gap={'sm'}>
-              <TextInput label='Surname' {...form.getInputProps('surname')} />
-              <TextInput
-                label='Middle Name'
-                {...form.getInputProps('middleName')}
-              />
-              <TextInput
-                label='Phone Number'
-                {...form.getInputProps('phoneNumber')}
-              />
-              <DateInput
-                label='Date of Birth'
-                {...form.getInputProps('dateOfBirth')}
-              />
-              <TextInput
-                label='Nationality'
-                {...form.getInputProps('nationality')}
-              />
-            </Stack>
+            <TextInput label='Surname' {...form.getInputProps('surname')} />
           </GridCol>
           <GridCol span={6}>
-            <Stack gap={'sm'}>
-              <TextInput
-                label='First Name'
-                {...form.getInputProps('firstName')}
-              />
-              <Radio.Group
-                mt={'sm'}
-                description='Gender'
-                {...form.getInputProps('gender')}
-              >
-                <Group mt='xs'>
-                  {Object.entries(Gender).map(([key, value]) => (
-                    <Radio key={key} value={value} label={value} />
-                  ))}
-                </Group>
-              </Radio.Group>
-              <TextInput
-                label='Email'
-                type='email'
-                mt={5}
-                {...form.getInputProps('email')}
-              />
-              <TextInput
-                label='Place of Birth'
-                {...form.getInputProps('placeOfBirth')}
-              />
-              <TextInput
-                label='Occupation'
-                {...form.getInputProps('occupation')}
-              />
-            </Stack>
+            <TextInput
+              label='First Name'
+              {...form.getInputProps('firstName')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Middle Name'
+              {...form.getInputProps('middleName')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <Radio.Group
+              mt={'xs'}
+              description='Gender'
+              {...form.getInputProps('gender')}
+            >
+              <Group mt='xs'>
+                {Object.entries(Gender).map(([key, value]) => (
+                  <Radio key={key} value={value} label={value} />
+                ))}
+              </Group>
+            </Radio.Group>
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Phone Number'
+              {...form.getInputProps('phoneNumber')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Email'
+              type='email'
+              {...form.getInputProps('email')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <DateInput
+              label='Date of Birth'
+              {...form.getInputProps('dateOfBirth')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Place of Birth'
+              {...form.getInputProps('placeOfBirth')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Nationality'
+              {...form.getInputProps('nationality')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Occupation'
+              {...form.getInputProps('occupation')}
+            />
           </GridCol>
         </Grid>
         <Button mt={'xl'} type='submit' loading={isPending}>
