@@ -2,6 +2,7 @@
 import {
   Button,
   Fieldset,
+  Flex,
   Grid,
   GridCol,
   Group,
@@ -31,6 +32,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import PersonalInfoForm from './PersonalInfoForm';
 import PersonalInfoInput from './PersonalInfoInput';
+import { IconDeviceFloppy } from '@tabler/icons-react';
 
 type Props = {
   weapons?: Weapon[];
@@ -216,9 +218,17 @@ export default function Form({
         </Grid>
       </Fieldset>
 
-      <Button mt={'lg'} type='submit' loading={isPending}>
-        Save
-      </Button>
+      <Flex justify={'flex-end'}>
+        <Button
+          mt={'lg'}
+          type='submit'
+          w={220}
+          loading={isPending}
+          leftSection={<IconDeviceFloppy />}
+        >
+          Save
+        </Button>
+      </Flex>
     </form>
   );
 }
