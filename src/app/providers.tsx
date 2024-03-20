@@ -14,7 +14,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <Suspense>
-      <MantineProvider defaultColorScheme='auto' theme={theme}>
+      <MantineProvider theme={theme}>
         <Notifications />
         <ModalsProvider>
           <SessionProvider>{children}</SessionProvider>
