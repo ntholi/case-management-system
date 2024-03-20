@@ -20,10 +20,10 @@ datasource db {
 
 model Account {
   id                String  @id @default(cuid())
-  userId            String
+  userId            String  @map("user_id")
   type              String
   provider          String
-  providerAccountId String
+  providerAccountId String  @map("provider_account_id")
   refresh_token     String? @db.Text
   access_token      String? @db.Text
   expires_at        Int?
@@ -40,8 +40,8 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -57,13 +57,13 @@ model User {
   emailVerified  DateTime?      @map("email_verified")
   image          String?
   hashedPassword String?        @map("hashed_password")
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
   policeStation  PoliceStation? @relation(fields: [policeStationId], references: [id])
 
   accounts        Account[]
   sessions        Session[]
-  policeStationId String?
+  policeStationId String?   @map("police_station_id")
 
   @@map("users")
 }
@@ -80,8 +80,8 @@ model VerificationToken {
 model Weapon {
   id        String   @id @default(cuid())
   name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
   cases     Case[]
 
   @@map("weapons")
@@ -90,9 +90,9 @@ model Weapon {
 model CrimeClassification {
   id        String   @id @default(cuid())
   name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   cases     Case[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("crime_classifications")
 }
@@ -101,10 +101,10 @@ model PoliceStation {
   id        String   @id @default(cuid())
   name      String
   district  District
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   cases     Case[]
   users     User[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([name, district])
   @@map("police_stations")
@@ -113,11 +113,11 @@ model PoliceStation {
 model ReportingPerson {
   id           Int      @id @default(autoincrement())
   name         String?
-  idNo         String?
-  phoneNumber  String?
+  nationalId   String?  @map("national_id")
+  phoneNumber  String?  @map("phone_number")
   relationship String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
   case         Case?
 
   @@map("reporting_persons")
@@ -125,26 +125,26 @@ model ReportingPerson {
 
 model Case {
   id                   Int                   @id @default(autoincrement())
-  rciNo                String                @unique
-  obNo                 String
+  rciNo                String                @unique @map("rci_no")
+  obNo                 String                @unique @map("ob_no")
   weapons              Weapon[]
   crimeClassifications CrimeClassification[]
   policeStation        PoliceStation         @relation(fields: [policeStationId], references: [id])
-  occurrencePlace      String?
+  occurrencePlace      String?               @map("occurrence_place")
   victims              PersonalInformation[] @relation("CaseToVictim")
   suspects             PersonalInformation[] @relation("CaseToSuspect")
-  modusOperandi        String?
-  modusOperandiDetails String?
-  modusOperandiLinked  ModusOperandiLined?
-  dateOfOccurrence     DateTime?
-  dateOfReport         DateTime?
-  policeStationId      String
+  modusOperandi        String?               @map("modus_operandi")
+  modusOperandiDetails String?               @map("modus_operandi_details")
+  modusOperandiLinked  ModusOperandiLined?   @map("modus_operandi_linked")
+  dateOfOccurrence     DateTime?             @map("date_of_occurrence")
+  dateOfReport         DateTime?             @map("date_of_report")
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
-  reportingPersonId    Int                   @unique
   caseStatus           CaseStatus?
   published            Boolean               @default(false)
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
+  policeStationId      String                @map("police_station_id")
+  reportingPersonId    Int                   @unique @map("reporting_person_id")
+  createdAt            DateTime              @default(now()) @map("created_at")
+  updatedAt            DateTime              @updatedAt @map("updated_at")
 
   @@map("cases")
 }
@@ -154,42 +154,42 @@ model CaseStatus {
   crNumber         Int              @unique @default(autoincrement()) @map("cr_number")
   policeCaseStatus PoliceCaseStatus @default(PENDING_ALLOCATION) @map("police_case_status")
   courtCaseStatus  CourtCaseStatus? @map("court_case_status")
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
   case             Case             @relation(fields: [caseId], references: [id], onDelete: Cascade)
   caseId           Int              @unique
+  createdAt        DateTime         @default(now()) @map("created_at")
+  updatedAt        DateTime         @updatedAt @map("updated_at")
 
   @@map("case_statuses")
 }
 
 model PersonalInformation {
   id               Int            @id @default(autoincrement())
-  nationalId       String         @unique
-  nationalIdType   String
+  nationalId       String         @unique @map("national_id")
+  nationalIdType   String         @map("national_id_type")
   surname          String?
-  middleName       String?
-  firstName        String?
+  middleName       String?        @map("middle_name")
+  firstName        String?        @map("first_name")
   gender           Gender?
-  phoneNumber      String?
+  phoneNumber      String?        @map("phone_number")
   email            String?
-  dateOfBirth      DateTime?
+  dateOfBirth      DateTime?      @map("date_of_birth")
   nationality      String?
-  maritalStatus    MaritalStatus?
+  maritalStatus    MaritalStatus? @map("marital_status")
   occupation       String?
   education        Education?
-  placeOfBirth     String?
-  areaChief        String?
-  placeOfResidence String?
-  headMan          String?
-  principalChief   String?
+  placeOfBirth     String?        @map("place_of_birth")
+  areaChief        String?        @map("area_chief")
+  placeOfResidence String?        @map("place_of_residence")
+  headMan          String?        @map("head_man")
+  principalChief   String?        @map("principal_chief")
   district         String?
-  nextOfKin        String?
-  nextOfKinPhone   String?
+  nextOfKin        String?        @map("next_of_kin")
+  nextOfKinPhone   String?        @map("next_of_kin_phone")
   victimCases      Case[]         @relation("CaseToVictim")
   suspectCases     Case[]         @relation("CaseToSuspect")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("personal_informations")
 }
