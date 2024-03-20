@@ -141,9 +141,10 @@ model Case {
   policeStationId      String
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   reportingPersonId    Int                   @unique
+  caseStatus           CaseStatus?
+  published            Boolean               @default(false)
   createdAt            DateTime              @default(now())
   updatedAt            DateTime              @updatedAt
-  caseStatus           CaseStatus?
 
   @@map("cases")
 }
