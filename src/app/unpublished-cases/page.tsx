@@ -31,6 +31,7 @@ import { remove } from './actions';
 import { Case as BaseCase, PersonalInformation, Prisma } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
+import { useRouter } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,6 +43,7 @@ export type Case = BaseCase & {
 export default function CasePage() {
   const [data, setData] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
@@ -80,7 +82,14 @@ export default function CasePage() {
           >
             Published
           </Button>
-          <DeleteIconButton ml={10} id={row.id} action={remove} />
+          <DeleteIconButton
+            ml={10}
+            id={row.id}
+            action={async (id) => {
+              await remove(id);
+              router.refresh();
+            }}
+          />
         </Group>
       </TableTd>
     </TableTr>

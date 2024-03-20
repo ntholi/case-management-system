@@ -156,7 +156,7 @@ model CaseStatus {
   courtCaseStatus  CourtCaseStatus? @map("court_case_status")
   createdAt        DateTime         @default(now())
   updatedAt        DateTime         @updatedAt
-  case             Case             @relation(fields: [caseId], references: [id])
+  case             Case             @relation(fields: [caseId], references: [id], onDelete: Cascade)
   caseId           Int              @unique
 
   @@map("case_statuses")
