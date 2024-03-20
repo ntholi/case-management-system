@@ -27,7 +27,7 @@ import {
   IconUpload,
 } from '@tabler/icons-react';
 import Link from 'next/link';
-import { remove } from './actions';
+import { remove, publish } from './actions';
 import { Case as BaseCase, PersonalInformation, Prisma } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
@@ -78,6 +78,10 @@ export default function CasePage() {
             ml={'sm'}
             size='xs'
             variant='light'
+            onClick={async () => {
+              await publish(row.id);
+              router.refresh();
+            }}
             rightSection={<IconUpload size={'1rem'} />}
           >
             Published
