@@ -19,11 +19,11 @@ import BackButton from './BackButton';
 
 export const dynamic = 'force-dynamic';
 
-type Props = { params: { id: number } };
+type Props = { params: { id: string } };
 
 export default async function CasePage({ params: { id } }: Props) {
   const item = await prisma.case.findUnique({
-    where: { id: Number(id) },
+    where: { id },
     include: {
       victims: true,
       suspects: true,
