@@ -12,7 +12,7 @@ export function date(date: Date | undefined | null) {
     return 'Invalid Date';
   }
 }
-export function dateTime(date: Date | undefined | null) {
+export function dateTime(date: Date | string | undefined | null) {
   if (!date) return '';
   const formatter = new Intl.DateTimeFormat('en-LS', {
     year: 'numeric',
@@ -22,7 +22,7 @@ export function dateTime(date: Date | undefined | null) {
     minute: 'numeric',
   });
   try {
-    return formatter.format(date);
+    return formatter.format(new Date(date));
   } catch (e) {
     console.error('Error formatting date', date);
     return 'Invalid Date';

@@ -111,7 +111,7 @@ model PoliceStation {
 }
 
 model ReportingPerson {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @default(cuid())
   name         String?
   nationalId   String?  @map("national_id")
   phoneNumber  String?  @map("phone_number")
@@ -124,7 +124,7 @@ model ReportingPerson {
 }
 
 model Case {
-  id                   Int                   @id @default(autoincrement())
+  id                   String                @id @default(cuid())
   rciNo                String                @unique @map("rci_no")
   obNo                 String                @unique @map("ob_no")
   weapons              Weapon[]
@@ -142,7 +142,7 @@ model Case {
   caseStatus           CaseStatus?
   published            Boolean               @default(false)
   policeStationId      String                @map("police_station_id")
-  reportingPersonId    Int                   @unique @map("reporting_person_id")
+  reportingPersonId    String                @unique @map("reporting_person_id")
   createdAt            DateTime              @default(now()) @map("created_at")
   updatedAt            DateTime              @updatedAt @map("updated_at")
 
@@ -155,7 +155,7 @@ model CaseStatus {
   policeCaseStatus PoliceCaseStatus @default(PENDING_ALLOCATION) @map("police_case_status")
   courtCaseStatus  CourtCaseStatus? @map("court_case_status")
   case             Case             @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  caseId           Int              @unique
+  caseId           String           @unique
   createdAt        DateTime         @default(now()) @map("created_at")
   updatedAt        DateTime         @updatedAt @map("updated_at")
 
@@ -163,7 +163,7 @@ model CaseStatus {
 }
 
 model PersonalInformation {
-  id               Int            @id @default(autoincrement())
+  id               String         @id @default(cuid())
   nationalId       String         @unique @map("national_id")
   nationalIdType   String         @map("national_id_type")
   surname          String?
