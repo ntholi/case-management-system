@@ -190,6 +190,8 @@ model PersonalInformation {
   victimCases      Case[]         @relation("CaseToVictim")
   suspectCases     Case[]         @relation("CaseToSuspect")
   description      String?
+  physicalAddress  String?        @map("physical_address")
+  villageChief     String?        @map("village_chief")
   createdAt        DateTime       @default(now()) @map("created_at")
   updatedAt        DateTime       @updatedAt @map("updated_at")
 

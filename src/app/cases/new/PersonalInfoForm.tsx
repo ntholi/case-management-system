@@ -162,6 +162,18 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
               {...form.getInputProps('disability')}
             />
           </GridCol>
+          <GridCol span={6}>
+            <Textarea
+              label='Physical Address'
+              {...form.getInputProps('physicalAddress')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Village Chief'
+              {...form.getInputProps('villageChief')}
+            />
+          </GridCol>
         </Grid>
         <Grid>
           <GridCol span={12}>
