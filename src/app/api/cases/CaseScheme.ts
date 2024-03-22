@@ -16,7 +16,7 @@ export const CaseSchema = z.object({
   }),
   victimIds: z.array(z.string()).optional(),
   suspectIds: z.array(z.string()).optional(),
-  weaponId: z.string().optional(),
+  weaponIds: z.array(z.string()).optional(),
   crimeClassificationId: z.string().optional(),
   dateOfOccurrence: z.string().optional(),
   district: z.nativeEnum(District).optional(),

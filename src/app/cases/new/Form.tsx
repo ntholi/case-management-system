@@ -6,6 +6,7 @@ import {
   Grid,
   GridCol,
   Group,
+  MultiSelect,
   Radio,
   Select,
   TextInput,
@@ -131,9 +132,9 @@ export default function Form({
           />
         </GridCol>
         <GridCol span={6}>
-          <Select
-            label='Weapon Used'
-            {...form.getInputProps('weaponId')}
+          <MultiSelect
+            label='Weapons Used'
+            {...form.getInputProps('weaponIds')}
             data={
               weapons?.map((it) => ({ value: it.id, label: it.name })) || []
             }

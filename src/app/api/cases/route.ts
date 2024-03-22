@@ -66,11 +66,7 @@ export async function POST(request: NextRequest) {
         },
       },
       weapons: {
-        connect: data.weaponId
-          ? {
-              id: data.weaponId,
-            }
-          : undefined,
+        connect: data.weaponIds?.map((id) => ({ id })),
       },
       crimeClassifications: {
         connect: data.crimeClassificationId
