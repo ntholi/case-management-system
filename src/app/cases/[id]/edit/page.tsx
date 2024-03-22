@@ -17,26 +17,24 @@ export default async function CasePage({ params: { id } }: Props) {
   const weapons = await prisma?.weapon.findMany();
   const crimeClassifications = await prisma?.crimeClassification.findMany();
   const policeStations = await prisma?.policeStation.findMany();
-  const criminalCase = await prisma.case.findUnique({
-    where: {
-      id,
-    },
+  const item = await prisma.case.findUnique({
+    where: { id },
     include: {
+      victims: true,
+      suspects: true,
       weapons: true,
+      crimeClassifications: true,
       policeStation: true,
       caseStatus: true,
-      crimeClassifications: true,
       reportingPerson: true,
-      suspects: true,
-      victims: true,
     },
   });
 
-  if (!criminalCase) {
+  if (!item) {
     return notFound();
   }
 
-  console.log({ criminalCase });
+  console.log({ item });
 
   return (
     <>
@@ -48,7 +46,7 @@ export default async function CasePage({ params: { id } }: Props) {
       </Paper>
       <Paper p='md' withBorder mt={'lg'}>
         <Form
-          criminalCase={criminalCase}
+          item={item}
           weapons={weapons}
           crimeClassifications={crimeClassifications}
           policeStations={policeStations}

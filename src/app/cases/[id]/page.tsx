@@ -30,6 +30,8 @@ export default async function CasePage({ params: { id } }: Props) {
       weapons: true,
       crimeClassifications: true,
       policeStation: true,
+      caseStatus: true,
+      reportingPerson: true,
     },
   });
 

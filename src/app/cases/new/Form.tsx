@@ -39,22 +39,26 @@ type Case = BaseCase & {
   reportingPerson: PersonalInformation;
 };
 type Props = {
-  criminalCase?: Case;
+  item?: Case;
   weapons?: Weapon[];
   policeStations?: PoliceStation[];
   crimeClassifications?: CrimeClassification[];
 };
 
 export default function Form({
-  criminalCase,
+  item,
   weapons,
   crimeClassifications,
   policeStations,
 }: Props) {
-  const [victims, setVictims] = React.useState<PersonalInformation[]>([]);
-  const [suspects, setSuspects] = React.useState<PersonalInformation[]>([]);
+  const [victims, setVictims] = React.useState<PersonalInformation[]>(
+    item?.victims || []
+  );
+  const [suspects, setSuspects] = React.useState<PersonalInformation[]>(
+    item?.suspects || []
+  );
   const { setValues, ...form } = useForm<Case>({
-    initialValues: criminalCase,
+    initialValues: item,
     validate: {
       policeStationId: (value) => {
         if (!value) return 'Police Station is required';
@@ -78,7 +82,7 @@ export default function Form({
         suspectIds: suspects?.map((it) => it.id),
         reportingPerson: reportingPersonForm.values,
       };
-      if (criminalCase) {
+      if (item) {
         await axios.put(`/api/cases/${obj.id}`, obj);
       }
       await axios.post('/api/cases', obj);
