@@ -34,8 +34,6 @@ export default async function CasePage({ params: { id } }: Props) {
     return notFound();
   }
 
-  console.log({ item });
-
   return (
     <>
       <Paper p='md' withBorder>

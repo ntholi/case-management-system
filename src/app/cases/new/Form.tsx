@@ -15,7 +15,6 @@ import {
 import { DateTimePicker } from '@mantine/dates';
 
 import { useForm } from '@mantine/form';
-import { useDisclosure } from '@mantine/hooks';
 import {
   Case as BaseCase,
   CrimeClassification,
@@ -24,12 +23,11 @@ import {
   PoliceStation,
   Weapon,
 } from '@prisma/client';
+import { IconDeviceFloppy } from '@tabler/icons-react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import PersonalInfoForm from './PersonalInfoForm';
 import PersonalInfoInput from './PersonalInfoInput';
-import { IconDeviceFloppy } from '@tabler/icons-react';
 
 type Case = BaseCase & {
   weapons: Weapon[];
@@ -87,10 +85,12 @@ export default function Form({
         suspectIds: suspects?.map((it) => it.id),
         reportingPerson: reportingPersonForm.values,
       };
+      console.log({ item });
       if (item) {
         await axios.put(`/api/cases/${obj.id}`, obj);
+      } else {
+        await axios.post('/api/cases', obj);
       }
-      await axios.post('/api/cases', obj);
       router.push('/cases');
     });
   }
