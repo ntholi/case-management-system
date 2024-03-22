@@ -8,14 +8,14 @@ export async function create(data: Case) {
   });
 }
 
-export async function update(id: number, data: Case) {
+export async function update(id: string, data: Case) {
   await prisma.case.update({
     where: { id },
     data,
   });
 }
 
-export async function remove(id: number) {
+export async function remove(id: string) {
   await prisma.case.delete({
     where: { id },
   });

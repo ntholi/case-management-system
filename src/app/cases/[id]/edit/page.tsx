@@ -44,7 +44,7 @@ export default async function CasePage({ params: { id } }: Props) {
       </Paper>
       <Paper p='md' withBorder mt={'lg'}>
         <Form
-          item={item}
+          item={item as any}
           weapons={weapons}
           crimeClassifications={crimeClassifications}
           policeStations={policeStations}
