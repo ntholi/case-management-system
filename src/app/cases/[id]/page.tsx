@@ -15,7 +15,7 @@ import {
 import { PersonalInformation } from '@prisma/client';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { notFound } from 'next/navigation';
-import BackButton from './BackButton';
+import BackButton from '../../../components/BackButton';
 
 export const dynamic = 'force-dynamic';
 

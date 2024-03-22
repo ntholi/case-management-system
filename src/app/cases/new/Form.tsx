@@ -16,7 +16,7 @@ import { DateTimePicker } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import {
-  Case,
+  Case as BaseCase,
   CrimeClassification,
   ModusOperandiLined,
   PersonalInformation,
@@ -30,24 +30,31 @@ import PersonalInfoForm from './PersonalInfoForm';
 import PersonalInfoInput from './PersonalInfoInput';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 
+type Case = BaseCase & {
+  weapons: Weapon[];
+  policeStation: PoliceStation;
+  crimeClassifications: CrimeClassification[];
+  suspects: PersonalInformation[];
+  victims: PersonalInformation[];
+  reportingPerson: PersonalInformation;
+};
 type Props = {
+  criminalCase?: Case;
   weapons?: Weapon[];
   policeStations?: PoliceStation[];
   crimeClassifications?: CrimeClassification[];
 };
 
 export default function Form({
+  criminalCase,
   weapons,
   crimeClassifications,
   policeStations,
 }: Props) {
-  const [victimOpened, { open: openVictim, close: closeVictim }] =
-    useDisclosure(false);
-  const [suspectOpened, { open: openSuspect, close: closeSuspect }] =
-    useDisclosure(false);
   const [victims, setVictims] = React.useState<PersonalInformation[]>([]);
   const [suspects, setSuspects] = React.useState<PersonalInformation[]>([]);
   const { setValues, ...form } = useForm<Case>({
+    initialValues: criminalCase,
     validate: {
       policeStationId: (value) => {
         if (!value) return 'Police Station is required';
@@ -65,12 +72,16 @@ export default function Form({
       values.occurrencePlace = values.occurrencePlace.trim();
     }
     startTransition(async () => {
-      await axios.post('/api/cases', {
+      const obj = {
         ...values,
         victimIds: victims?.map((it) => it.id),
         suspectIds: suspects?.map((it) => it.id),
         reportingPerson: reportingPersonForm.values,
-      });
+      };
+      if (criminalCase) {
+        await axios.put(`/api/cases/${obj.id}`, obj);
+      }
+      await axios.post('/api/cases', obj);
       router.push('/cases');
     });
   }
