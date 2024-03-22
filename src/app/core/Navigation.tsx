@@ -1,7 +1,6 @@
 import {
   AppShell,
   Avatar,
-  Box,
   Divider,
   NavLink,
   ScrollArea,
@@ -9,10 +8,8 @@ import {
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import {
-  IconBuilding,
   IconBuildingBank,
   IconCategory,
-  IconChartInfographic,
   IconChevronRight,
   IconHome,
   IconHourglass,

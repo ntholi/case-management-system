@@ -1,5 +1,6 @@
 'use client';
 import {
+  Box,
   Button,
   Fieldset,
   Flex,
@@ -201,6 +202,17 @@ export default function Form({
             mt={'md'}
             placeholder='How Modus Operandi Contributed to Crime?'
             {...form.getInputProps('modusOperandiDetails')}
+          />
+        </GridCol>
+      </Grid>
+
+      <Grid>
+        <GridCol span={12}>
+          <Textarea
+            description='Give a detailed explanation of what occurred.'
+            rows={7}
+            label='What Happened?'
+            {...form.getInputProps('whatHappened')}
           />
         </GridCol>
       </Grid>

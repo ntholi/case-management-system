@@ -140,6 +140,7 @@ model Case {
   dateOfReport         DateTime?             @map("date_of_report")
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   caseStatus           CaseStatus?
+  whatHappened         String?               @map("what_happened")
   published            Boolean               @default(false)
   policeStationId      String                @map("police_station_id")
   reportingPersonId    String                @unique @map("reporting_person_id")
@@ -187,9 +188,8 @@ model PersonalInformation {
   nextOfKinPhone   String?        @map("next_of_kin_phone")
   victimCases      Case[]         @relation("CaseToVictim")
   suspectCases     Case[]         @relation("CaseToSuspect")
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
 
   @@map("personal_informations")
 }
