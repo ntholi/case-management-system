@@ -2,41 +2,20 @@ import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import { CaseSchema } from './CaseScheme';
+import { createCase, getCase } from './service';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url || '');
   const weapon = searchParams.get('weapon');
   const classification = searchParams.get('classification');
   const station = searchParams.get('station');
-  const publish = !(searchParams.get('published') === 'false');
+  const published = !(searchParams.get('published') === 'false');
 
-  const data = await prisma.case.findMany({
-    where: {
-      published: publish,
-      weapons: weapon
-        ? {
-            some: {
-              name: weapon,
-            },
-          }
-        : undefined,
-      crimeClassifications: classification
-        ? {
-            some: {
-              name: classification,
-            },
-          }
-        : undefined,
-      policeStationId: station ? station : undefined,
-    },
-    include: {
-      reportingPerson: true,
-      victims: true,
-      suspects: true,
-      weapons: true,
-      crimeClassifications: true,
-      policeStation: true,
-    },
+  const data = await getCase({
+    weapon,
+    classification,
+    station,
+    published,
   });
 
   return NextResponse.json(data);
@@ -44,55 +23,6 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const data = CaseSchema.parse(await request.json());
-
-  const dateOfOccurrence = data.dateOfOccurrence
-    ? new Date(data.dateOfOccurrence)
-    : null;
-  const dateOfReport = data.dateOfReport ? new Date(data.dateOfReport) : null;
-
-  const res = await prisma.case.create({
-    data: {
-      rciNo: data.rciNo,
-      obNo: data.obNo,
-      occurrencePlace: data.occurrencePlace,
-      modusOperandi: data.modusOperandi,
-      modusOperandiDetails: data.modusOperandiDetails,
-      modusOperandiLinked: data.modusOperandiLinked,
-      dateOfOccurrence: dateOfOccurrence,
-      dateOfReport: dateOfReport,
-      caseStatus: {
-        create: {
-          policeCaseStatus: 'PENDING_ALLOCATION',
-        },
-      },
-      weapons: {
-        connect: data.weaponIds?.map((id) => ({ id })),
-      },
-      crimeClassifications: {
-        connect: data.crimeClassificationId
-          ? {
-              id: data.crimeClassificationId,
-            }
-          : undefined,
-      },
-      reportingPerson: {
-        create: data.reportingPerson,
-      },
-      victims: {
-        connect: data?.victimIds?.map((id) => ({ id })),
-      },
-      suspects: {
-        connect: data?.suspectIds?.map((id) => ({ id })),
-      },
-      policeStation: {
-        connect: {
-          id: data.policeStationId,
-        },
-      },
-    },
-  });
-
-  revalidatePath('/cases');
-
-  return NextResponse.json(res);
+  const criminalCase = await createCase(data);
+  return NextResponse.json(criminalCase);
 }

@@ -59,7 +59,7 @@ export default function Form({
     item?.suspects || []
   );
   const { setValues, ...form } = useForm<Case>({
-    initialValues: item,
+    initialValues: { ...item, weaponIds: item?.weapons?.map((it) => it.id) },
     validate: {
       policeStationId: (value) => {
         if (!value) return 'Police Station is required';
