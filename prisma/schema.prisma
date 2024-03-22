@@ -188,6 +188,7 @@ model PersonalInformation {
   nextOfKinPhone   String?        @map("next_of_kin_phone")
   victimCases      Case[]         @relation("CaseToVictim")
   suspectCases     Case[]         @relation("CaseToSuspect")
+  description      String?
   createdAt        DateTime       @default(now()) @map("created_at")
   updatedAt        DateTime       @updatedAt @map("updated_at")
 

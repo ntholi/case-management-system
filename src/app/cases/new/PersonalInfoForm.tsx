@@ -8,6 +8,7 @@ import {
   Radio,
   Stack,
   TextInput,
+  Textarea,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { Gender, PersonalInformation } from '@prisma/client';
@@ -140,6 +141,15 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
             <TextInput
               label='Occupation'
               {...form.getInputProps('occupation')}
+            />
+          </GridCol>
+        </Grid>
+        <Grid>
+          <GridCol span={12}>
+            <Textarea
+              rows={5}
+              label='Description'
+              {...form.getInputProps('description')}
             />
           </GridCol>
         </Grid>
