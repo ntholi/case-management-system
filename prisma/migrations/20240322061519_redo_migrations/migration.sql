@@ -107,7 +107,7 @@ CREATE TABLE "police_stations" (
 
 -- CreateTable
 CREATE TABLE "reporting_persons" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT,
     "national_id" TEXT,
     "phone_number" TEXT,
@@ -120,7 +120,7 @@ CREATE TABLE "reporting_persons" (
 
 -- CreateTable
 CREATE TABLE "cases" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "rci_no" TEXT NOT NULL,
     "ob_no" TEXT NOT NULL,
     "occurrence_place" TEXT,
@@ -131,7 +131,7 @@ CREATE TABLE "cases" (
     "date_of_report" TIMESTAMP(3),
     "published" BOOLEAN NOT NULL DEFAULT false,
     "police_station_id" TEXT NOT NULL,
-    "reporting_person_id" INTEGER NOT NULL,
+    "reporting_person_id" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -144,7 +144,7 @@ CREATE TABLE "case_statuses" (
     "cr_number" SERIAL NOT NULL,
     "police_case_status" "PoliceCaseStatus" NOT NULL DEFAULT 'PENDING_ALLOCATION',
     "court_case_status" "CourtCaseStatus",
-    "caseId" INTEGER NOT NULL,
+    "caseId" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -153,7 +153,7 @@ CREATE TABLE "case_statuses" (
 
 -- CreateTable
 CREATE TABLE "personal_informations" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "national_id" TEXT NOT NULL,
     "national_id_type" TEXT NOT NULL,
     "surname" TEXT,
@@ -183,26 +183,26 @@ CREATE TABLE "personal_informations" (
 
 -- CreateTable
 CREATE TABLE "_CaseToWeapon" (
-    "A" INTEGER NOT NULL,
+    "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_CaseToCrimeClassification" (
-    "A" INTEGER NOT NULL,
+    "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_CaseToVictim" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "_CaseToSuspect" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
