@@ -1,7 +1,6 @@
 import prisma from '@/lib/prisma';
-import { Case } from '@prisma/client';
-import { CaseSchema } from './CaseScheme';
 import { z } from 'zod';
+import { CaseSchema } from './CaseScheme';
 
 type GetCaseType = {
   weapon?: string | null;

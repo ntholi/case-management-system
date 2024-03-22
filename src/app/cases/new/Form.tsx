@@ -33,6 +33,7 @@ import { IconDeviceFloppy } from '@tabler/icons-react';
 
 type Case = BaseCase & {
   weapons: Weapon[];
+  weaponIds?: string[];
   policeStation: PoliceStation;
   crimeClassifications: CrimeClassification[];
   suspects: PersonalInformation[];
@@ -59,7 +60,10 @@ export default function Form({
     item?.suspects || []
   );
   const { setValues, ...form } = useForm<Case>({
-    initialValues: { ...item, weaponIds: item?.weapons?.map((it) => it.id) },
+    initialValues: item && {
+      ...item,
+      weaponIds: item?.weapons?.map((it) => it.id),
+    },
     validate: {
       policeStationId: (value) => {
         if (!value) return 'Police Station is required';
