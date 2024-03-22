@@ -1,21 +1,24 @@
 'use client';
 import {
   Button,
+  Flex,
   Grid,
   GridCol,
   Group,
   LoadingOverlay,
   Radio,
+  Select,
   Stack,
   TextInput,
   Textarea,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Gender, PersonalInformation } from '@prisma/client';
+import { Education, Gender, PersonalInformation } from '@prisma/client';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import IdTypeInput from './components/IdTypeInput';
 import { DateInput } from '@mantine/dates';
+import { IconDeviceFloppy } from '@tabler/icons-react';
 
 type Props = {
   onSave: (value: PersonalInformation | undefined) => void;
@@ -132,9 +135,13 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
             />
           </GridCol>
           <GridCol span={6}>
-            <TextInput
-              label='Nationality'
-              {...form.getInputProps('nationality')}
+            <Select
+              label='Education'
+              {...form.getInputProps('education')}
+              data={Object.entries(Education).map(([key, value]) => ({
+                value: value,
+                label: value,
+              }))}
             />
           </GridCol>
           <GridCol span={6}>
@@ -143,17 +150,36 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
               {...form.getInputProps('occupation')}
             />
           </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Nationality'
+              {...form.getInputProps('nationality')}
+            />
+          </GridCol>
+          <GridCol span={6}>
+            <TextInput
+              label='Disability'
+              {...form.getInputProps('disability')}
+            />
+          </GridCol>
         </Grid>
         <Grid>
           <GridCol span={12}>
             <Textarea
               rows={5}
+              description={`Provide a brief description or unique identifiers for this person.`}
               label='Description'
               {...form.getInputProps('description')}
             />
           </GridCol>
         </Grid>
-        <Button mt={'xl'} type='submit' loading={isPending}>
+        <Button
+          mt={'lg'}
+          type='submit'
+          w={'100%'}
+          loading={isPending}
+          leftSection={<IconDeviceFloppy />}
+        >
           Save
         </Button>
       </Stack>

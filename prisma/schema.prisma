@@ -140,6 +140,7 @@ model Case {
   dateOfReport         DateTime?             @map("date_of_report")
   reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   caseStatus           CaseStatus?
+  disability           String?
   whatHappened         String?               @map("what_happened")
   published            Boolean               @default(false)
   policeStationId      String                @map("police_station_id")
