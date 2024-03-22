@@ -17,6 +17,7 @@ import {
   IconHome,
   IconHourglass,
   IconLogout2,
+  IconLogs,
   IconSubtask,
   IconSwords,
   IconUsers,
@@ -89,6 +90,14 @@ export default function Navigation() {
               active={pathname.startsWith('/users')}
               href={'/users'}
               leftSection={<IconUsers size='1.1rem' />}
+              rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+            />
+            <NavLink
+              label='Audit Tail'
+              component={Link}
+              active={pathname.startsWith('/audit-tail')}
+              href={'#'}
+              leftSection={<IconLogs size='1.1rem' />}
               rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
             />
           </>
