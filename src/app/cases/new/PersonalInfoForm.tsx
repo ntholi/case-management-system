@@ -60,7 +60,13 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
       axios
         .get(`/api/personal-info?nationalId=${nationalId}`)
         .then((response) => {
-          setValues(response.data);
+          const data = {
+            ...response.data,
+            dateOfBirth: response?.data?.dateOfBirth
+              ? new Date(response?.data?.dateOfBirth)
+              : null,
+          };
+          setValues(data);
         })
         .finally(() => {
           setLookingUp(false);
