@@ -6,7 +6,6 @@ import ThemedIconButton from '@/components/ThemedIconButton';
 import ThemedTableHead from '@/components/ThemedTableHead';
 import { dateTime } from '@/lib/format';
 import {
-  ActionIcon,
   Anchor,
   Button,
   Divider,
@@ -20,13 +19,11 @@ import {
   TableTh,
   TableTr,
 } from '@mantine/core';
+import { Case as BaseCase, PersonalInformation } from '@prisma/client';
 import { IconEdit, IconFileSpreadsheet, IconPlus } from '@tabler/icons-react';
 import Link from 'next/link';
-import { remove } from './actions';
-import Filter, { Filters } from './Filter';
-import { Case as BaseCase, PersonalInformation, Prisma } from '@prisma/client';
 import { useEffect, useState } from 'react';
-import { useQueryState } from 'nuqs';
+import { remove } from './actions';
 import { exportToExcel } from './export';
 
 export const dynamic = 'force-dynamic';
@@ -39,24 +36,16 @@ export type Case = BaseCase & {
 export default function CasePage() {
   const [data, setData] = useState<Case[]>([]);
   const [loading, setLoading] = useState(true);
-  const [weapon] = useQueryState(Filters.weapon);
-  const [classification] = useQueryState(Filters.classification);
-  const [station] = useQueryState(Filters.station);
 
   useEffect(() => {
-    const filter = new URLSearchParams();
-    if (weapon) filter.set(Filters.weapon, weapon);
-    if (classification) filter.set(Filters.classification, classification);
-    if (station) filter.set(Filters.station, station.split(':')[0]);
-
     async function fetchData() {
-      const response = await fetch(`/api/cases?${filter}`);
+      const response = await fetch(`/api/cases`);
       const data = await response.json();
       setData(data);
       setLoading(false);
     }
     fetchData();
-  }, [weapon, classification, station]);
+  }, []);
 
   const rows = data.map((row) => (
     <TableTr key={row.id}>
@@ -94,19 +83,8 @@ export default function CasePage() {
     <>
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
+          <PageTitle text='Cases' />
           <Group>
-            <PageTitle text='Cases' />
-            <Divider orientation='vertical' />
-            <Filter />
-          </Group>
-          <Group>
-            <Button
-              variant='light'
-              onClick={() => exportToExcel(data)}
-              leftSection={<IconFileSpreadsheet size={'1rem'} />}
-            >
-              Report
-            </Button>
             <ThemedButton href='/cases/new' icon={<IconPlus size={'1rem'} />}>
               New
             </ThemedButton>
