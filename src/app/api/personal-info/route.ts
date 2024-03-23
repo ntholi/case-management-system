@@ -15,7 +15,11 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const data = await request.json();
+  const input = await request.json();
+  const data = {
+    ...input,
+    dateOfBirth: input.dateOfBirth ? new Date(input.dateOfBirth) : null,
+  };
 
   const existing = await prisma.personalInformation.findFirst({
     where: {
