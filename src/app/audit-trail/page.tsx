@@ -35,10 +35,10 @@ export default async function CasePage() {
     <TableTr key={row.id}>
       <TableTd>{dateTime(row.createdAt)}</TableTd>
       <TableTd>
-        <Anchor component={Link} href={`#`} size='sm' c='gray'>
+        <Anchor component={Link} href={`#`} size='sm' c='dimmed'>
           {row.user.firstName} {row.user.lastName}
         </Anchor>{' '}
-        {asPastTense(row.action)} {row.model}
+        {asPastTense(row.action)} {asWord(row.model)}
       </TableTd>
       <TableTd align='right'>
         <Anchor component={Link} href={`#`} size='sm'>
@@ -66,4 +66,12 @@ export default async function CasePage() {
       </Table>
     </>
   );
+}
+
+// converts modal name to proper word, eg ModalName to Modal Name
+function asWord(modalName: string) {
+  return modalName
+    .split(/(?=[A-Z])/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }

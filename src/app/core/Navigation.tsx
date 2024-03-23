@@ -82,19 +82,19 @@ export default function Navigation() {
               rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
             />
             <NavLink
-              label='Users'
-              component={Link}
-              active={pathname.startsWith('/users')}
-              href={'/users'}
-              leftSection={<IconUsers size='1.1rem' />}
-              rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
-            />
-            <NavLink
               label='Audit Trail'
               component={Link}
               active={pathname.startsWith('/audit-trail')}
               href={'audit-trail'}
               leftSection={<IconLogs size='1.1rem' />}
+              rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+            />
+            <NavLink
+              label='Users'
+              component={Link}
+              active={pathname.startsWith('/users')}
+              href={'/users'}
+              leftSection={<IconUsers size='1.1rem' />}
               rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
             />
           </>
