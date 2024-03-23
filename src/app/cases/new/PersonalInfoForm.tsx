@@ -80,14 +80,15 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
         <Grid pos={'relative'}>
           <LoadingOverlay visible={lookingUp} />
           <GridCol span={6}>
-            <TextInput label='Surname' {...form.getInputProps('surname')} />
-          </GridCol>
-          <GridCol span={6}>
             <TextInput
               label='First Name'
               {...form.getInputProps('firstName')}
             />
           </GridCol>
+          <GridCol span={6}>
+            <TextInput label='Surname' {...form.getInputProps('surname')} />
+          </GridCol>
+
           <GridCol span={6}>
             <TextInput
               label='Middle Name'
