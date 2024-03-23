@@ -27,6 +27,9 @@ export async function createCase(data: CaseSchemaType) {
       modusOperandiLinked: data.modusOperandiLinked,
       dateOfOccurrence: dateOfOccurrence,
       dateOfReport: dateOfReport,
+      suspectVictimRelationship: data.suspectVictimRelationship,
+      disability: data.disability,
+      whatHappened: data.whatHappened,
       caseStatus: {
         create: {
           policeCaseStatus: 'PENDING_ALLOCATION',
@@ -79,11 +82,9 @@ export async function updateCase(id: string, data: CaseSchemaType) {
       modusOperandiLinked: data.modusOperandiLinked,
       dateOfOccurrence: dateOfOccurrence,
       dateOfReport: dateOfReport,
-      caseStatus: {
-        create: {
-          policeCaseStatus: 'PENDING_ALLOCATION',
-        },
-      },
+      suspectVictimRelationship: data.suspectVictimRelationship,
+      disability: data.disability,
+      whatHappened: data.whatHappened,
       weapons: {
         connect: data.weaponIds?.map((id) => ({ id })),
       },

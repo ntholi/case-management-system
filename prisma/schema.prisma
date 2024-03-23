@@ -124,29 +124,30 @@ model ReportingPerson {
 }
 
 model Case {
-  id                   String                @id @default(cuid())
-  rciNo                String                @unique @map("rci_no")
-  obNo                 String                @unique @map("ob_no")
-  weapons              Weapon[]
-  crimeClassifications CrimeClassification[]
-  policeStation        PoliceStation         @relation(fields: [policeStationId], references: [id])
-  occurrencePlace      String?               @map("occurrence_place")
-  victims              PersonalInformation[] @relation("CaseToVictim")
-  suspects             PersonalInformation[] @relation("CaseToSuspect")
-  modusOperandi        String?               @map("modus_operandi")
-  modusOperandiDetails String?               @map("modus_operandi_details")
-  modusOperandiLinked  ModusOperandiLined?   @map("modus_operandi_linked")
-  dateOfOccurrence     DateTime?             @map("date_of_occurrence")
-  dateOfReport         DateTime?             @map("date_of_report")
-  reportingPerson      ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
-  caseStatus           CaseStatus?
-  disability           String?
-  whatHappened         String?               @map("what_happened")
-  published            Boolean               @default(false)
-  policeStationId      String                @map("police_station_id")
-  reportingPersonId    String                @unique @map("reporting_person_id")
-  createdAt            DateTime              @default(now()) @map("created_at")
-  updatedAt            DateTime              @updatedAt @map("updated_at")
+  id                        String                @id @default(cuid())
+  rciNo                     String                @unique @map("rci_no")
+  obNo                      String                @unique @map("ob_no")
+  weapons                   Weapon[]
+  crimeClassifications      CrimeClassification[]
+  policeStation             PoliceStation         @relation(fields: [policeStationId], references: [id])
+  occurrencePlace           String?               @map("occurrence_place")
+  victims                   PersonalInformation[] @relation("CaseToVictim")
+  suspects                  PersonalInformation[] @relation("CaseToSuspect")
+  modusOperandi             String?               @map("modus_operandi")
+  modusOperandiDetails      String?               @map("modus_operandi_details")
+  modusOperandiLinked       ModusOperandiLined?   @map("modus_operandi_linked")
+  dateOfOccurrence          DateTime?             @map("date_of_occurrence")
+  dateOfReport              DateTime?             @map("date_of_report")
+  reportingPerson           ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
+  caseStatus                CaseStatus?
+  suspectVictimRelationship String?               @map("suspect_victim_relationship")
+  disability                String?
+  whatHappened              String?               @map("what_happened")
+  published                 Boolean               @default(false)
+  policeStationId           String                @map("police_station_id")
+  reportingPersonId         String                @unique @map("reporting_person_id")
+  createdAt                 DateTime              @default(now()) @map("created_at")
+  updatedAt                 DateTime              @updatedAt @map("updated_at")
 
   @@map("cases")
 }

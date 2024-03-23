@@ -22,4 +22,7 @@ export const CaseSchema = z.object({
   district: z.nativeEnum(District).optional(),
   policeStationId: z.string(),
   dateOfReport: z.string().optional(),
+  suspectVictimRelationship: z.string().optional(),
+  disability: z.string().optional(),
+  whatHappened: z.string().optional(),
 });
