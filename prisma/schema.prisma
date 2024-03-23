@@ -200,6 +200,12 @@ model PersonalInformation {
   @@map("personal_informations")
 }
 
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+}
+
 enum Education {
   NONE
   PRIMARY
