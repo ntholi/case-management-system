@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url || '');
   const nationalId = searchParams.get('nationalId') || '';
 
-  const data = await prisma.personalInformation.findUnique({
+  const data = await prisma.personalInformation.findFirst({
     where: {
       nationalId: nationalId,
     },
@@ -17,13 +17,26 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const data = await request.json();
 
-  const res = await prisma.personalInformation.upsert({
+  const existing = await prisma.personalInformation.findFirst({
     where: {
       nationalId: data.nationalId,
+      AND: {
+        nationalId: {
+          not: null,
+        },
+      },
     },
-    update: data,
-    create: data,
   });
+  const res = existing
+    ? await prisma.personalInformation.update({
+        where: {
+          id: existing.id,
+        },
+        data,
+      })
+    : await prisma.personalInformation.create({
+        data,
+      });
 
   return NextResponse.json(res);
 }

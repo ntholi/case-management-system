@@ -1,7 +1,6 @@
 'use client';
 import {
   Button,
-  Flex,
   Grid,
   GridCol,
   Group,
@@ -12,13 +11,13 @@ import {
   TextInput,
   Textarea,
 } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { Education, Gender, PersonalInformation } from '@prisma/client';
+import { IconDeviceFloppy } from '@tabler/icons-react';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import IdTypeInput from './components/IdTypeInput';
-import { DateInput } from '@mantine/dates';
-import { IconDeviceFloppy } from '@tabler/icons-react';
 
 type Props = {
   onSave: (value: PersonalInformation | undefined) => void;
@@ -75,7 +74,6 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
         <TextInput
           onBlurCapture={lookupByNationalId}
           label='ID'
-          required
           {...form.getInputProps('nationalId')}
         />
         <IdTypeInput required {...form.getInputProps('nationalIdType')} />

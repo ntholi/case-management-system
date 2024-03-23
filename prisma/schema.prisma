@@ -168,7 +168,7 @@ model CaseStatus {
 
 model PersonalInformation {
   id               String         @id @default(cuid())
-  nationalId       String         @unique @map("national_id")
+  nationalId       String?        @map("national_id")
   nationalIdType   String         @map("national_id_type")
   surname          String?
   middleName       String?        @map("middle_name")
