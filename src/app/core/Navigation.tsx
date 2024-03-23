@@ -90,10 +90,10 @@ export default function Navigation() {
               rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
             />
             <NavLink
-              label='Audit Tail'
+              label='Audit Trail'
               component={Link}
-              active={pathname.startsWith('/audit-tail')}
-              href={'#'}
+              active={pathname.startsWith('/audit-trail')}
+              href={'audit-trail'}
               leftSection={<IconLogs size='1.1rem' />}
               rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
             />

@@ -1,8 +1,6 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
+import { auditLog } from '@/app/audit-trail/service';
 import { PrismaClient } from '@prisma/client';
-import { getServerSession } from 'next-auth';
 import { Action } from '@prisma/client/runtime/library';
-import { auditLog } from '@/app/audit/service';
 
 const prismaClientSingleton = () => {
   return new PrismaClient().$extends({

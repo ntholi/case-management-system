@@ -1,0 +1,24 @@
+'use server';
+import prisma from '@/lib/prisma';
+import { User, Weapon } from '@prisma/client';
+
+export async function create(data: Weapon, user: User) {
+  await prisma.weapon.create({
+    data,
+  });
+}
+
+export async function update(id: string, data: Weapon) {
+  await prisma.weapon.update({
+    where: { id },
+    data: {
+      name: data.name,
+    },
+  });
+}
+
+export async function remove(id: string) {
+  await prisma.weapon.delete({
+    where: { id },
+  });
+}
