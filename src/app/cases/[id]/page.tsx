@@ -87,8 +87,8 @@ export default async function CasePage({ params: { id } }: Props) {
                   value={item.modusOperandiLinked}
                 />
                 <FieldView
-                  label='How it contributes to Crime'
-                  value={item.modusOperandiDetails}
+                  label='Contributing Factor'
+                  value={item.contributingFactor}
                 />
               </Stack>
             </Card>

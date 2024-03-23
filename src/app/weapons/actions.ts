@@ -2,7 +2,7 @@
 import prisma from '@/lib/prisma';
 import { User, Weapon } from '@prisma/client';
 
-export async function create(data: Weapon, user: User) {
+export async function create(data: Weapon) {
   await prisma.weapon.create({
     data,
   });
