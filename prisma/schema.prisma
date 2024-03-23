@@ -134,7 +134,7 @@ model Case {
   victims                   PersonalInformation[] @relation("CaseToVictim")
   suspects                  PersonalInformation[] @relation("CaseToSuspect")
   modusOperandi             String?               @map("modus_operandi")
-  modusOperandiDetails      String?               @map("modus_operandi_details")
+  contributingFactor        String?               @map("contributing_factor")
   modusOperandiLinked       ModusOperandiLined?   @map("modus_operandi_linked")
   dateOfOccurrence          DateTime?             @map("date_of_occurrence")
   dateOfReport              DateTime?             @map("date_of_report")

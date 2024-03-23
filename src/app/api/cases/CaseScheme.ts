@@ -6,7 +6,7 @@ export const CaseSchema = z.object({
   obNo: z.string(),
   occurrencePlace: z.string().optional(),
   modusOperandi: z.string().optional(),
-  modusOperandiDetails: z.string().optional(),
+  contributingFactor: z.string().optional(),
   modusOperandiLinked: z.nativeEnum(ModusOperandiLined).optional(),
   reportingPerson: z.object({
     name: z.string().optional(),

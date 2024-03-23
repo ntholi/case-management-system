@@ -200,7 +200,7 @@ export default function Form({
       <Grid mt={'lg'}>
         <GridCol span={6}>
           <Textarea
-            rows={5}
+            rows={6}
             label='Modus Operandi'
             {...form.getInputProps('modusOperandi')}
           />
@@ -220,8 +220,8 @@ export default function Form({
           <Textarea
             cols={3}
             mt={'md'}
-            placeholder='How Modus Operandi Contributed to Crime?'
-            {...form.getInputProps('modusOperandiDetails')}
+            label='Contributing Factor'
+            {...form.getInputProps('contributingFactor')}
           />
         </GridCol>
 
