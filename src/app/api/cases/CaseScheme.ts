@@ -25,4 +25,5 @@ export const CaseSchema = z.object({
   suspectVictimRelationship: z.string().optional(),
   disability: z.string().optional(),
   whatHappened: z.string().optional(),
+  damagedProperty: z.string().optional(),
 });

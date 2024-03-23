@@ -143,6 +143,7 @@ model Case {
   suspectVictimRelationship String?               @map("suspect_victim_relationship")
   disability                String?
   whatHappened              String?               @map("what_happened")
+  damagedProperty           String?               @map("damaged_property")
   published                 Boolean               @default(false)
   policeStationId           String                @map("police_station_id")
   reportingPersonId         String                @unique @map("reporting_person_id")

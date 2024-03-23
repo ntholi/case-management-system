@@ -211,9 +211,14 @@ export default function Form({
             {...form.getInputProps('modusOperandiDetails')}
           />
         </GridCol>
-      </Grid>
 
-      <Grid>
+        <GridCol span={12}>
+          <Textarea
+            label='Damaged Property'
+            description='Describe the property that was damaged.'
+            {...form.getInputProps('damagedProperty')}
+          />
+        </GridCol>
         <GridCol span={12}>
           <Textarea
             description='Give a detailed explanation of what occurred.'

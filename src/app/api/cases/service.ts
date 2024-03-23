@@ -30,6 +30,7 @@ export async function createCase(data: CaseSchemaType) {
       suspectVictimRelationship: data.suspectVictimRelationship,
       disability: data.disability,
       whatHappened: data.whatHappened,
+      damagedProperty: data.damagedProperty,
       caseStatus: {
         create: {
           policeCaseStatus: 'PENDING_ALLOCATION',
@@ -85,6 +86,7 @@ export async function updateCase(id: string, data: CaseSchemaType) {
       suspectVictimRelationship: data.suspectVictimRelationship,
       disability: data.disability,
       whatHappened: data.whatHappened,
+      damagedProperty: data.damagedProperty,
       weapons: {
         connect: data.weaponIds?.map((id) => ({ id })),
       },
