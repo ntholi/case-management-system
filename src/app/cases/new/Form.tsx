@@ -123,6 +123,13 @@ export default function Form({
             setItems={setSuspects}
           />
         </GridCol>
+        <GridCol span={12}>
+          <TextInput
+            label='Relationship'
+            description='Relationship between suspect and victim'
+            {...form.getInputProps('suspectVictimRelationship')}
+          />
+        </GridCol>
         <GridCol span={6}>
           <Select
             label='Classification'
@@ -135,13 +142,7 @@ export default function Form({
             }
           />
         </GridCol>
-        <GridCol span={6}>
-          <TextInput
-            label='Relationship'
-            description='Relationship between suspect and victim'
-            {...form.getInputProps('suspectVictimRelationship')}
-          />
-        </GridCol>
+
         <GridCol span={6}>
           <MultiSelect
             label='Weapons Used'
