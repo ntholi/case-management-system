@@ -26,7 +26,7 @@ import {
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import PersonalInfoInput from './PersonalInfoInput';
 
 type Case = BaseCase & {
@@ -57,7 +57,7 @@ export default function Form({
   const [suspects, setSuspects] = React.useState<PersonalInformation[]>(
     item?.suspects || []
   );
-  const { setValues, ...form } = useForm<Case>({
+  const { setValues, setFieldValue, ...form } = useForm<Case>({
     initialValues: item && {
       ...item,
       weaponIds: item?.weapons?.map((it) => it.id),
@@ -67,12 +67,26 @@ export default function Form({
         if (!value) return 'Police Station is required';
         return undefined;
       },
+      dateOfReport: (value) => {
+        if (
+          form.values.dateOfOccurrence &&
+          value &&
+          value < form.values.dateOfOccurrence
+        ) {
+          return 'Date of report cannot be before date of occurrence';
+        }
+        return undefined;
+      },
     },
   });
   const { setValues: setReportingPerson, ...reportingPersonForm } =
     useForm<Case>({});
   const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
+
+  useEffect(() => {
+    setFieldValue('dateOfReport', new Date());
+  }, [setFieldValue]);
 
   function handleSubmit(values: Case) {
     if (values.occurrencePlace) {
