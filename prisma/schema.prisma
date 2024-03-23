@@ -63,7 +63,8 @@ model User {
 
   accounts        Account[]
   sessions        Session[]
-  policeStationId String?   @map("police_station_id")
+  policeStationId String?    @map("police_station_id")
+  auditLogs       AuditLog[]
 
   @@map("users")
 }
@@ -200,10 +201,16 @@ model PersonalInformation {
   @@map("personal_informations")
 }
 
-enum AuditAction {
-  CREATE
-  UPDATE
-  DELETE
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  model     String
+  value     Json?
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  userId    String
+
+  @@map("audit_logs")
 }
 
 enum Education {
