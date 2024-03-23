@@ -11,6 +11,7 @@ import {
   IconBuildingBank,
   IconCategory,
   IconChevronRight,
+  IconFileAnalytics,
   IconHome,
   IconHourglass,
   IconLogout2,
@@ -68,6 +69,14 @@ export default function Navigation() {
           active={pathname.startsWith('/police-stations')}
           href={'/police-stations'}
           leftSection={<IconBuildingBank size='1.1rem' />}
+          rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
+        />
+        <NavLink
+          label='Reports'
+          component={Link}
+          active={pathname.startsWith('/reports')}
+          href={'/reports'}
+          leftSection={<IconFileAnalytics size='1.1rem' />}
           rightSection={<IconChevronRight size='0.8rem' stroke={1.5} />}
         />
         {session?.user?.role === 'ADMIN' && (
