@@ -1,11 +1,16 @@
-import { saveAs } from 'file-saver';
+import { calculateAge } from '@/lib/utils';
+import {
+  Case as BaseCase,
+  CrimeClassification,
+  PersonalInformation,
+} from '@prisma/client';
 import ExcelJS from 'exceljs';
-import { Case as BaseCase, PersonalInformation } from '@prisma/client';
-import { buffer } from 'stream/consumers';
+import { saveAs } from 'file-saver';
 
 export type Case = BaseCase & {
   victim?: PersonalInformation;
   suspect?: PersonalInformation;
+  classification?: CrimeClassification;
 };
 
 export function exportToExcel(cases: Case[]) {
@@ -16,14 +21,20 @@ export function exportToExcel(cases: Case[]) {
     'OB No.',
     'Victim',
     'Suspect',
+    'Suspect Age',
     'Date of Occurrence',
+    'Crime Classification',
+    'Victim/Suspect Relationship',
   ]);
   const data = cases.map((it) => [
     it.rciNo,
     it.obNo,
     `${it?.victim?.firstName || ''} ${it?.victim?.surname || ''}`,
     `${it?.suspect?.firstName || ''} ${it?.suspect?.surname || ''}`,
+    calculateAge(it?.suspect?.dateOfBirth),
     it.dateOfOccurrence,
+    it?.classification?.name,
+    it.suspectVictimRelationship,
   ]);
 
   data.forEach((row) => sheet.addRow(row));
@@ -32,6 +43,6 @@ export function exportToExcel(cases: Case[]) {
     const blob = new Blob([buffer], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    saveAs(blob, 'report.xlsx');
+    saveAs(blob, 'Report.xlsx');
   });
 }

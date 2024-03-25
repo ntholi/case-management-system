@@ -16,19 +16,25 @@ import {
   TableTh,
   TableTr,
 } from '@mantine/core';
-import { Case as BaseCase, PersonalInformation } from '@prisma/client';
+import {
+  Case as BaseCase,
+  CrimeClassification,
+  PersonalInformation,
+} from '@prisma/client';
 import { IconFileSpreadsheet } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 import { useEffect, useState } from 'react';
 import Filter, { Filters } from './Filter';
 import { exportToExcel } from './export';
+import { calculateAge } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
 export type Case = BaseCase & {
   victim?: PersonalInformation;
   suspect?: PersonalInformation;
+  classification?: CrimeClassification;
 };
 
 export default function CasePage() {
@@ -63,7 +69,10 @@ export default function CasePage() {
       <TableTd>
         {row.suspect?.firstName} {row.suspect?.surname}
       </TableTd>
+      <TableTd>{calculateAge(row.suspect?.dateOfBirth)}</TableTd>
       <TableTd>{dateTime(row.dateOfOccurrence)} </TableTd>
+      <TableTd>{row.classification?.name}</TableTd>
+      <TableTd>{row.suspectVictimRelationship}</TableTd>
       <TableTd align='right'>
         <Group gap={1} justify='end'>
           <Anchor mr={'lg'} href={`/cases/${row.id}`} component={Link}>
@@ -108,7 +117,10 @@ export default function CasePage() {
             <TableTh>OB No.</TableTh>
             <TableTh>Victim</TableTh>
             <TableTh>Suspect</TableTh>
+            <TableTh>Age</TableTh>
             <TableTh>Date of Occurrence</TableTh>
+            <TableTh>Classification</TableTh>
+            <TableTh>Victim/Suspect Relationship</TableTh>
             <TableTh></TableTh>
           </TableTr>
         </ThemedTableHead>
