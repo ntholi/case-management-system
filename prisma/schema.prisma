@@ -142,7 +142,6 @@ model Case {
   reportingPerson           ReportingPerson       @relation(fields: [reportingPersonId], references: [id])
   caseStatus                CaseStatus?
   suspectVictimRelationship String?               @map("suspect_victim_relationship")
-  disability                String?
   whatHappened              String?               @map("what_happened")
   damagedProperty           String?               @map("damaged_property")
   published                 Boolean               @default(false)
@@ -195,6 +194,7 @@ model PersonalInformation {
   description      String?
   physicalAddress  String?        @map("physical_address")
   villageChief     String?        @map("village_chief")
+  disability       String?
   createdAt        DateTime       @default(now()) @map("created_at")
   updatedAt        DateTime       @updatedAt @map("updated_at")
 
