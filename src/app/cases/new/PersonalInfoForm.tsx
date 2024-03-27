@@ -49,7 +49,13 @@ export default function PersonalInfoForm({ onSave, value }: Props) {
     event?.stopPropagation();
     startTransition(async () => {
       const res = await axios.post('/api/personal-info', values);
-      onSave(res.data);
+      const data = {
+        ...res.data,
+        dateOfBirth: res?.data?.dateOfBirth
+          ? new Date(res?.data?.dateOfBirth)
+          : null,
+      };
+      onSave(data);
     });
   }
 
