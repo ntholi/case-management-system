@@ -10,7 +10,7 @@ export const CaseSchema = z.object({
   modusOperandiLinked: z.nativeEnum(ModusOperandiLined).optional(),
   reportingPerson: z.object({
     name: z.string().optional(),
-    idNo: z.string().optional(),
+    nationalId: z.string().optional(),
     phoneNumber: z.string().optional(),
     relationship: z.string().optional(),
   }),

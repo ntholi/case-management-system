@@ -28,7 +28,6 @@ export async function createCase(data: CaseSchemaType) {
       dateOfOccurrence: dateOfOccurrence,
       dateOfReport: dateOfReport,
       suspectVictimRelationship: data.suspectVictimRelationship,
-      disability: data.disability,
       whatHappened: data.whatHappened,
       damagedProperty: data.damagedProperty,
       caseStatus: {
@@ -84,7 +83,6 @@ export async function updateCase(id: string, data: CaseSchemaType) {
       dateOfOccurrence: dateOfOccurrence,
       dateOfReport: dateOfReport,
       suspectVictimRelationship: data.suspectVictimRelationship,
-      disability: data.disability,
       whatHappened: data.whatHappened,
       damagedProperty: data.damagedProperty,
       weapons: {
