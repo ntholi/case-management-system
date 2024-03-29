@@ -32,8 +32,9 @@ import PersonalInfoInput from './PersonalInfoInput';
 type Case = BaseCase & {
   weapons: Weapon[];
   weaponIds?: string[];
-  policeStation: PoliceStation;
   crimeClassifications: CrimeClassification[];
+  crimeClassificationIds?: string[];
+  policeStation: PoliceStation;
   suspects: PersonalInformation[];
   victims: PersonalInformation[];
   reportingPerson: PersonalInformation;
@@ -61,6 +62,7 @@ export default function Form({
     initialValues: item && {
       ...item,
       weaponIds: item?.weapons?.map((it) => it.id),
+      crimeClassificationIds: item?.crimeClassifications?.map((it) => it.id),
     },
     validate: {
       policeStationId: (value) => {
@@ -144,9 +146,9 @@ export default function Form({
           />
         </GridCol>
         <GridCol span={6}>
-          <Select
-            label='Classification'
-            {...form.getInputProps('classificationId')}
+          <MultiSelect
+            label='Crime Classifications'
+            {...form.getInputProps('crimeClassificationIds')}
             data={
               crimeClassifications?.map((it) => ({
                 value: it.id,

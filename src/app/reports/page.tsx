@@ -35,7 +35,7 @@ export const dynamic = 'force-dynamic';
 export type Case = BaseCase & {
   victims?: PersonalInformation[];
   suspects?: PersonalInformation[];
-  classification?: CrimeClassification;
+  crimeClassifications?: CrimeClassification[];
 };
 
 export default function CasePage() {
@@ -71,7 +71,9 @@ export default function CasePage() {
         <PersonalInformationRow items={row.suspects} />
       </TableTd>
       <TableTd>{dateTime(row.dateOfOccurrence)} </TableTd>
-      <TableTd>{row.classification?.name}</TableTd>
+      <TableTd>
+        {row.crimeClassifications?.map((it) => it.name).join(', ')}
+      </TableTd>
       <TableTd>{row.suspectVictimRelationship}</TableTd>
       <TableTd align='right'>
         <Group gap={1} justify='end'>

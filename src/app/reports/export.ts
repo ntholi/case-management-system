@@ -1,3 +1,4 @@
+import { dateTime } from '@/lib/format';
 import { calculateAge } from '@/lib/utils';
 import {
   Case as BaseCase,
@@ -10,7 +11,7 @@ import { saveAs } from 'file-saver';
 export type Case = BaseCase & {
   victims?: PersonalInformation[];
   suspects?: PersonalInformation[];
-  classification?: CrimeClassification;
+  crimeClassifications?: CrimeClassification[];
 };
 
 export function exportToExcel(cases: Case[]) {
@@ -55,8 +56,8 @@ export function exportToExcel(cases: Case[]) {
         (v) => `${v.firstName} ${v.surname} (${calculateAge(v.dateOfBirth)})`
       )
       .join(', '),
-    it.dateOfOccurrence,
-    it?.classification?.name,
+    dateTime(it.dateOfOccurrence),
+    it.crimeClassifications?.map((c) => c.name).join(', '),
     it.suspectVictimRelationship,
   ]);
 
