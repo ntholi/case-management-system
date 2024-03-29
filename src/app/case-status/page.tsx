@@ -8,6 +8,7 @@ import {
   Flex,
   Group,
   Loader,
+  Modal,
   Paper,
   Select,
   Table,
@@ -27,6 +28,11 @@ import Filter from './Filter';
 import { remove, update } from './actions';
 import { useEffect, useState } from 'react';
 import { useQueryState } from 'nuqs';
+import Form from './Form';
+import { useDisclosure } from '@mantine/hooks';
+import ThemedIconButton from '@/components/ThemedIconButton';
+import { IconEdit } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,6 +40,10 @@ export type CaseStatus = BaseCaseStatus & {
   case: Case;
 };
 export default function CasePage() {
+  const [opened, { open, close }] = useDisclosure(false);
+  const router = useRouter();
+
+  const [selected, setSelected] = useState<CaseStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<CaseStatus[]>([]);
   const [rciNo] = useQueryState('rciNo');
@@ -58,13 +68,14 @@ export default function CasePage() {
       <TableTd>{row.policeCaseStatus}</TableTd>
       <TableTd>{row.courtCaseStatus}</TableTd>
       <TableTd align='right'>
-        <UpdateIconButton
-          title={'Case Management'}
-          form={<Form />}
-          initialValues={row}
-          objectId={row.id}
-          onUpdate={update}
-        />
+        <ThemedIconButton
+          onClick={() => {
+            setSelected(row);
+            open();
+          }}
+        >
+          <IconEdit size={'1rem'} />
+        </ThemedIconButton>
         <DeleteIconButton ml={10} id={row.id} action={remove} />
       </TableTd>
     </TableTr>
@@ -79,6 +90,17 @@ export default function CasePage() {
 
   return (
     <>
+      {selected && (
+        <Modal opened={opened} onClose={close} title={'Case Management'}>
+          <Form
+            caseStatus={selected}
+            onClose={() => {
+              close();
+              router.refresh();
+            }}
+          />
+        </Modal>
+      )}
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
           <Group>
@@ -98,33 +120,6 @@ export default function CasePage() {
         </ThemedTableHead>
         <TableTbody>{rows}</TableTbody>
       </Table>
-    </>
-  );
-}
-
-function Form() {
-  return (
-    <>
-      <Select
-        label='Police Case Status'
-        name='policeCaseStatus'
-        data={
-          Object.entries(PoliceCaseStatus).map(([key, value]) => ({
-            value: value,
-            label: value,
-          })) || []
-        }
-      />
-      <Select
-        label='Court Case Status'
-        name='courtCaseStatus'
-        data={
-          Object.entries(CourtCaseStatus).map(([key, value]) => ({
-            value: value,
-            label: value,
-          })) || []
-        }
-      />
     </>
   );
 }
