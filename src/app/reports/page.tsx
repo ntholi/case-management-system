@@ -28,12 +28,13 @@ import { useEffect, useState } from 'react';
 import Filter, { Filters } from './Filter';
 import { exportToExcel } from './export';
 import { calculateAge } from '@/lib/utils';
+import PersonalInformationRow from '@/components/PersonalInformationRow';
 
 export const dynamic = 'force-dynamic';
 
 export type Case = BaseCase & {
-  victim?: PersonalInformation;
-  suspect?: PersonalInformation;
+  victims?: PersonalInformation[];
+  suspects?: PersonalInformation[];
   classification?: CrimeClassification;
 };
 
@@ -64,12 +65,11 @@ export default function CasePage() {
       <TableTd>{row.obNo}</TableTd>
       <TableTd>{row.rciNo}</TableTd>
       <TableTd>
-        {row.victim?.firstName} {row.victim?.surname}
+        <PersonalInformationRow items={row.victims} />
       </TableTd>
       <TableTd>
-        {row.suspect?.firstName} {row.suspect?.surname}
+        <PersonalInformationRow items={row.suspects} />
       </TableTd>
-      <TableTd>{calculateAge(row.suspect?.dateOfBirth)}</TableTd>
       <TableTd>{dateTime(row.dateOfOccurrence)} </TableTd>
       <TableTd>{row.classification?.name}</TableTd>
       <TableTd>{row.suspectVictimRelationship}</TableTd>
@@ -117,7 +117,6 @@ export default function CasePage() {
             <TableTh>OB No.</TableTh>
             <TableTh>Victim</TableTh>
             <TableTh>Suspect</TableTh>
-            <TableTh>Age</TableTh>
             <TableTh>Date of Occurrence</TableTh>
             <TableTh>Classification</TableTh>
             <TableTh>Victim/Suspect Relationship</TableTh>

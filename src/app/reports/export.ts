@@ -8,8 +8,8 @@ import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 
 export type Case = BaseCase & {
-  victim?: PersonalInformation;
-  suspect?: PersonalInformation;
+  victims?: PersonalInformation[];
+  suspects?: PersonalInformation[];
   classification?: CrimeClassification;
 };
 
@@ -22,7 +22,6 @@ export function exportToExcel(cases: Case[]) {
     'OB No.',
     'Victim',
     'Suspect',
-    'Suspect Age',
     'Date of Occurrence',
     'Crime Classification',
     'Victim/Suspect Relationship',
@@ -46,9 +45,16 @@ export function exportToExcel(cases: Case[]) {
   const data = cases.map((it) => [
     it.rciNo,
     it.obNo,
-    `${it?.victim?.firstName || ''} ${it?.victim?.surname || ''}`,
-    `${it?.suspect?.firstName || ''} ${it?.suspect?.surname || ''}`,
-    calculateAge(it?.suspect?.dateOfBirth),
+    it.victims
+      ?.map(
+        (v) => `${v.firstName} ${v.surname} (${calculateAge(v.dateOfBirth)})`
+      )
+      .join(', '),
+    it.suspects
+      ?.map(
+        (v) => `${v.firstName} ${v.surname} (${calculateAge(v.dateOfBirth)})`
+      )
+      .join(', '),
     it.dateOfOccurrence,
     it?.classification?.name,
     it.suspectVictimRelationship,
@@ -66,7 +72,7 @@ export function exportToExcel(cases: Case[]) {
 
 function addHeader(sheet: ExcelJS.Worksheet, title: string) {
   sheet.addRow([title]);
-  sheet.mergeCells('A1:H1');
+  sheet.mergeCells('A1:G1');
   const row = sheet.getRow(1);
   row.height = 150;
   row.alignment = { vertical: 'middle', horizontal: 'center' };

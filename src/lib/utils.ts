@@ -1,13 +1,15 @@
 export function calculateAge(
   dateOfBirth: Date | string | null | undefined
-): number {
+): string {
   if (!dateOfBirth) {
-    return 0;
+    return 'age unknown';
   }
 
   const dob = new Date(dateOfBirth);
   const diff = Date.now() - dob.getTime();
   const ageDate = new Date(diff);
 
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
+  const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+  if (age === 1) return `${age} year old`;
+  return `${age} years old`;
 }
