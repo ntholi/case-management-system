@@ -25,12 +25,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { remove } from './actions';
 import { exportToExcel } from './export';
+import PersonalInformationRow from '@/components/PersonalInformationRow';
 
 export const dynamic = 'force-dynamic';
 
 export type Case = BaseCase & {
-  victim?: PersonalInformation;
-  suspect?: PersonalInformation;
+  victims?: PersonalInformation[];
+  suspects?: PersonalInformation[];
 };
 
 export default function CasePage() {
@@ -52,10 +53,10 @@ export default function CasePage() {
       <TableTd>{row.obNo}</TableTd>
       <TableTd>{row.rciNo}</TableTd>
       <TableTd>
-        {row.victim?.firstName} {row.victim?.surname}
+        <PersonalInformationRow items={row.victims} />
       </TableTd>
       <TableTd>
-        {row.suspect?.firstName} {row.suspect?.surname}
+        <PersonalInformationRow items={row.suspects} />
       </TableTd>
       <TableTd>{dateTime(row.dateOfOccurrence)} </TableTd>
       <TableTd align='right'>
