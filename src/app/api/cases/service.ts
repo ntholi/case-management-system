@@ -6,6 +6,7 @@ type GetCaseType = {
   weapon?: string | null;
   classification?: string | null;
   station?: string | null;
+  dateRange?: string | null;
   published: boolean;
 };
 
@@ -114,10 +115,16 @@ export async function updateCase(id: string, data: CaseSchemaType) {
 }
 
 export async function getCase(getCase: GetCaseType) {
-  const { weapon, classification, station, published } = getCase;
+  const { weapon, classification, station, published, dateRange } = getCase;
   const data = await prisma.case.findMany({
     where: {
       published: published,
+      dateOfReport: dateRange
+        ? {
+            gte: new Date(Number(dateRange.split('-')[0])),
+            lte: new Date(Number(dateRange.split('-')[1])),
+          }
+        : undefined,
       weapons: weapon
         ? {
             some: {

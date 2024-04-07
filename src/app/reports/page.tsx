@@ -1,5 +1,6 @@
 'use client';
 import PageTitle from '@/components/PageTitle';
+import PersonalInformationRow from '@/components/PersonalInformationRow';
 import ThemedTableHead from '@/components/ThemedTableHead';
 import { dateTime } from '@/lib/format';
 import {
@@ -25,11 +26,9 @@ import { IconFileSpreadsheet } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useQueryState } from 'nuqs';
 import { useEffect, useState } from 'react';
+import DateFilter from './DateFilter';
 import Filter, { Filters } from './Filter';
 import { exportToExcel } from './export';
-import { calculateAge } from '@/lib/utils';
-import PersonalInformationRow from '@/components/PersonalInformationRow';
-import DateFilter from './DateFilter';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,12 +44,14 @@ export default function CasePage() {
   const [weapon] = useQueryState(Filters.weapon);
   const [classification] = useQueryState(Filters.classification);
   const [station] = useQueryState(Filters.station);
+  const [date] = useQueryState('date');
 
   useEffect(() => {
     const filter = new URLSearchParams();
     if (weapon) filter.set(Filters.weapon, weapon);
     if (classification) filter.set(Filters.classification, classification);
     if (station) filter.set(Filters.station, station.split(':')[0]);
+    if (date) filter.set('date', date);
 
     async function fetchData() {
       const response = await fetch(`/api/cases?${filter}`);
@@ -59,7 +60,7 @@ export default function CasePage() {
       setLoading(false);
     }
     fetchData();
-  }, [weapon, classification, station]);
+  }, [weapon, classification, station, date]);
 
   const rows = data.map((row) => (
     <TableTr key={row.id}>

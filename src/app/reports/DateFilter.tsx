@@ -22,7 +22,7 @@ export default function DateFilter() {
     if (value[0] === null && value[1] === null) {
       setDateFilter(null);
     } else {
-      setDateFilter(`${value[0]?.toISOString()}..${value[1]?.toISOString()}`);
+      setDateFilter(`${value[0]?.getTime()}-${value[1]?.getTime()}`);
     }
   }, [setDateFilter, value]);
 
