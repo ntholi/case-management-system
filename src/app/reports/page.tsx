@@ -29,6 +29,7 @@ import Filter, { Filters } from './Filter';
 import { exportToExcel } from './export';
 import { calculateAge } from '@/lib/utils';
 import PersonalInformationRow from '@/components/PersonalInformationRow';
+import DateFilter from './DateFilter';
 
 export const dynamic = 'force-dynamic';
 
@@ -96,10 +97,11 @@ export default function CasePage() {
     <>
       <Paper p='md' withBorder>
         <Flex justify={'space-between'} align={'center'}>
-          <Group>
+          <Group align='center'>
             <PageTitle text='Cases' />
             <Divider orientation='vertical' />
             <Filter />
+            <DateFilter />
           </Group>
           <Group>
             <Button
