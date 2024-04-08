@@ -160,6 +160,8 @@ model CaseStatus {
   courtCaseStatus  CourtCaseStatus? @map("court_case_status")
   case             Case             @relation(fields: [caseId], references: [id], onDelete: Cascade)
   caseId           String           @unique
+  verdict          Verdict?         @default(UNKNOWN)
+  sentence         String?
   createdAt        DateTime         @default(now()) @map("created_at")
   updatedAt        DateTime         @updatedAt @map("updated_at")
 
@@ -211,6 +213,12 @@ model AuditLog {
   userId    String
 
   @@map("audit_logs")
+}
+
+enum Verdict {
+  GUILTY
+  NOT_GUILTY
+  UNKNOWN
 }
 
 enum Education {
