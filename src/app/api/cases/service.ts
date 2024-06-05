@@ -40,11 +40,7 @@ export async function createCase(data: CaseSchemaType) {
         connect: data.weaponIds?.map((id) => ({ id })),
       },
       crimeClassifications: {
-        connect: data.crimeClassificationId
-          ? {
-              id: data.crimeClassificationId,
-            }
-          : undefined,
+        connect: data.crimeClassificationIds?.map((id) => ({ id })),
       },
       reportingPerson: {
         create: data.reportingPerson,
@@ -90,11 +86,7 @@ export async function updateCase(id: string, data: CaseSchemaType) {
         connect: data.weaponIds?.map((id) => ({ id })),
       },
       crimeClassifications: {
-        connect: data.crimeClassificationId
-          ? {
-              id: data.crimeClassificationId,
-            }
-          : undefined,
+        connect: data.crimeClassificationIds?.map((id) => ({ id })),
       },
       reportingPerson: {
         create: data.reportingPerson,
