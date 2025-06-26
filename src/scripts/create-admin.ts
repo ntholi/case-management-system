@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import minimist from 'minimist';
-import prisma from '@/lib/prisma';
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+
+const prisma = new PrismaClient();
 
 const args = minimist(process.argv.slice(2));
 if (!args.email) {
@@ -59,4 +61,11 @@ async function createUser(
   console.log('Done!');
 }
 
-createUser(args.email, args.firstName, args.lastName, String(args.password));
+createUser(args.email, args.firstName, args.lastName, String(args.password))
+  .catch((error) => {
+    console.error('Error creating user:', error);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
