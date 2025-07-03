@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma migrate deploy && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "create-admin": "tsx src/scripts/create-admin.ts",
     "postinstall": "prisma generate"
   },
