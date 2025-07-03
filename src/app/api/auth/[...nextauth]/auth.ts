@@ -75,4 +75,4 @@ export const authOptions = {
       return session;
     },
   },
-} as AuthOptions;
+} as unknown as AuthOptions;

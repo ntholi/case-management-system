@@ -47,10 +47,11 @@ export default function ResourceForm<T extends Resource>(
       <Stack gap={'lg'}>
         {React.Children.map(children, (child: React.ReactNode) => {
           if (!React.isValidElement(child)) return child;
-          if (!child.props.name) return child;
-          return React.cloneElement(child as React.ReactElement<any>, {
-            ...child.props,
-            ...form.getInputProps(child.props.name),
+          const typedChild = child as React.ReactElement<{ name?: string }>;
+          if (!typedChild.props.name) return child;
+          return React.cloneElement(typedChild, {
+            ...typedChild.props,
+            ...form.getInputProps(typedChild.props.name),
           });
         })}
       </Stack>
