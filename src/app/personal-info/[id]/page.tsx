@@ -5,9 +5,15 @@ import { notFound } from 'next/navigation';
 import { Divider, Flex, Paper, Stack, Title } from '@mantine/core';
 import BackButton from '@/components/BackButton';
 
-type Props = { params: { id: string } };
+type Props = { params: Promise<{ id: string }> };
 
-export default async function PersonaInformation({ params: { id } }: Props) {
+export default async function PersonaInformation(props: Props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const person = await prisma.personalInformation.findUnique({
     where: {
       id: id,

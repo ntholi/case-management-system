@@ -19,9 +19,15 @@ import BackButton from '../../../components/BackButton';
 
 export const dynamic = 'force-dynamic';
 
-type Props = { params: { id: string } };
+type Props = { params: Promise<{ id: string }> };
 
-export default async function CasePage({ params: { id } }: Props) {
+export default async function CasePage(props: Props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const item = await prisma.case.findUnique({
     where: { id },
     include: {

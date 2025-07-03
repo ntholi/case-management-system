@@ -48,7 +48,7 @@ export default function ResourceForm<T extends Resource>(
         {React.Children.map(children, (child: React.ReactNode) => {
           if (!React.isValidElement(child)) return child;
           if (!child.props.name) return child;
-          return React.cloneElement(child as React.ReactElement, {
+          return React.cloneElement(child as React.ReactElement<any>, {
             ...child.props,
             ...form.getInputProps(child.props.name),
           });

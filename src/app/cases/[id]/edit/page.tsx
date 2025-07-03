@@ -10,10 +10,16 @@ import BackButton from '@/components/BackButton';
 export const dynamic = 'force-dynamic';
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default async function CasePage({ params: { id } }: Props) {
+export default async function CasePage(props: Props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const weapons = await prisma?.weapon.findMany();
   const crimeClassifications = await prisma?.crimeClassification.findMany();
   const policeStations = await prisma?.policeStation.findMany();

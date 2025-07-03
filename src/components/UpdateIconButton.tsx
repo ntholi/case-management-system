@@ -15,7 +15,7 @@ export type Props<T extends Resource> = {
   onUpdate: (id: any, value: T) => Promise<void>;
   objectId: string | number;
   title: string;
-  form: React.ReactElement;
+  form: React.ReactElement<any>;
 };
 
 export default function UpdateIconButton<T extends Resource>(props: Props<T>) {
