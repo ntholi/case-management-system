@@ -4,9 +4,8 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
-import { ColorSchemeScript } from '@mantine/core';
-import Providers from './providers';
 import AdminShell from './core/AdminShell';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'Case Management',
@@ -16,9 +15,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='en'>
-      <head>
-        <ColorSchemeScript defaultColorScheme='dark' />
-      </head>
       <body>
         <Providers>
           <AdminShell>{children}</AdminShell>
