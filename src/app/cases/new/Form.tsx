@@ -26,7 +26,7 @@ import {
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React from 'react';
 import PersonalInfoInput from './PersonalInfoInput';
 
 type Case = BaseCase & {
@@ -58,22 +58,28 @@ export default function Form({
   const [suspects, setSuspects] = React.useState<PersonalInformation[]>(
     item?.suspects || []
   );
-  const { setValues, setFieldValue, ...form } = useForm<Case>({
-    initialValues: item && {
-      ...item,
-      weaponIds: item?.weapons?.map((it) => it.id),
-      crimeClassificationIds: item?.crimeClassifications?.map((it) => it.id),
-    },
+  const { setValues, setFieldValue, ...form } = useForm<Partial<Case>>({
+    initialValues: item
+      ? {
+          ...item,
+          weaponIds: item?.weapons?.map((it) => it.id),
+          crimeClassificationIds: item?.crimeClassifications?.map(
+            (it) => it.id
+          ),
+        }
+      : {
+          dateOfReport: new Date(),
+        },
     validate: {
       policeStationId: (value) => {
         if (!value) return 'Police Station is required';
         return undefined;
       },
-      dateOfReport: (value) => {
+      dateOfReport: (value, values) => {
         if (
-          form.values.dateOfOccurrence &&
+          values.dateOfOccurrence &&
           value &&
-          value < form.values.dateOfOccurrence
+          value < values.dateOfOccurrence
         ) {
           return 'Date of report cannot be before date of occurrence';
         }
@@ -86,11 +92,7 @@ export default function Form({
   const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
 
-  useEffect(() => {
-    setFieldValue('dateOfReport', new Date());
-  }, [setFieldValue]);
-
-  function handleSubmit(values: Case) {
+  function handleSubmit(values: Partial<Case>) {
     if (values.occurrencePlace) {
       values.occurrencePlace = values.occurrencePlace.trim();
     }
